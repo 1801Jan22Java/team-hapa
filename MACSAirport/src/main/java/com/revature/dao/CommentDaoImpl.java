@@ -7,7 +7,7 @@ import org.hibernate.*;
 import com.revature.domain.Comment;
 import com.revature.util.HibernateUtil;
 
-public class CommentsDaoImpl implements CommentsDao{
+public class CommentDaoImpl implements CommentDao{
 
 	@Override
 	public void createComment(Comment c) {

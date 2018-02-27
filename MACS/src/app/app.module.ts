@@ -10,7 +10,10 @@ import { HomeComponent } from './home/home.component';
 import { AppRouterModule } from './app-router/app-router.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ArrivalsDeparturesComponent } from './arrivals-departures/arrivals-departures.component';
+
 import { Test1Component } from './test1/test1.component';
+import { Test2Component } from './test2/test2.component';
+
 
 
 // Create an array of routes.
@@ -27,7 +30,8 @@ import { Test1Component } from './test1/test1.component';
     HomeComponent,
     NavbarComponent,
     ArrivalsDeparturesComponent,
-    Test1Component
+    Test1Component,
+    Test2Component
   ],
   imports: [
     BrowserModule,

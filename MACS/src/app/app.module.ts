@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './components/home/home.component';
 
 import { AppRouterModule } from './app-router/app-router.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -21,6 +21,9 @@ import { ViewItineraryComponent } from './components/view-itinerary/view-itinera
 import { SubmitFeedbackComponent } from './components/submit-feedback/submit-feedback.component';
 import { ViewFlightHistoryComponent } from './components/view-flight-history/view-flight-history.component';
 import { CheckInComponent } from './components/check-in/check-in.component';
+import { FlightSearchResultsComponent } from './components/flight-search-results/flight-search-results.component';
+import { TrackFlightStatusResultsComponent } from './components/track-flight-status-results/track-flight-status-results.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
@@ -50,6 +53,9 @@ import { CheckInComponent } from './components/check-in/check-in.component';
     SubmitFeedbackComponent,
     ViewFlightHistoryComponent,
     CheckInComponent,
+    FlightSearchResultsComponent,
+    TrackFlightStatusResultsComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

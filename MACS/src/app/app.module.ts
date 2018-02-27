@@ -10,7 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { AppRouterModule } from './app-router/app-router.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ArrivalsDeparturesComponent } from './arrivals-departures/arrivals-departures.component';
-
+import { Test3Component } from './test3/test3.component';
 import { Test1Component } from './test1/test1.component';
 import { Test2Component } from './test2/test2.component';
 import { Test4Component } from './test4/test4.component';
@@ -31,6 +31,7 @@ import { Test4Component } from './test4/test4.component';
     HomeComponent,
     NavbarComponent,
     ArrivalsDeparturesComponent,
+    Test3Component,
     Test1Component,
     Test2Component,
     Test4Component

@@ -13,6 +13,7 @@ import { ArrivalsDeparturesComponent } from './arrivals-departures/arrivals-depa
 
 import { Test1Component } from './test1/test1.component';
 import { Test2Component } from './test2/test2.component';
+import { Test4Component } from './test4/test4.component';
 
 
 
@@ -31,7 +32,8 @@ import { Test2Component } from './test2/test2.component';
     NavbarComponent,
     ArrivalsDeparturesComponent,
     Test1Component,
-    Test2Component
+    Test2Component,
+    Test4Component
   ],
   imports: [
     BrowserModule,

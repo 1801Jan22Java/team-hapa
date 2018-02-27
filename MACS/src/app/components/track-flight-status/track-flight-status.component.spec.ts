@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Test4Component } from './test4.component';
+import { TrackFlightStatusComponent } from './track-flight-status.component';
 
-describe('Test4Component', () => {
-  let component: Test4Component;
-  let fixture: ComponentFixture<Test4Component>;
+describe('TrackFlightStatusComponent', () => {
+  let component: TrackFlightStatusComponent;
+  let fixture: ComponentFixture<TrackFlightStatusComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Test4Component ]
+      declarations: [ TrackFlightStatusComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Test4Component);
+    fixture = TestBed.createComponent(TrackFlightStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

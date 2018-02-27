@@ -4,16 +4,24 @@ import { NgModule } from '@angular/core';
 // import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 
 import { AppRouterModule } from './app-router/app-router.module';
-import { NavbarComponent } from './navbar/navbar.component';
-import { ArrivalsDeparturesComponent } from './arrivals-departures/arrivals-departures.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ArrivalsDeparturesComponent } from './components/arrivals-departures/arrivals-departures.component';
+import { FlightSearchComponent } from './components/flight-search/flight-search.component';
+import { TrackFlightStatusComponent } from './components/track-flight-status/track-flight-status.component';
+import { FlightReservationComponent } from './components/flight-reservation/flight-reservation.component';
+import { AccountRegistrationComponent } from './components/account-registration/account-registration.component';
+import { ChangeAccountDetailsComponent } from './components/change-account-details/change-account-details.component';
+import { ViewReservationsComponent } from './components/view-reservations/view-reservations.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ViewItineraryComponent } from './components/view-itinerary/view-itinerary.component';
+import { SubmitFeedbackComponent } from './components/submit-feedback/submit-feedback.component';
+import { ViewFlightHistoryComponent } from './components/view-flight-history/view-flight-history.component';
+import { CheckInComponent } from './components/check-in/check-in.component';
 
-import { Test1Component } from './test1/test1.component';
-import { Test2Component } from './test2/test2.component';
-import { Test4Component } from './test4/test4.component';
 
 
 
@@ -31,9 +39,17 @@ import { Test4Component } from './test4/test4.component';
     HomeComponent,
     NavbarComponent,
     ArrivalsDeparturesComponent,
-    Test1Component,
-    Test2Component,
-    Test4Component
+    FlightSearchComponent,
+    TrackFlightStatusComponent,
+    FlightReservationComponent,
+    AccountRegistrationComponent,
+    ChangeAccountDetailsComponent,
+    ViewReservationsComponent,
+    ResetPasswordComponent,
+    ViewItineraryComponent,
+    SubmitFeedbackComponent,
+    ViewFlightHistoryComponent,
+    CheckInComponent,
   ],
   imports: [
     BrowserModule,

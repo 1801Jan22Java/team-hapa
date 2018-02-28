@@ -19,7 +19,7 @@ export class FlightSearchService {
 
     // Placeholder
     // return of(this.array);
-    this.observable= this.http.get('/src/assets/httpTest.json');
+    this.observable= this.http.get('/assets/httpTest.json');
   }
 
   displayOpenFlights():Observable<any>{

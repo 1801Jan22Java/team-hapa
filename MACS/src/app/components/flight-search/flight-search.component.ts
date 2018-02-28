@@ -25,6 +25,7 @@ export class FlightSearchComponent implements OnInit {
 
   onSubmit(): void {
     // console.log(this.form.get('date').value);
+    this.service.searchOpenFlights(this.form.get('date').value, this.form.get('destination').value);
     this.router.navigateByUrl('flightsearch');
   }
 

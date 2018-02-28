@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// Commented out, creating a new routermodule modle
-// import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -24,6 +24,7 @@ import { CheckInComponent } from './components/check-in/check-in.component';
 import { FlightSearchResultsComponent } from './components/flight-search-results/flight-search-results.component';
 import { TrackFlightStatusResultsComponent } from './components/track-flight-status-results/track-flight-status-results.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { FlightSearchService } from './services/flight-search/flight-search.service';
 
 
 
@@ -62,9 +63,12 @@ import { FooterComponent } from './components/footer/footer.component';
     // Add Router Module. First example is with appRoutes hard coded in 
     // AppModule. Commented out to implement app-router externally
     // RouterModule.forRoot(appRoutes)
-    AppRouterModule
+    AppRouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [FlightSearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

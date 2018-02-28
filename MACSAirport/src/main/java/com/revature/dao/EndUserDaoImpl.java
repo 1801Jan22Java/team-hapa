@@ -37,6 +37,20 @@ public class EndUserDaoImpl implements EndUserDao {
 		s.close();
 		return thisEndUser;
 	}
+	
+	@Override
+	public List<EndUser> getAllEndUsers(){
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+		
+		List<EndUser> endUserList = s.createQuery("from EndUser").list();
+		
+		tx.commit();
+		s.close();
+		
+		return endUserList;
+		
+	}
 
 	@Override
 	public int addEndUser(EndUser thisEndUser) {
@@ -50,6 +64,17 @@ public class EndUserDaoImpl implements EndUserDao {
 			tx.rollback();
 		}
 		return result;
+	}
+	
+	@Override
+	public void updateEndUser(EndUser u) {
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+				
+		s.merge(u);
+		
+		tx.commit();
+		s.close();
 	}
 
 }

@@ -39,7 +39,7 @@ public class Driver {
 		// animalInit();
 
 		// REAL DATA
-		//stateInit();
+		// stateInit();
 		
 		// LIMITED TO US CITIES DO NOT USE
 		//usCityInit();
@@ -51,25 +51,25 @@ public class Driver {
 		//allRoutes();
 		
 		// REAL DATA
-		//countryInit();
+		// countryInit();
 		
 		// REAL DATA
-		//intlCityInit();
+		// intlCityInit();
 		
 		// REAL DATA
-		//commonlookupInit();
+		// commonlookupInit();
 		
 		// DUMMY DATA
-		//flightInit();
+		// flightInit();
 		
 		// DUMMY DATA
-		//endUserInit();
+		// endUserInit();
 		
 		// DUMMY DATA
-		//reservationInit();
+		// reservationInit();
 		
 		// DUMMY DATA
-		//feedbackInit();
+		// feedbackInit();
 
 	}
 	
@@ -719,6 +719,7 @@ public class Driver {
 				new City("Melbourne", 135959, -37.8136276, 144.963057599999, null, cod.getCountryByName( "Australia") ),
 				new City("Brisbane", 1180285, -27.4697707, 153.0251235, null, cod.getCountryByName( "Australia") ),
 				new City("Vienna", 1863881, 48.2081743, 16.3738189, null, cod.getCountryByName( "Austria") ),
+				// Stopped here
 				new City("Baku", 3202300, 40.4092616999999, 49.8670924, null, cod.getCountryByName( "Azerbaijan") ),
 				new City("Dhaka", 12043977, 23.810332, 90.4125180999999, null, cod.getCountryByName( "Bangladesh") ),
 				new City("Chittagong", 2581643, 22.356851, 91.7831819, null, cod.getCountryByName( "Bangladesh") ),

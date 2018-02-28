@@ -5,9 +5,12 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.revature.domain.EndUser;
+import com.revature.domain.Flight;
+import com.revature.domain.Reservation;
 import com.revature.util.HibernateUtil;
 
 public class EndUserDaoImpl implements EndUserDao {
@@ -75,6 +78,19 @@ public class EndUserDaoImpl implements EndUserDao {
 		
 		tx.commit();
 		s.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Reservation> getReservationHistory(EndUser user) {
+		Session s = HibernateUtil.getSession();
+		
+		List<Reservation> reservations = s.createCriteria(Reservation.class)
+				.add( Restrictions.eq("endUser", user) )
+				.addOrder( Order.desc("creationDate") ).list();
+		
+		s.close();
+		return reservations;
 	}
 
 }

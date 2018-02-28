@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FlightSearchService } from '../../services/flight-search/flight-search.service';
 
 @Component({
   selector: 'app-flight-search',
@@ -8,12 +10,22 @@ import { Router } from '@angular/router';
 })
 export class FlightSearchComponent implements OnInit {
 
-  constructor(private router : Router) { }
+  constructor(private router: Router, private service: FlightSearchService) {
+ 
+  }
+
+  form = new FormGroup({
+    date: new FormControl("", Validators.required),
+    destination: new FormControl("", Validators.required)
+  })
+
 
   ngOnInit() {
   }
 
-  submit(): void {
+  onSubmit(): void {
+    // console.log(this.form.get('date').value);
+    this.service.searchOpenFlights(this.form.get('date').value, this.form.get('destination').value);
     this.router.navigateByUrl('flightsearch');
   }
 

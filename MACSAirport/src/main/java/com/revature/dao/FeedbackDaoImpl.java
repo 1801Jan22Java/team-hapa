@@ -33,5 +33,18 @@ public class FeedbackDaoImpl implements FeedbackDao {
 		}
 		return result;
 	}
+	
+	@Override
+	public List<Feedback> getAllFeedback() {
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+
+		List<Feedback> feedbackList = s.createQuery("from Feedback").list();
+		
+		tx.commit();
+		s.close();
+		
+		return feedbackList;
+	}
 
 }

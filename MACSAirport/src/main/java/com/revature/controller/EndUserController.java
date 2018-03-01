@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.revature.dao.*;
 import com.revature.domain.*;
 import com.revature.exception.FullFlightException;
+import com.revature.formatted.LoginInfo;
 
 @Controller("endUserController")
 @RequestMapping("/util")
@@ -117,10 +118,19 @@ public class EndUserController {
 	
 	@RequestMapping("/login")
 	@ResponseBody
-	public String login(@RequestParam("email") String email,
+	public ResponseEntity<LoginInfo> login(@RequestParam("email") String email,
 						@RequestParam("password") String password) {
-		//Pending the format of the JSON object we'll be returning.
-		return null;
+		EndUserDao eud = new EndUserDaoImpl();
+		LoginInfo thisUser = null;
+		
+		EndUser toCheck = eud.getEndUserByEmail(email);
+		
+		if(email.equals(toCheck.getEmail()) && password.equals(toCheck.getPassword())) {
+			thisUser = new LoginInfo(toCheck.getFirstname(), toCheck.getId(), toCheck.getTypeId());
+			return new ResponseEntity<LoginInfo>(thisUser, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<LoginInfo>(thisUser, HttpStatus.UNAUTHORIZED);
 	}
 	
 	

@@ -25,6 +25,7 @@ import { FlightSearchResultsComponent } from './components/flight-search-results
 import { TrackFlightStatusResultsComponent } from './components/track-flight-status-results/track-flight-status-results.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FlightSearchService } from './services/flight-search/flight-search.service';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -57,6 +58,7 @@ import { FlightSearchService } from './services/flight-search/flight-search.serv
     FlightSearchResultsComponent,
     TrackFlightStatusResultsComponent,
     FooterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

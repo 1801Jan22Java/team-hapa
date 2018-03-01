@@ -20,6 +20,7 @@ import { ViewFlightHistoryComponent } from '../components/view-flight-history/vi
 import { CheckInComponent } from '../components/check-in/check-in.component';
 import { FlightSearchResultsComponent } from '../components/flight-search-results/flight-search-results.component';
 import { TrackFlightStatusResultsComponent } from '../components/track-flight-status-results/track-flight-status-results.component';
+import {LoginComponent} from '../components/login/login.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
   { path: 'flightstatus', component: TrackFlightStatusResultsComponent },
 
   { path: 'register', component: AccountRegistrationComponent },
+  { path: 'login', component: LoginComponent },
 
   { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },

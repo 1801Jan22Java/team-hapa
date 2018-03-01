@@ -6,10 +6,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 
 import com.revature.domain.*;
 import com.revature.util.HibernateUtil;
 
+@Component
 public class CommonLookupDaoImpl implements CommonLookupDao {
 
 	@Override

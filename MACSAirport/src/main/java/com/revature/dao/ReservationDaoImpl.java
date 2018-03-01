@@ -5,9 +5,12 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.revature.domain.CommonLookup;
 import com.revature.domain.Reservation;
+import com.revature.exception.FullFlightException;
 import com.revature.util.HibernateUtil;
 
 public class ReservationDaoImpl implements ReservationDao {
@@ -35,4 +38,40 @@ public class ReservationDaoImpl implements ReservationDao {
 		return result;
 	}
 
+	@Override
+	public void checkIn(int flightID) {
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+		CommonLookupDao cldi = new CommonLookupDaoImpl();
+		CommonLookup reservedStatus = cldi.getCommonLookupByName("RESERVATION_STATUS", "Checked In");
+		ReservationDao rd = new ReservationDaoImpl();
+		Reservation thisReservation = rd.getReservationById(flightID);
+		
+		thisReservation.setStatusId(reservedStatus);
+		
+		s.merge(thisReservation);
+		
+		tx.commit();
+		s.close();
+	}
+	
+
+	@Override
+	public void cancel(int flightID) {
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+		CommonLookupDao cldi = new CommonLookupDaoImpl();
+		
+		CommonLookup reservedStatus = cldi.getCommonLookupByName("RESERVATION_STATUS", "Cancelled");
+		
+		ReservationDao rd = new ReservationDaoImpl();
+		Reservation thisReservation = rd.getReservationById(flightID);
+		
+		thisReservation.setStatusId(reservedStatus);
+		
+		s.merge(thisReservation);
+		
+		tx.commit();
+		s.close();
+	}
 }

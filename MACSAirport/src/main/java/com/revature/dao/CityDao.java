@@ -13,4 +13,5 @@ public interface CityDao {
 	public double distanceBetween(City departure, City arrival);
 	public City getCityByName(String cityName, State thisState, Country thisCountry);
 	public List<City> getAllCities();
+	City getIntlCityByName(String cityName, Country thisCountry);
 }

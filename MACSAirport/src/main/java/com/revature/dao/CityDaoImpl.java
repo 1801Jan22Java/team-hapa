@@ -54,6 +54,25 @@ public class CityDaoImpl implements CityDao {
 		s.close();
 		return thisCity;
 	}
+	
+	@Override
+	public City getIntlCityByName(String cityName, Country thisCountry) {
+		Session s = HibernateUtil.getSession();
+		
+		City thisCity = null;
+		try {
+			Criteria c = s.createCriteria(City.class);
+			c.add(Restrictions.eq("name", cityName));
+			c.add(Restrictions.not(Restrictions.eq("country", "United States")));
+			List<City> cities = c.list();
+			thisCity = (City) cities.get(0);
+		} catch (Exception e) {
+			thisCity = null;
+		}
+		
+		s.close();
+		return thisCity;
+	}
 
 	@Override
 	public int addCity(City thisCity) {

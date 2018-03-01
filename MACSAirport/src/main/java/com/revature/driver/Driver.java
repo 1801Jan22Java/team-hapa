@@ -1,5 +1,6 @@
 package com.revature.driver;
 
+<<<<<<< HEAD
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.revature.dao.*;
 import com.revature.domain.*;
@@ -21,6 +24,7 @@ public class Driver {
 
 	public static void main(String[] args) {
 
+		
 		// init();
 
 		// FlashcardDao fd = new FlashcardDaoImpl();
@@ -963,3 +967,13 @@ public class Driver {
 	}
 	
 }
+=======
+public class Driver {
+
+	// For testing table builds, simple queries, etc. on the fly
+	public static void main(String[] args) {
+		System.out.println("It works");
+	}
+	
+}
+>>>>>>> 985d324dec09397d93546b147d2511f320e47857

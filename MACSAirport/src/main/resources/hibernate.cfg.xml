@@ -4,6 +4,7 @@
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
+<<<<<<< HEAD
 		<property name="hibernate.connection.username">MACS</property>
 		<property name="hibernate.connection.password">12345RevaDB</property>
 		<property name="hibernate.connection.url">jdbc:oracle:thin:@macsairportdb.ceduno256cgh.us-east-1.rds.amazonaws.com:1521:ORCL</property>
@@ -25,5 +26,16 @@
 		<mapping class="com.revature.domain.Feedback" />
 		<mapping class="com.revature.domain.Flight" />
 		<mapping class="com.revature.domain.Reservation" />
+=======
+		<property name="hibernate.connection.username"></property>
+		<property name="hibernate.connection.password"></property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@hostname:1521:ORCL</property>
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<!-- this can be noisy in the console -->
+		<property name="hibernate.show_sql">true</property>
+		<!-- choose whether to create db or update existing db -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<!-- map domain object classes -->
+>>>>>>> 985d324dec09397d93546b147d2511f320e47857
 	</session-factory>
 </hibernate-configuration>

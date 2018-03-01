@@ -2,21 +2,24 @@ package com.revature.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.*;
+import org.springframework.stereotype.Repository;
 
 import com.revature.domain.Comment;
 import com.revature.util.HibernateUtil;
 
+@Repository("commentDaoImpl")
 public class CommentDaoImpl implements CommentDao{
 
 	@Override
+	@Transactional
 	public void createComment(Comment c) {
 		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
 		
 		s.persist(c);
 		
-		tx.commit();
 		s.close();
 	}
 
@@ -32,13 +35,12 @@ public class CommentDaoImpl implements CommentDao{
 	}
 
 	@Override
+	@Transactional
 	public List<Comment> getAllComments() {
 		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
 
 		List<Comment> commentList = s.createQuery("from Comment").list();
 		
-		tx.commit();
 		s.close();
 		
 		return commentList;

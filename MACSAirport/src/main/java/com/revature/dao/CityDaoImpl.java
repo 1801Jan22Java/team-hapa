@@ -2,16 +2,18 @@ package com.revature.dao;
 
 import java.util.List;
 
-
+import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
 import com.revature.domain.*;
 import com.revature.util.HibernateUtil;
 
+@Repository("cityDaoImpl")
 public class CityDaoImpl implements CityDao {
 
 	@Override

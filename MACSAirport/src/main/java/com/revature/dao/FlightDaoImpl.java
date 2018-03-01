@@ -10,6 +10,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.revature.domain.City;
 import com.revature.domain.CommonLookup;
@@ -19,7 +20,7 @@ import com.revature.domain.Reservation;
 import com.revature.exception.FullFlightException;
 import com.revature.util.HibernateUtil;
 
-@Component
+@Repository("flightDaoImpl")
 public class FlightDaoImpl implements FlightDao {
 
 	@Override

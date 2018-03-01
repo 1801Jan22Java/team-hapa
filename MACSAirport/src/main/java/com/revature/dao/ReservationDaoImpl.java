@@ -2,17 +2,21 @@ package com.revature.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
 import com.revature.domain.CommonLookup;
 import com.revature.domain.Reservation;
 import com.revature.exception.FullFlightException;
 import com.revature.util.HibernateUtil;
 
+@Repository("reservationDaoImpl")
 public class ReservationDaoImpl implements ReservationDao {
 
 	@Override
@@ -39,11 +43,13 @@ public class ReservationDaoImpl implements ReservationDao {
 	}
 
 	@Override
-	public void checkIn(int flightID) {
+	@Transactional
+	public Reservation checkIn(int flightID) {
 		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
+		
 		CommonLookupDao cldi = new CommonLookupDaoImpl();
 		CommonLookup reservedStatus = cldi.getCommonLookupByName("RESERVATION_STATUS", "Checked In");
+		
 		ReservationDao rd = new ReservationDaoImpl();
 		Reservation thisReservation = rd.getReservationById(flightID);
 		
@@ -51,15 +57,17 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		s.merge(thisReservation);
 		
-		tx.commit();
 		s.close();
+		
+		return thisReservation;
 	}
 	
 
 	@Override
-	public void cancel(int flightID) {
+	@Transactional
+	public Reservation cancel(int flightID) {
 		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
+
 		CommonLookupDao cldi = new CommonLookupDaoImpl();
 		
 		CommonLookup reservedStatus = cldi.getCommonLookupByName("RESERVATION_STATUS", "Cancelled");
@@ -71,7 +79,7 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		s.merge(thisReservation);
 		
-		tx.commit();
 		s.close();
+		return thisReservation;
 	}
 }

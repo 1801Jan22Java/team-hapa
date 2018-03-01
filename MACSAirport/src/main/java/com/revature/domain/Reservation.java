@@ -8,7 +8,9 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.stereotype.Component;
 
+@Component
 @Entity 
 @Table(name="RESERVATION")
 public class Reservation implements Serializable {

@@ -2,17 +2,22 @@ package com.revature.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.revature.domain.EndUser;
 import com.revature.domain.Flight;
 import com.revature.domain.Reservation;
 import com.revature.util.HibernateUtil;
 
+@Repository("endUserDaoImpl")
 public class EndUserDaoImpl implements EndUserDao {
 
 	@Override
@@ -42,13 +47,12 @@ public class EndUserDaoImpl implements EndUserDao {
 	}
 	
 	@Override
+	@Transactional
 	public List<EndUser> getAllEndUsers(){
 		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
 		
 		List<EndUser> endUserList = s.createQuery("from EndUser").list();
 		
-		tx.commit();
 		s.close();
 		
 		return endUserList;
@@ -70,13 +74,12 @@ public class EndUserDaoImpl implements EndUserDao {
 	}
 	
 	@Override
+	@Transactional
 	public void updateEndUser(EndUser u) {
 		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
 				
 		s.merge(u);
 		
-		tx.commit();
 		s.close();
 	}
 
@@ -92,5 +95,4 @@ public class EndUserDaoImpl implements EndUserDao {
 		s.close();
 		return reservations;
 	}
-
 }

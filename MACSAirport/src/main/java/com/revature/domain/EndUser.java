@@ -1,5 +1,6 @@
 package com.revature.domain;
 
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -167,7 +168,5 @@ public class EndUser implements Serializable {
 				+ password + ", type=" + type + ", secretAnswer1=" + secretAnswer1 + ", secretAnswer2=" + secretAnswer2
 				+ ", secretAnswer3=" + secretAnswer3 + ", noFly=" + noFly + "]";
 	}
-
-	
 
 }

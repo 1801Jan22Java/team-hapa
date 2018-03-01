@@ -2,6 +2,8 @@ package com.revature.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -35,16 +37,24 @@ public class FeedbackDaoImpl implements FeedbackDao {
 	}
 	
 	@Override
+	@Transactional
 	public List<Feedback> getAllFeedback() {
 		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
 
 		List<Feedback> feedbackList = s.createQuery("from Feedback").list();
 		
-		tx.commit();
 		s.close();
 		
 		return feedbackList;
 	}
 
+	@Override
+	@Transactional
+	public void deleteFeedback(Feedback thisFeedback) {
+		Session s = HibernateUtil.getSession();
+
+		s.delete(thisFeedback);
+		
+		s.close();
+	}
 }

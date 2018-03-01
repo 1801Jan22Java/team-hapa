@@ -12,6 +12,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.revature.dao.*;
 import com.revature.domain.*;
@@ -21,6 +23,7 @@ public class Driver {
 
 	public static void main(String[] args) {
 
+		
 		// init();
 
 		// FlashcardDao fd = new FlashcardDaoImpl();

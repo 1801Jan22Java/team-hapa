@@ -32,15 +32,17 @@ const appRoutes: Routes = [
   { path: 'register', component: AccountRegistrationComponent },
   { path: 'login', component: LoginComponent },
 
+  { path: 'feedback', component: SubmitFeedbackComponent },
+
+  { path: 'profile', component: ChangeAccountDetailsComponent },
+  { path: 'reservation/history', component: ViewFlightHistoryComponent },
+
   { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },
   { path: 'app-flight-reservation', component: FlightReservationComponent },
-  { path: 'app-change-account-details', component: ChangeAccountDetailsComponent },
   { path: 'app-view-reservations', component: ViewReservationsComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
   { path: 'app-view-itinerary', component: ViewItineraryComponent },
-  { path: 'app-submit-feedback', component: SubmitFeedbackComponent },
-  { path: 'app-view-flight-history', component: ViewFlightHistoryComponent },
   { path: 'app-check-in-component', component: CheckInComponent }
 ];
 

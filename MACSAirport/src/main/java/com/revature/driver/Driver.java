@@ -1,6 +1,5 @@
 package com.revature.driver;
 
-<<<<<<< HEAD
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -967,13 +966,3 @@ public class Driver {
 	}
 	
 }
-=======
-public class Driver {
-
-	// For testing table builds, simple queries, etc. on the fly
-	public static void main(String[] args) {
-		System.out.println("It works");
-	}
-	
-}
->>>>>>> 985d324dec09397d93546b147d2511f320e47857

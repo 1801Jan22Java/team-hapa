@@ -13,7 +13,6 @@
   	<maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   
-<<<<<<< HEAD
 	<dependencyManagement>
 	    <dependencies>
 	        <dependency>
@@ -26,25 +25,17 @@
 	    </dependencies>
 	</dependencyManagement>
 	
-=======
->>>>>>> 985d324dec09397d93546b147d2511f320e47857
+
   <dependencies>
     <dependency>
   		<groupId>log4j</groupId>
   		<artifactId>log4j</artifactId>
-<<<<<<< HEAD
-  		</dependency>
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-=======
   		<version>1.2.17</version>
   	</dependency>
   	<dependency>
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>
   		<version>4.12</version>
->>>>>>> 985d324dec09397d93546b147d2511f320e47857
   		<scope>test</scope>
   	</dependency>
   	<dependency>
@@ -54,7 +45,6 @@
   	</dependency>
   	<dependency>
 		<groupId>javax.servlet</groupId>
-<<<<<<< HEAD
     	<artifactId>servlet-api</artifactId>
 		<version>2.5</version>
    	</dependency>
@@ -65,18 +55,10 @@
 	<dependency>
 		<groupId>javax.validation</groupId>
 		<artifactId>validation-api</artifactId>
-=======
-    	<artifactId>javax.servlet-api</artifactId>
-    	<version>3.0.1</version>
->>>>>>> 985d324dec09397d93546b147d2511f320e47857
 	</dependency>
 	<dependency>
 		<groupId>com.fasterxml.jackson.core</groupId>
 		<artifactId>jackson-databind</artifactId>
-<<<<<<< HEAD
-=======
-		<version>2.6.3</version>
->>>>>>> 985d324dec09397d93546b147d2511f320e47857
 	</dependency>
 	<dependency>
 	    <groupId>org.apache.commons</groupId>
@@ -86,7 +68,6 @@
 	<dependency>
 	    <groupId>commons-io</groupId>
 	    <artifactId>commons-io</artifactId>
-<<<<<<< HEAD
     </dependency>
 	<dependency>
 	    <groupId>commons-fileupload</groupId>
@@ -95,26 +76,13 @@
 	<dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
-=======
-	    <version>2.6</version>
-	</dependency>
-	<dependency>
-	    <groupId>commons-fileupload</groupId>
-	    <artifactId>commons-fileupload</artifactId>
-    	<version>1.2</version>
-	</dependency>
-	<dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
         <version>2.2.2</version>
->>>>>>> 985d324dec09397d93546b147d2511f320e47857
         <scope>compile</scope>
     </dependency>
     <dependency>
   		<groupId>org.hibernate</groupId>
   		<artifactId>hibernate-core</artifactId>
-<<<<<<< HEAD
-  		</dependency>
+  	</dependency>
   	<dependency>
   		<groupId>org.hibernate</groupId>
   		<artifactId>hibernate-entitymanager</artifactId>
@@ -134,16 +102,12 @@
     <dependency>
     	<groupId>org.springframework</groupId>
     	<artifactId>spring-webmvc</artifactId>
-    </dependency>
-=======
-  		<version>4.3.11.Final</version>
   	</dependency>
   	<dependency>
   		<groupId>org.hibernate</groupId>
   		<artifactId>hibernate-entitymanager</artifactId>
   		<version>4.3.11.Final</version>
   	</dependency>
->>>>>>> 985d324dec09397d93546b147d2511f320e47857
   </dependencies>
   <build>
     <finalName>MACSAirport</finalName>

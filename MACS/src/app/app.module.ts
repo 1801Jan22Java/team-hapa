@@ -27,6 +27,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FlightSearchService } from './services/flight-search/flight-search.service';
 import { LoginComponent } from './components/login/login.component';
 import { FlightDetailsComponent } from './components/flight-details/flight-details.component';
+import { AdminFeedbackComponent } from './components/admin-feedback/admin-feedback.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 
 
 
@@ -61,6 +63,8 @@ import { FlightDetailsComponent } from './components/flight-details/flight-detai
     FooterComponent,
     LoginComponent,
     FlightDetailsComponent,
+    AdminFeedbackComponent,
+    AdminUsersComponent,
   ],
   imports: [
     BrowserModule,

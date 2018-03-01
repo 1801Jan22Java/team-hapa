@@ -22,6 +22,8 @@ import { FlightSearchResultsComponent } from '../components/flight-search-result
 import { TrackFlightStatusResultsComponent } from '../components/track-flight-status-results/track-flight-status-results.component';
 import { LoginComponent } from '../components/login/login.component';
 import { FlightDetailsComponent } from '../components/flight-details/flight-details.component'
+import { AdminFeedbackComponent } from '../components/admin-feedback/admin-feedback.component';
+import { AdminUsersComponent } from '../components/admin-users/admin-users.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -40,6 +42,9 @@ const appRoutes: Routes = [
   { path: 'reservation/history', component: ViewFlightHistoryComponent },
   { path: 'reservation/confirm', component: ViewReservationsComponent },
   { path: 'checkin', component: ViewItineraryComponent },
+
+  { path: 'admin/feedback', component: AdminFeedbackComponent },
+  { path: 'admin/users', component: AdminUsersComponent },
 
   { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },

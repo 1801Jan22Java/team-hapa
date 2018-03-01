@@ -20,7 +20,8 @@ import { ViewFlightHistoryComponent } from '../components/view-flight-history/vi
 import { CheckInComponent } from '../components/check-in/check-in.component';
 import { FlightSearchResultsComponent } from '../components/flight-search-results/flight-search-results.component';
 import { TrackFlightStatusResultsComponent } from '../components/track-flight-status-results/track-flight-status-results.component';
-import {LoginComponent} from '../components/login/login.component';
+import { LoginComponent } from '../components/login/login.component';
+import { FlightDetailsComponent } from '../components/flight-details/flight-details.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,19 +29,23 @@ const appRoutes: Routes = [
 
   { path: 'flightsearch', component: FlightSearchResultsComponent },
   { path: 'flightstatus', component: TrackFlightStatusResultsComponent },
+  { path: 'flight/details', component: FlightDetailsComponent },
 
   { path: 'register', component: AccountRegistrationComponent },
   { path: 'login', component: LoginComponent },
 
+  { path: 'feedback', component: SubmitFeedbackComponent },
+
+  { path: 'profile', component: ChangeAccountDetailsComponent },
+  { path: 'reservation/history', component: ViewFlightHistoryComponent },
+  { path: 'reservation/confirm', component: ViewReservationsComponent },
+  { path: 'checkin', component: ViewItineraryComponent },
+
   { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },
   { path: 'app-flight-reservation', component: FlightReservationComponent },
-  { path: 'app-change-account-details', component: ChangeAccountDetailsComponent },
-  { path: 'app-view-reservations', component: ViewReservationsComponent },
+  { path: 'reservation/confirm', component: ViewReservationsComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
-  { path: 'app-view-itinerary', component: ViewItineraryComponent },
-  { path: 'app-submit-feedback', component: SubmitFeedbackComponent },
-  { path: 'app-view-flight-history', component: ViewFlightHistoryComponent },
   { path: 'app-check-in-component', component: CheckInComponent }
 ];
 

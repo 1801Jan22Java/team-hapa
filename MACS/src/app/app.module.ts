@@ -26,6 +26,7 @@ import { TrackFlightStatusResultsComponent } from './components/track-flight-sta
 import { FooterComponent } from './components/footer/footer.component';
 import { FlightSearchService } from './services/flight-search/flight-search.service';
 import { LoginComponent } from './components/login/login.component';
+import { FlightDetailsComponent } from './components/flight-details/flight-details.component';
 
 
 
@@ -59,6 +60,7 @@ import { LoginComponent } from './components/login/login.component';
     TrackFlightStatusResultsComponent,
     FooterComponent,
     LoginComponent,
+    FlightDetailsComponent,
   ],
   imports: [
     BrowserModule,

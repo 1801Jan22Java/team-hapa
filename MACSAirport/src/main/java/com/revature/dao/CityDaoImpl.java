@@ -65,10 +65,12 @@ public class CityDaoImpl implements CityDao {
 		Session s = HibernateUtil.getSession();
 		
 		City thisCity = null;
+		CountryDao cod = new CountryDaoImpl();
 		try {
 			Criteria c = s.createCriteria(City.class);
 			c.add(Restrictions.eq("name", cityName));
-			c.add(Restrictions.not(Restrictions.eq("country", "United States")));
+			c.add(Restrictions.not(Restrictions.eq("country", cod.getCountryByName("United States"))));
+			c.add( Restrictions.eq("country", thisCountry) );
 			List<City> cities = c.list();
 			thisCity = cities.get(0);
 		} catch (Exception e) {
@@ -102,7 +104,7 @@ public class CityDaoImpl implements CityDao {
 		 * 
 		 * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
 		 * el2 End altitude in meters
-		 * @returns Distance in Meters
+		 * @returns Distance in Miles
 		 */
 		double lat1 = departure.getLatitude();
 		double lat2 = arrival.getLatitude();

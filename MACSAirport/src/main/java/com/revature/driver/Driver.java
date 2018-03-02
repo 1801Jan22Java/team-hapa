@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import org.hibernate.Session;
 
@@ -210,7 +211,7 @@ public class Driver {
 		}
 	}
 	
-	static void feedbackInit() {
+	public static void feedbackInit() {
 		EndUserDao eud = new EndUserDaoImpl();
 		FeedbackDao fed = new FeedbackDaoImpl();
 
@@ -221,7 +222,7 @@ public class Driver {
 		fe1.setId(fed.addFeedback(fe1));
 	}
 	
-	static void reservationInit() {
+	public static void reservationInit() {
 		ReservationDao rd = new ReservationDaoImpl();
 		EndUserDao eud = new EndUserDaoImpl();
 		FlightDao fd = new FlightDaoImpl();
@@ -236,7 +237,7 @@ public class Driver {
 		rd.addReservation(r1);
 	}
 	
-	static void endUserInit() {
+	public static void endUserInit() {
 		CommonLookupDao cld = new CommonLookupDaoImpl();
 		EndUserDao eud = new EndUserDaoImpl();
 		CommonLookup cl1 = cld.getCommonLookupByName("END_USER_TYPE", "Passenger");
@@ -245,7 +246,7 @@ public class Driver {
 		eud.addEndUser(ed1);
 	}
 	
-	static void flightInit() {
+	public static void flightInit() {
 		Session s = HibernateUtil.getSession();
 		FlightDao fd = new FlightDaoImpl();
 		StateDao sd = new StateDaoImpl();
@@ -269,7 +270,7 @@ public class Driver {
 		s.close();
 	}
 	
-	static void commonlookupInit() {
+	public static void commonlookupInit() {
 		CommonLookupDao cld = new CommonLookupDaoImpl();
 		CommonLookup cl1 = new CommonLookup("FLIGHT_TYPE", "Arrival");
 		cl1.setId(cld.addCommonLookup(cl1));
@@ -297,7 +298,7 @@ public class Driver {
 		
 	}
 	
-	static void routeInit() {
+	public static void routeInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
 		CountryDao cod = new CountryDaoImpl();
@@ -324,7 +325,7 @@ public class Driver {
 		
 	}
 	
-	static void allRoutes() {
+	public static void allRoutes() {
 		CityDao cd = new CityDaoImpl();
 		BufferedWriter bw = null;
 		try {
@@ -359,7 +360,7 @@ public class Driver {
 		}
 	}
 	
-	static void stateInit() {
+	public static void stateInit() {
 		StateDao sd = new StateDaoImpl();
 		State[] states = {
 				new State("Alabama"),
@@ -421,7 +422,7 @@ public class Driver {
 		}
 	}
 	
-	static void countryInit() {
+	public static void countryInit() {
 		CountryDao cd = new CountryDaoImpl();
 		Country[] countries = {
 				new Country("Afghanistan"),
@@ -516,7 +517,7 @@ public class Driver {
 		}
 	}
 	
-	static void usCityInit() {
+	public static void usCityInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
 		CountryDao cod = new CountryDaoImpl();
@@ -840,7 +841,7 @@ public class Driver {
 		
 	}
 	
-	static void intlCityInit() {
+	public static void intlCityInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
 		CountryDao cod = new CountryDaoImpl();
@@ -856,7 +857,6 @@ public class Driver {
 				new City("Melbourne", 135959, -37.8136276, 144.963057599999, null, cod.getCountryByName( "Australia") ),
 				new City("Brisbane", 1180285, -27.4697707, 153.0251235, null, cod.getCountryByName( "Australia") ),
 				new City("Vienna", 1863881, 48.2081743, 16.3738189, null, cod.getCountryByName( "Austria") ),
-				// Stopped here
 				new City("Baku", 3202300, 40.4092616999999, 49.8670924, null, cod.getCountryByName( "Azerbaijan") ),
 				new City("Dhaka", 12043977, 23.810332, 90.4125180999999, null, cod.getCountryByName( "Bangladesh") ),
 				new City("Chittagong", 2581643, 22.356851, 91.7831819, null, cod.getCountryByName( "Bangladesh") ),

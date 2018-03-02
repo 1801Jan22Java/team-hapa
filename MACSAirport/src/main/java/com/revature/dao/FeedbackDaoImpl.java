@@ -4,10 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 import com.revature.domain.Feedback;
 import com.revature.util.HibernateUtil;
@@ -36,6 +34,7 @@ public class FeedbackDaoImpl implements FeedbackDao {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Feedback> getAllFeedback() {

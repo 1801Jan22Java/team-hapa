@@ -2,15 +2,15 @@ package com.revature.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.revature.domain.*;
+import com.revature.domain.City;
+import com.revature.domain.Country;
+import com.revature.domain.State;
 import com.revature.util.HibernateUtil;
 
 @Repository("cityDaoImpl")
@@ -24,6 +24,7 @@ public class CityDaoImpl implements CityDao {
 		return thisCity;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<City> getAllCities() {
 		Session s = HibernateUtil.getSession();
@@ -32,6 +33,7 @@ public class CityDaoImpl implements CityDao {
 		return cities;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public City getCityByName(String cityName, State thisState, Country thisCountry) {
 		
@@ -45,7 +47,7 @@ public class CityDaoImpl implements CityDao {
 				c.add(Restrictions.eq("state", thisState));
 				c.add(Restrictions.eq("country", thisCountry));
 				List<City> cities = c.list();
-				thisCity = (City) cities.get(0);
+				thisCity = cities.get(0);
 			} catch (Exception e) {
 				// This state could not be found
 				thisState = null;
@@ -57,6 +59,7 @@ public class CityDaoImpl implements CityDao {
 		return thisCity;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public City getIntlCityByName(String cityName, Country thisCountry) {
 		Session s = HibernateUtil.getSession();
@@ -67,7 +70,7 @@ public class CityDaoImpl implements CityDao {
 			c.add(Restrictions.eq("name", cityName));
 			c.add(Restrictions.not(Restrictions.eq("country", "United States")));
 			List<City> cities = c.list();
-			thisCity = (City) cities.get(0);
+			thisCity = cities.get(0);
 		} catch (Exception e) {
 			thisCity = null;
 		}

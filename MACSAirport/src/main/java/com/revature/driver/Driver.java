@@ -73,7 +73,96 @@ public class Driver {
 		
 		// DUMMY DATA
 		// feedbackInit();
+		
+		// REAL DATA
+		//flightData();
 
+	}
+	
+	static void flightData() {
+		
+		CityDao cid = new CityDaoImpl();
+		FlightDao fd = new FlightDaoImpl();
+		CountryDao cod = new CountryDaoImpl();
+		CityDao cd = new CityDaoImpl();
+		StateDao sd = new StateDaoImpl();
+		CommonLookupDao cld = new CommonLookupDaoImpl();
+		Random randomMethod = new Random();
+		
+		City newCity = null;
+		Date newTime = null;
+		final double AVG_TICKET_2012 = 381.56;
+		final int AVG_DISTANCE_2012 = 2356;
+		final double AVG_COST_PER_MILE_2012 = AVG_TICKET_2012 / AVG_DISTANCE_2012;
+		final long ONE_MINUTE_IN_MILLIS = 60000; // millisecs
+		final String[] TYPES = {"Arrival", "Departure"};
+		
+		City homeCity = new City("Reston", 58404, 38.958631, -77.357003, sd.getStateByName( "Virginia"), cod.getCountryByName("United States") );
+		final int TOTAL_GATES = 5;
+		final double STANDARD_FEE = 89.15;
+		final int MANDATORY_WAIT_TIME = 60; // gate must be occupied for at least 60 minutes
+		final int MAX_ADDITIONAL_WAIT_TIME = 240; // 0-239 minutes of additional waiting until next plane at that gate
+		final int AVG_MPH = 550;
+		
+		ArrayList<City> allCities = (ArrayList<City>) cid.getAllCities();
+		ArrayList<Flight> allFlights = (ArrayList<Flight>) fd.getAllFlights();
+		if (allFlights != null) {
+			Flight[] newFlights = new Flight[TOTAL_GATES+1];
+			for (int i = 0; i < TOTAL_GATES+1; i++) {
+				newFlights[i] = null;
+			}
+			for (Flight f : allFlights) {
+				if (newFlights[f.getGate()] == null) {
+					int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
+					long curTimeInMs = f.getTime().getTime();
+				    newTime = new Date(curTimeInMs + (waitTime * ONE_MINUTE_IN_MILLIS));
+				    
+				    String nextType = (f.getType().getRefValue().equals("Arrival")) ? "Departure" : "Arrival";
+					CommonLookup cl1 = cld.getCommonLookupByName("FLIGHT_TYPE", nextType);
+					
+					boolean foundMatch = false;
+					do {
+						newCity = allCities.get(randomMethod.nextInt(allCities.size())); // returns number between 0 and the last index of the array
+						foundMatch = false;
+						for (Flight nf : newFlights) {
+							if (nf != null && (nf.getCity().getId() == newCity.getId())) {
+								foundMatch = true;
+							}
+						}
+					} while (foundMatch);
+					
+					double distance = cd.distanceBetween(homeCity, newCity);
+					int newDurationMin = (int) (distance / AVG_MPH * 60.0);
+					
+					double newCost = AVG_COST_PER_MILE_2012 * distance;
+					
+					Flight newFlight = new Flight(f.getGate(), newTime, newCost, newDurationMin, cl1, newCity);
+					newFlights[f.getGate()] = newFlight;
+					newFlight.setId(fd.addFlight(newFlight));
+				}
+			}
+		} else {
+			for (int i = 1; i <= TOTAL_GATES; i++) {
+				// no flights are scheduled past this moment
+				
+				int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
+				long curTimeInMs = new Date().getTime();
+			    newTime = new Date(curTimeInMs + (waitTime * ONE_MINUTE_IN_MILLIS));
+			    
+				String nextType = TYPES[randomMethod.nextInt(TYPES.length)];// returns number between 0 and the last index of the array
+				CommonLookup cl1 = cld.getCommonLookupByName("FLIGHT_TYPE", nextType);
+				
+				newCity = allCities.get(randomMethod.nextInt(allCities.size())); // returns number between 0 and the last index of the array
+				
+				double distance = cd.distanceBetween(homeCity, newCity);
+				int newDurationMin = (int) (distance / AVG_MPH * 60.0);
+				
+				double newCost = AVG_COST_PER_MILE_2012 * distance;
+				
+				Flight newFlight = new Flight(i, newTime, newCost, newDurationMin, cl1, newCity);
+				newFlight.setId(fd.addFlight(newFlight));
+			}
+		}
 	}
 	
 	static void feedbackInit() {

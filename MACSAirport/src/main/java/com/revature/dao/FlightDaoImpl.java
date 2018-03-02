@@ -3,6 +3,7 @@ package com.revature.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -125,6 +126,22 @@ public class FlightDaoImpl implements FlightDao {
 				.list();
 		s.close();
 		return flights;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Flight> getAllPendingFlights() {
+		Session s = HibernateUtil.getSession();
+		Criteria c = s.createCriteria(Flight.class);
+		c.add(Restrictions.ge("time", new Date()));
+		c.addOrder( Order.desc("time") );
+		List<Flight> allFlights = c.list();
+		if (allFlights.size() < 1) {
+			allFlights = null;
+		}
+		s.close();
+		return allFlights;
 	}
 	
 }

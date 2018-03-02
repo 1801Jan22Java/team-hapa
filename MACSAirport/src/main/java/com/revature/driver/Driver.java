@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import org.hibernate.Session;
 
@@ -88,10 +89,127 @@ public class Driver {
 		
 		// DUMMY DATA
 		// feedbackInit();
+		
+		// REAL DATA
+		//flightData();
 
 	}
 	
-	static void feedbackInit() {
+	/*
+	 *  It uses getAllPendingFlights() to pull all flights that haven't happened yet, or return null.
+		If there are no pending flights it will generate new flights with arrival/departure times calculated from the current time.
+		If there are pending flights it calculate arrival/departure times calculated from the latest pending flights.
+		
+		If there are no pending flights it will choose whether the flights are arrivals or departures randomly.
+		If there are pending flights it will the flight type opposite of the latest flight to that gate.
+		
+		It will choose a city at random for the destination/arrival of each gate that will be different from the cities chosen for the other gates.
+		
+		The base cost is based on the total distance, but a STANDARD_FEE is added onto the cost, that can be changed with new airport policy.
+		
+		The duration is based on the total distance divided by AVG_MPH, which can be changed with new airport policy
+		
+		The new flight time is calculated by adding together three values:
+		1.  If there are no pending flights, start with the current time
+		    If there are pending flights, start with the time of the latest flight at that gate
+		2.  a random number of minutes between 0 and MAX_ADDITIONAL_WAIT_TIME, which can be changed with new airport policy
+		3.  a MANDATORY_WAIT_TIME, which can be changed with new airport policy
+
+	 */
+	static void flightData() {
+		
+		CityDao cid = new CityDaoImpl();
+		FlightDao fd = new FlightDaoImpl();
+		CountryDao cod = new CountryDaoImpl();
+		CityDao cd = new CityDaoImpl();
+		StateDao sd = new StateDaoImpl();
+		CommonLookupDao cld = new CommonLookupDaoImpl();
+		Random randomMethod = new Random();
+		
+		City newCity = null;
+		Date newTime = null;
+		final double AVG_TICKET_2012 = 381.56;
+		final int AVG_DISTANCE_2012 = 2356;
+		final double AVG_COST_PER_MILE_2012 = AVG_TICKET_2012 / AVG_DISTANCE_2012;
+		final long ONE_MINUTE_IN_MILLIS = 60000; // millisecs
+		final String[] TYPES = {"Arrival", "Departure"};
+		
+		City homeCity = new City("Reston", 58404, 38.958631, -77.357003, sd.getStateByName( "Virginia"), cod.getCountryByName("United States") );
+		final int TOTAL_GATES = 5;
+		final double STANDARD_FEE = 89.15;
+		final int MANDATORY_WAIT_TIME = 60; // gate must be occupied for at least 60 minutes
+		final int MAX_ADDITIONAL_WAIT_TIME = 240; // 0-239 minutes of additional waiting until next plane at that gate
+		final int AVG_MPH = 550;
+		
+		ArrayList<City> allCities = (ArrayList<City>) cid.getAllCities();
+		ArrayList<Flight> allFlights = (ArrayList<Flight>) fd.getAllPendingFlights();
+		Flight[] newFlights = new Flight[TOTAL_GATES+1];
+		for (int i = 0; i < newFlights.length; i++) {
+			newFlights[i] = null;
+		}
+		if (allFlights != null) {
+			for (Flight f : allFlights) {
+				if (f.getGate() < newFlights.length && newFlights[f.getGate()] == null) {
+					int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
+					long curTimeInMs = f.getTime().getTime();
+				    newTime = new Date(curTimeInMs + (waitTime * ONE_MINUTE_IN_MILLIS));
+				    
+				    String nextType = (f.getType().getRefValue().equals("Arrival")) ? "Departure" : "Arrival";
+					CommonLookup cl1 = cld.getCommonLookupByName("FLIGHT_TYPE", nextType);
+					
+					boolean foundMatch = false;
+					do {
+						newCity = allCities.get(randomMethod.nextInt(allCities.size())); // returns number between 0 and the last index of the array
+						foundMatch = false;
+						for (Flight nf : newFlights) {
+							if (nf != null && (nf.getCity().getId() == newCity.getId())) {
+								foundMatch = true;
+							}
+						}
+					} while (foundMatch);
+					
+					double distance = cd.distanceBetween(homeCity, newCity);
+					int newDurationMin = (int) (distance / AVG_MPH * 60.0);
+					
+					double newCost = (AVG_COST_PER_MILE_2012 * distance) + STANDARD_FEE;
+					
+					Flight newFlight = new Flight(f.getGate(), newTime, newCost, newDurationMin, cl1, newCity);
+					newFlights[f.getGate()] = newFlight;
+					newFlight.setId(fd.addFlight(newFlight));
+				}
+			}
+		}
+		for (int i = 1; i < newFlights.length; i++) {
+			if (newFlights[i] == null) {
+				int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
+				long curTimeInMs = new Date().getTime();
+			    newTime = new Date(curTimeInMs + (waitTime * ONE_MINUTE_IN_MILLIS));
+			    
+				String nextType = TYPES[randomMethod.nextInt(TYPES.length)];// returns number between 0 and the last index of the array
+				CommonLookup cl1 = cld.getCommonLookupByName("FLIGHT_TYPE", nextType);
+				
+				boolean foundMatch = false;
+				do {
+					newCity = allCities.get(randomMethod.nextInt(allCities.size())); // returns number between 0 and the last index of the array
+					foundMatch = false;
+					for (Flight nf : newFlights) {
+						if (nf != null && (nf.getCity().getId() == newCity.getId())) {
+							foundMatch = true;
+						}
+					}
+				} while (foundMatch);
+				
+				double distance = cd.distanceBetween(homeCity, newCity);
+				int newDurationMin = (int) (distance / AVG_MPH * 60.0);
+				
+				double newCost = (AVG_COST_PER_MILE_2012 * distance) + STANDARD_FEE;
+				
+				Flight newFlight = new Flight(i, newTime, newCost, newDurationMin, cl1, newCity);
+				newFlights[i] = newFlight;
+				newFlight.setId(fd.addFlight(newFlight));
+			}
+		}
+
 		EndUserDao eud = new EndUserDaoImpl();
 		FeedbackDao fed = new FeedbackDaoImpl();
 
@@ -101,8 +219,9 @@ public class Driver {
 		
 		fe1.setId(fed.addFeedback(fe1));
 	}
+
 	
-	static void reservationInit() {
+	public static void reservationInit() {
 		ReservationDao rd = new ReservationDaoImpl();
 		EndUserDao eud = new EndUserDaoImpl();
 		FlightDao fd = new FlightDaoImpl();
@@ -116,8 +235,9 @@ public class Driver {
 		Reservation r1 = new Reservation(eu1, f1, clstatus, cltype);
 		rd.addReservation(r1);
 	}
-	
-	static void endUserInit() {
+
+
+	public static void endUserInit() {
 		CommonLookupDao cld = new CommonLookupDaoImpl();
 		EndUserDao eud = new EndUserDaoImpl();
 		CommonLookup cl1 = cld.getCommonLookupByName("END_USER_TYPE", "Passenger");
@@ -125,8 +245,9 @@ public class Driver {
 		EndUser ed1 = new EndUser("John", "Doe", "john@doe.com", "password", cl1, "answer1", "answer2", "answer3");
 		eud.addEndUser(ed1);
 	}
-	
-	static void flightInit() {
+
+
+	public static void flightInit() {
 		Session s = HibernateUtil.getSession();
 		FlightDao fd = new FlightDaoImpl();
 		StateDao sd = new StateDaoImpl();
@@ -150,7 +271,8 @@ public class Driver {
 		s.close();
 	}
 	
-	static void commonlookupInit() {
+	
+	public static void commonlookupInit() {
 		CommonLookupDao cld = new CommonLookupDaoImpl();
 		CommonLookup cl1 = new CommonLookup("FLIGHT_TYPE", "Arrival");
 		cl1.setId(cld.addCommonLookup(cl1));
@@ -177,8 +299,9 @@ public class Driver {
 		cl8.setId(cld.addCommonLookup(cl8));
 		
 	}
-	
-	static void routeInit() {
+
+
+	public static void routeInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
 		CountryDao cod = new CountryDaoImpl();
@@ -205,7 +328,8 @@ public class Driver {
 		
 	}
 	
-	static void allRoutes() {
+	
+	public static void allRoutes() {
 		CityDao cd = new CityDaoImpl();
 		BufferedWriter bw = null;
 		try {
@@ -239,8 +363,9 @@ public class Driver {
 			}
 		}
 	}
-	
-	static void stateInit() {
+
+
+	public static void stateInit() {
 		StateDao sd = new StateDaoImpl();
 		State[] states = {
 				new State("Alabama"),
@@ -301,8 +426,9 @@ public class Driver {
 			s.setId(sd.addState(s));
 		}
 	}
-	
-	static void countryInit() {
+
+
+	public static void countryInit() {
 		CountryDao cd = new CountryDaoImpl();
 		Country[] countries = {
 				new Country("Afghanistan"),
@@ -396,8 +522,9 @@ public class Driver {
 			c.setId(cd.addCountry(c));
 		}
 	}
-	
-	static void usCityInit() {
+
+
+	public static void usCityInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
 		CountryDao cod = new CountryDaoImpl();
@@ -720,8 +847,9 @@ public class Driver {
 		}
 		
 	}
-	
-	static void intlCityInit() {
+
+
+	public static void intlCityInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
 		CountryDao cod = new CountryDaoImpl();
@@ -737,7 +865,6 @@ public class Driver {
 				new City("Melbourne", 135959, -37.8136276, 144.963057599999, null, cod.getCountryByName( "Australia") ),
 				new City("Brisbane", 1180285, -27.4697707, 153.0251235, null, cod.getCountryByName( "Australia") ),
 				new City("Vienna", 1863881, 48.2081743, 16.3738189, null, cod.getCountryByName( "Austria") ),
-				// Stopped here
 				new City("Baku", 3202300, 40.4092616999999, 49.8670924, null, cod.getCountryByName( "Azerbaijan") ),
 				new City("Dhaka", 12043977, 23.810332, 90.4125180999999, null, cod.getCountryByName( "Bangladesh") ),
 				new City("Chittagong", 2581643, 22.356851, 91.7831819, null, cod.getCountryByName( "Bangladesh") ),

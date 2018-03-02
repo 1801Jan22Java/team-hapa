@@ -1,6 +1,7 @@
 package com.revature.domain;
 
 
+
 import java.io.Serializable;
 import java.util.Date;
 

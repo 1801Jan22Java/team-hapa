@@ -7,12 +7,12 @@ Service to prevent front-end access to unauthorized areas.
 This one is specifically for admins.
 */
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class UserAuthGuardService implements CanActivate {
 
   constructor(private session: SessionService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    return this.session.checkAdmin();
+    return this.session.checkUser();
   }
 
 }

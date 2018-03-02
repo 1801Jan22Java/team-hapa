@@ -16,18 +16,23 @@ export class LoginComponent implements OnInit {
     password: new FormControl("", Validators.required)
   })
 
-  constructor(private session: SessionService, private router : Router) { }
+  constructor(private session: SessionService, private router: Router) { }
 
   ngOnInit() {
 
   }
 
-  onSubmit(){
+  onSubmit() {
     let email = this.form.get("email").value;
     let password = this.form.get("password").value;
 
     this.session.setSession(email, password);
-    this.router.navigateByUrl('reservation/history');
+
+    if (this.session.checkUser()) {
+      this.router.navigateByUrl('reservation/history');
+    } else {
+      this.router.navigateByUrl('home');
+    }
   }
   // this.check();
 

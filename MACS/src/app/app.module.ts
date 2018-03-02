@@ -32,6 +32,9 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 //Services
 import { FlightSearchService } from './services/flight-search/flight-search.service';
 import { SessionService } from './services/session/session.service';
+import { AuthGuardService } from './services/auth-guard/auth-guard.service';
+import { UserAuthGuardService } from './services/user-auth-guard/user-auth-guard.service';
+import { VisitorAuthGuardService } from './services/visitor-auth-guard/visitor-auth-guard.service';
 
 // Create an array of routes.
 // Commented out to impelement app-router externally
@@ -76,7 +79,12 @@ import { SessionService } from './services/session/session.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [FlightSearchService, SessionService],
+  providers: [
+    FlightSearchService,
+    SessionService,
+    AuthGuardService,
+    UserAuthGuardService,
+    VisitorAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

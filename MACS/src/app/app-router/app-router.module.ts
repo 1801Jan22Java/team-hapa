@@ -25,6 +25,11 @@ import { FlightDetailsComponent } from '../components/flight-details/flight-deta
 import { AdminFeedbackComponent } from '../components/admin-feedback/admin-feedback.component';
 import { AdminUsersComponent } from '../components/admin-users/admin-users.component';
 
+// Route guards
+import { AuthGuardService } from '../services/auth-guard/auth-guard.service';
+import { UserAuthGuardService } from '../services/user-auth-guard/user-auth-guard.service';
+import { VisitorAuthGuardService } from '../services/visitor-auth-guard/visitor-auth-guard.service';
+
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -33,23 +38,59 @@ const appRoutes: Routes = [
   { path: 'flightstatus', component: TrackFlightStatusResultsComponent },
   { path: 'flight/details', component: FlightDetailsComponent },
 
-  { path: 'register', component: AccountRegistrationComponent },
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'register',
+    component: AccountRegistrationComponent,
+    canActivate: [VisitorAuthGuardService]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [VisitorAuthGuardService]
+  },
 
-  { path: 'feedback', component: SubmitFeedbackComponent },
+  {
+    path: 'feedback',
+    component: SubmitFeedbackComponent,
+    canActivate: [UserAuthGuardService]
+  },
+  {
+    path: 'profile',
+    component: ChangeAccountDetailsComponent,
+    canActivate: [UserAuthGuardService]
+  },
+  {
+    path: 'reservation/history',
+    component: ViewFlightHistoryComponent,
+    canActivate: [UserAuthGuardService]
+  },
+  {
+    path: 'reservation/confirm',
+    component: ViewReservationsComponent,
+    canActivate: [UserAuthGuardService]
+  },
+  {
+    path: 'checkin',
+    component: ViewItineraryComponent,
+    canActivate: [UserAuthGuardService]
+  },
 
-  { path: 'profile', component: ChangeAccountDetailsComponent },
-  { path: 'reservation/history', component: ViewFlightHistoryComponent },
+  {
+    path: 'admin/feedback',
+    component: AdminFeedbackComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'admin/users',
+    component: AdminUsersComponent,
+    canActivate: [AuthGuardService]
+  },
+
   { path: 'reservation/confirm', component: ViewReservationsComponent },
-  { path: 'checkin', component: ViewItineraryComponent },
-
-  { path: 'admin/feedback', component: AdminFeedbackComponent },
-  { path: 'admin/users', component: AdminUsersComponent },
-
+  
   { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },
   { path: 'app-flight-reservation', component: FlightReservationComponent },
-  { path: 'reservation/confirm', component: ViewReservationsComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
   { path: 'app-check-in-component', component: CheckInComponent }
 ];

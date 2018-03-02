@@ -31,7 +31,7 @@ import { UserAuthGuardService } from '../services/user-auth-guard/user-auth-guar
 import { VisitorAuthGuardService } from '../services/visitor-auth-guard/visitor-auth-guard.service';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
 
   { path: 'flightsearch', component: FlightSearchResultsComponent },
@@ -87,7 +87,7 @@ const appRoutes: Routes = [
   },
 
   { path: 'reservation/confirm', component: ViewReservationsComponent },
-  
+
   { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },
   { path: 'app-flight-reservation', component: FlightReservationComponent },

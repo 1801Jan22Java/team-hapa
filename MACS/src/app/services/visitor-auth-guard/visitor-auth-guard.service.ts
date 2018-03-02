@@ -12,7 +12,12 @@ export class VisitorAuthGuardService implements CanActivate {
   constructor(private session: SessionService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    return !this.session.checkLoggedIn();
+    if(!this.session.checkLoggedIn()){
+      return true;
+    } else{
+      this.router.navigate(["/home"])
+    }
+    return false;
   }
 
 }

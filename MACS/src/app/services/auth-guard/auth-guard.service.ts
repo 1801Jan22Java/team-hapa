@@ -12,7 +12,13 @@ export class AuthGuardService implements CanActivate {
   constructor(private session: SessionService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    return this.session.checkAdmin();
+
+    if(this.session.checkAdmin()){
+      return true;
+    } else{
+      this.router.navigate(["/home"])
+    }
+    return false;
   }
 
 }

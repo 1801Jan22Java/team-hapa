@@ -26,67 +26,63 @@ export class SessionService {
   placed back in the Observable, which makes all the changes possible. 
   */
 
-  public user_id: number;
-  public user_type: number;
-
   constructor(private http: HttpClient) { }
 
+  private user_id : string = "user_id"
+  private user_type : string = "user_type";
+
   setSession(username: string, password: string) {
-    // let u: user = { username, password };
+    let u: user = { username, password };
 
     // // Send a user object, and get an auth object array back.
-    // this.http.post<auth[]>('util/login', u).subscribe(
-    //   // On successful login, store user_id and user_type into localStorage.
-    //   // Set the class variables.
-    //   data => {
-    //     localStorage.setItem("user_id", data[0].user_id.toString());
-    //     localStorage.setItem("user_type", data[0].user_type.toString());
-    //     this.user_id = data[0].user_id;
-    //     this.user_type = data[0].user_type;
-    //   },
-    //   error => console.log(error)
-    // );
+    this.http.post<auth[]>('util/login', u).subscribe(
+      // On successful login, store user_id and user_type into localStorage.
+      // Set the class variables.
+      data => {
+        localStorage.setItem(this.user_id, data[0].user_id.toString());
+        localStorage.setItem(this.user_type, data[0].user_type.toString());
+      },
+      error => console.log(error)
+    );
 
     // For testing purposes
-    localStorage.setItem("user_id", username);
-    localStorage.setItem("user_type", password);
+    localStorage.setItem(this.user_id, username);
+    localStorage.setItem(this.user_type, password);
   }
 
   getSession(): auth {
-    let user_id = parseInt(localStorage.getItem("user_id"))
-    let user_type = parseInt(localStorage.getItem("user_type"))
+    let user_id = parseInt(localStorage.getItem(this.user_id))
+    let user_type = parseInt(localStorage.getItem(this.user_type))
     return { user_id, user_type }
   }
 
   clearSession() {
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("user_type");
-    this.user_id = 0;
-    this.user_type = 0;
+    localStorage.removeItem(this.user_id);
+    localStorage.removeItem(this.user_type);
   }
 
   // Implementation specific code
   checkAdmin():boolean {
-    if (parseInt(localStorage.getItem("user_type"))==2){
+    if (parseInt(localStorage.getItem(this.user_type))==2){
       return true;
     }
     return false;
   }
   checkUser():boolean {
-    if (parseInt(localStorage.getItem("user_type"))==1){
+    if (parseInt(localStorage.getItem(this.user_type))==1){
       return true;
     }
     return false;
   }
   
   checkLoggedIn(): boolean{
-    if (parseInt(localStorage.getItem("user_type"))>=1 &&parseInt(localStorage.getItem("user_type")) !=undefined ){
+    if (parseInt(localStorage.getItem(this.user_type))>=1 &&parseInt(localStorage.getItem(this.user_type)) !=undefined ){
       return true;
     }
     return false;
   }
 
   getUserId(): number {
-    return parseInt(localStorage.getItem("user_id"));
+    return parseInt(localStorage.getItem(this.user_id));
   }
 }

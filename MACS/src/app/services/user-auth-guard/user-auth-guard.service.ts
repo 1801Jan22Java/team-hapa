@@ -12,7 +12,12 @@ export class UserAuthGuardService implements CanActivate {
   constructor(private session: SessionService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    return this.session.checkUser();
+    if(this.session.checkUser()){
+      return true;
+    } else{
+      this.router.navigate(["/home"])
+    }
+    return false;
   }
 
 }

@@ -8,7 +8,7 @@ import { SessionService } from '../../services/session/session.service';
 })
 export class FooterComponent implements OnInit {
 
-  constructor(private session : SessionService) { }
+  constructor(public session : SessionService) { }
 
   ngOnInit() {
   }

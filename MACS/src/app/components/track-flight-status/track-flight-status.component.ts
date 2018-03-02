@@ -21,7 +21,7 @@ export class TrackFlightStatusComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(event){
+  onSubmit(){
     this.router.navigateByUrl('flight/details');
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../../services/session/session.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private session : SessionService) { }
 
   ngOnInit() {
   }

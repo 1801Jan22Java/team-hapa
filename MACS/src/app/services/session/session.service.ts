@@ -48,8 +48,8 @@ export class SessionService {
     // );
 
     // For testing purposes
-    localStorage.setItem("user_id", "1");
-    localStorage.setItem("user_type", "2");
+    localStorage.setItem("user_id", username);
+    localStorage.setItem("user_type", password);
   }
 
   getSession(): auth {
@@ -79,8 +79,9 @@ export class SessionService {
     return false;
   }
   checkLoggedIn(): boolean{
-    if (parseInt(localStorage.getItem("user_type"))>1 &&parseInt(localStorage.getItem("user_type")) !=undefined ){
+    if (parseInt(localStorage.getItem("user_type"))>=1 &&parseInt(localStorage.getItem("user_type")) !=undefined ){
       return true;
     }
+    return false;
   }
 }

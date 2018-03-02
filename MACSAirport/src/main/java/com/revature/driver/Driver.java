@@ -133,7 +133,7 @@ public class Driver {
 		}
 		if (allFlights != null) {
 			for (Flight f : allFlights) {
-				if (newFlights[f.getGate()] == null) {
+				if (f.getGate() < newFlights.length && newFlights[f.getGate()] == null) {
 					int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
 					long curTimeInMs = f.getTime().getTime();
 				    newTime = new Date(curTimeInMs + (waitTime * ONE_MINUTE_IN_MILLIS));
@@ -162,40 +162,9 @@ public class Driver {
 					newFlight.setId(fd.addFlight(newFlight));
 				}
 			}
-			for (int i = 1; i < newFlights.length; i++) {
-				if (newFlights[i] == null) {
-					int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
-					long curTimeInMs = new Date().getTime();
-				    newTime = new Date(curTimeInMs + (waitTime * ONE_MINUTE_IN_MILLIS));
-				    
-					String nextType = TYPES[randomMethod.nextInt(TYPES.length)];// returns number between 0 and the last index of the array
-					CommonLookup cl1 = cld.getCommonLookupByName("FLIGHT_TYPE", nextType);
-					
-					boolean foundMatch = false;
-					do {
-						newCity = allCities.get(randomMethod.nextInt(allCities.size())); // returns number between 0 and the last index of the array
-						foundMatch = false;
-						for (Flight nf : newFlights) {
-							if (nf != null && (nf.getCity().getId() == newCity.getId())) {
-								foundMatch = true;
-							}
-						}
-					} while (foundMatch);
-					
-					double distance = cd.distanceBetween(homeCity, newCity);
-					int newDurationMin = (int) (distance / AVG_MPH * 60.0);
-					
-					double newCost = AVG_COST_PER_MILE_2012 * distance;
-					
-					Flight newFlight = new Flight(i, newTime, newCost, newDurationMin, cl1, newCity);
-					newFlights[i] = newFlight;
-					newFlight.setId(fd.addFlight(newFlight));
-				}
-			}
-		} else {
-			for (int i = 1; i <= TOTAL_GATES; i++) {
-				// no flights are scheduled past this moment
-				
+		}
+		for (int i = 1; i < newFlights.length; i++) {
+			if (newFlights[i] == null) {
 				int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
 				long curTimeInMs = new Date().getTime();
 			    newTime = new Date(curTimeInMs + (waitTime * ONE_MINUTE_IN_MILLIS));

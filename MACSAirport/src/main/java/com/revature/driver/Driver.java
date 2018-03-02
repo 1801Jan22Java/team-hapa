@@ -79,6 +79,27 @@ public class Driver {
 
 	}
 	
+	/*
+	 *  It uses getAllPendingFlights() to pull all flights that haven't happened yet, or return null.
+		If there are no pending flights it will generate new flights with arrival/departure times calculated from the current time.
+		If there are pending flights it calculate arrival/departure times calculated from the latest pending flights.
+		
+		If there are no pending flights it will choose whether the flights are arrivals or departures randomly.
+		If there are pending flights it will the flight type opposite of the latest flight to that gate.
+		
+		It will choose a city at random for the destination/arrival of each gate that will be different from the cities chosen for the other gates.
+		
+		The base cost is based on the total distance, but a STANDARD_FEE is added onto the cost, that can be changed with new airport policy.
+		
+		The duration is based on the total distance divided by AVG_MPH, which can be changed with new airport policy
+		
+		The new flight time is calculated by adding together three values:
+		1.  If there are no pending flights, start with the current time
+		    If there are pending flights, start with the time of the latest flight at that gate
+		2.  a random number of minutes between 0 and MAX_ADDITIONAL_WAIT_TIME, which can be changed with new airport policy
+		3.  a MANDATORY_WAIT_TIME, which can be changed with new airport policy
+
+	 */
 	static void flightData() {
 		
 		CityDao cid = new CityDaoImpl();
@@ -106,11 +127,11 @@ public class Driver {
 		
 		ArrayList<City> allCities = (ArrayList<City>) cid.getAllCities();
 		ArrayList<Flight> allFlights = (ArrayList<Flight>) fd.getAllPendingFlights();
+		Flight[] newFlights = new Flight[TOTAL_GATES+1];
+		for (int i = 0; i < newFlights.length; i++) {
+			newFlights[i] = null;
+		}
 		if (allFlights != null) {
-			Flight[] newFlights = new Flight[TOTAL_GATES+1];
-			for (int i = 0; i < TOTAL_GATES+1; i++) {
-				newFlights[i] = null;
-			}
 			for (Flight f : allFlights) {
 				if (newFlights[f.getGate()] == null) {
 					int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
@@ -141,11 +162,37 @@ public class Driver {
 					newFlight.setId(fd.addFlight(newFlight));
 				}
 			}
-		} else {
-			Flight[] newFlights = new Flight[TOTAL_GATES+1];
-			for (int i = 0; i < TOTAL_GATES+1; i++) {
-				newFlights[i] = null;
+			for (int i = 1; i < newFlights.length; i++) {
+				if (newFlights[i] == null) {
+					int waitTime = MANDATORY_WAIT_TIME + randomMethod.nextInt(MAX_ADDITIONAL_WAIT_TIME);
+					long curTimeInMs = new Date().getTime();
+				    newTime = new Date(curTimeInMs + (waitTime * ONE_MINUTE_IN_MILLIS));
+				    
+					String nextType = TYPES[randomMethod.nextInt(TYPES.length)];// returns number between 0 and the last index of the array
+					CommonLookup cl1 = cld.getCommonLookupByName("FLIGHT_TYPE", nextType);
+					
+					boolean foundMatch = false;
+					do {
+						newCity = allCities.get(randomMethod.nextInt(allCities.size())); // returns number between 0 and the last index of the array
+						foundMatch = false;
+						for (Flight nf : newFlights) {
+							if (nf != null && (nf.getCity().getId() == newCity.getId())) {
+								foundMatch = true;
+							}
+						}
+					} while (foundMatch);
+					
+					double distance = cd.distanceBetween(homeCity, newCity);
+					int newDurationMin = (int) (distance / AVG_MPH * 60.0);
+					
+					double newCost = AVG_COST_PER_MILE_2012 * distance;
+					
+					Flight newFlight = new Flight(i, newTime, newCost, newDurationMin, cl1, newCity);
+					newFlights[i] = newFlight;
+					newFlight.setId(fd.addFlight(newFlight));
+				}
 			}
+		} else {
 			for (int i = 1; i <= TOTAL_GATES; i++) {
 				// no flights are scheduled past this moment
 				

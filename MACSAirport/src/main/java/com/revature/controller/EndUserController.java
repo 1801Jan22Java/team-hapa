@@ -4,19 +4,55 @@ package com.revature.controller;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.revature.dao.*;
-import com.revature.domain.*;
+import com.revature.dao.CityDao;
+import com.revature.dao.CityDaoImpl;
+import com.revature.dao.CommonLookupDaoImpl;
+import com.revature.dao.CountryDao;
+import com.revature.dao.CountryDaoImpl;
+import com.revature.dao.EndUserDaoImpl;
+import com.revature.dao.FeedbackDaoImpl;
+import com.revature.dao.FlightDaoImpl;
+import com.revature.dao.ReservationDaoImpl;
+import com.revature.dao.StateDao;
+import com.revature.dao.StateDaoImpl;
+import com.revature.domain.City;
+import com.revature.domain.CommonLookup;
+import com.revature.domain.Country;
+import com.revature.domain.EndUser;
+import com.revature.domain.Feedback;
+import com.revature.domain.Flight;
+import com.revature.domain.Reservation;
+import com.revature.domain.State;
 import com.revature.exception.FullFlightException;
+import com.revature.formatted.LoginInfo;
 
 @Controller("endUserController")
 @RequestMapping("/util")
 public class EndUserController {
 	
+	@Autowired
+	CommonLookupDaoImpl cldi;
+	
+	@Autowired
+	EndUserDaoImpl eudi;
+	
+	@Autowired
+	FeedbackDaoImpl fd;
+	
+	@Autowired
+	FlightDaoImpl fdi;
+	
+	@Autowired
+	ReservationDaoImpl rdi;
 	
 	/*
 	 * EndUser Controller Methods
@@ -25,7 +61,7 @@ public class EndUserController {
 	//Returns the EndUser who just registered their account, parsed into JSON
 	@PostMapping("/register")
 	@ResponseBody
-	public ResponseEntity<EndUser> registerAccount(@RequestParam("firstName") String firstName,
+	public ResponseEntity<LoginInfo> registerAccount(@RequestParam("firstName") String firstName,
 									@RequestParam("lastName") String lastName,
 									@RequestParam("email") String email,
 									@RequestParam("password") String password,
@@ -35,8 +71,6 @@ public class EndUserController {
 									@RequestParam("answer3") String answer3
 									) {
 
-		CommonLookupDao cldi = new CommonLookupDaoImpl();
-		EndUserDao eudi = new EndUserDaoImpl();
 		CommonLookup cl1;
 		if(type.equals("Passenger")) {
 			cl1 = cldi.getCommonLookupByName("END_USER_TYPE", "Passenger");
@@ -49,7 +83,7 @@ public class EndUserController {
 		
 		eudi.addEndUser(newUser);
 		
-		return new ResponseEntity<EndUser>(newUser, HttpStatus.OK);
+		return new ResponseEntity<LoginInfo>(newUser.convertToLoginInfo(), HttpStatus.OK);
 	}
 	
 	
@@ -64,8 +98,6 @@ public class EndUserController {
 			) {
 
 		
-		CommonLookupDao cldi = new CommonLookupDaoImpl();
-		EndUserDao eudi = new EndUserDaoImpl();
 		EndUser user = eudi.getEndUserById(userID);
 		
 		//Change info if fields aren't blank
@@ -97,8 +129,6 @@ public class EndUserController {
 			@RequestParam("password") String password) {
 
 		
-		CommonLookupDao cldi = new CommonLookupDaoImpl();
-		EndUserDao eudi = new EndUserDaoImpl();
 		EndUser user = eudi.getEndUserByEmail(email);
 		
 		//Change info if fields aren't blank
@@ -117,10 +147,18 @@ public class EndUserController {
 	
 	@RequestMapping("/login")
 	@ResponseBody
-	public String login(@RequestParam("email") String email,
+	public ResponseEntity<LoginInfo> login(@RequestParam("email") String email,
 						@RequestParam("password") String password) {
-		//Pending the format of the JSON object we'll be returning.
-		return null;
+		LoginInfo thisUser = null;
+		
+		EndUser toCheck = eudi.getEndUserByEmail(email);
+		
+		if(email.equals(toCheck.getEmail()) && password.equals(toCheck.getPassword())) {
+			thisUser = toCheck.convertToLoginInfo();
+			return new ResponseEntity<LoginInfo>(thisUser, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<LoginInfo>(thisUser, HttpStatus.UNAUTHORIZED);
 	}
 	
 	
@@ -136,11 +174,10 @@ public class EndUserController {
 	@RequestMapping("/admin/nofly")
 	@ResponseBody
 	public ResponseEntity<EndUser> noFly(@RequestParam("userID") int userID) {
-		EndUserDao eud = new EndUserDaoImpl();
-		EndUser user = eud.getEndUserById(userID);
+		EndUser user = eudi.getEndUserById(userID);
 		
 		user.setNoFly(true);
-		eud.updateEndUser(user);
+		eudi.updateEndUser(user);
 
 
 		return new ResponseEntity<EndUser>(user, HttpStatus.OK);
@@ -155,9 +192,7 @@ public class EndUserController {
 	@ResponseBody
 	public ResponseEntity<Feedback> addFeedback(@RequestParam("userID") int userID,
 								@RequestParam("message") String message) {
-		FeedbackDao fd = new FeedbackDaoImpl();
-		EndUserDao eud = new EndUserDaoImpl();
-		Feedback feedback = new Feedback(eud.getEndUserById(userID), message);
+		Feedback feedback = new Feedback(eudi.getEndUserById(userID), message);
 		fd.addFeedback(feedback);
 		
 		return new ResponseEntity<Feedback>(feedback, HttpStatus.OK);
@@ -169,7 +204,6 @@ public class EndUserController {
 	@PostMapping("/admin/feedback")
 	@ResponseBody
 	public ResponseEntity<List<Feedback>> getAllFeedback() {
-		FeedbackDao fd = new FeedbackDaoImpl();
 		List<Feedback> feedbackList = fd.getAllFeedback();
 
 		return new ResponseEntity<List<Feedback>>(feedbackList, HttpStatus.OK);
@@ -179,7 +213,6 @@ public class EndUserController {
 	@PostMapping("/admin/read")
 	@ResponseBody
 	public ResponseEntity<Feedback> deleteFeedback(@RequestParam("feedbackID") int feedbackID) {
-		FeedbackDao fd = new FeedbackDaoImpl();
 		Feedback feedback = fd.getFeedbackById(feedbackID);
 		fd.deleteFeedback(feedback);
 
@@ -198,7 +231,6 @@ public class EndUserController {
 								@RequestParam("city") String ci,
 								@RequestParam("state") String s,
 								@RequestParam("country") String co) {
-		FlightDao fd = new FlightDaoImpl();
 
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
@@ -210,11 +242,11 @@ public class EndUserController {
 			State state = sd.getStateByName(s);
 			Country country = cod.getCountryByName(co);
 			City city = cd.getCityByName(ci, state, country);
-			flightList = fd.searchFlight(earliestDate, city);
+			flightList = fdi.searchFlight(earliestDate, city);
 		} else {
 			Country country = cod.getCountryByName(co);
 			City city = cd.getIntlCityByName(ci, country);
-			flightList = fd.searchFlight(earliestDate, city);
+			flightList = fdi.searchFlight(earliestDate, city);
 		}
 		
 		return new ResponseEntity<List<Flight>>(flightList, HttpStatus.OK);
@@ -224,8 +256,7 @@ public class EndUserController {
 	@PostMapping("/flight-details")
 	@ResponseBody
 	public ResponseEntity<Flight> flightDetails(@RequestParam("flightID") int flightID) {
-		FlightDao fd = new FlightDaoImpl();
-		Flight flight = fd.getFlightById(flightID);
+		Flight flight = fdi.getFlightById(flightID);
 		
 
 		return new ResponseEntity<Flight>(flight, HttpStatus.OK);
@@ -238,9 +269,8 @@ public class EndUserController {
 	@PostMapping("/all-flights")
 	@ResponseBody
 	public ResponseEntity<List<Flight>> allFlights() {
-		FlightDao fd = new FlightDaoImpl();
-		List<Flight> flightList = fd.getMostRecent10Arrivals();
-		List<Flight> flightListDepartures = fd.getMostRecent10Departures();
+		List<Flight> flightList = fdi.getMostRecent10Arrivals();
+		List<Flight> flightListDepartures = fdi.getMostRecent10Departures();
 		for(Flight f : flightListDepartures) {
 			flightList.add(f);
 		}
@@ -259,13 +289,11 @@ public class EndUserController {
 			fClass = true;
 		}
 		
-		FlightDao fd = new FlightDaoImpl();
-		EndUserDao eud = new EndUserDaoImpl();
-		EndUser user = eud.getEndUserById(userID);
-		Flight flight = fd.getFlightById(flightID);
+		EndUser user = eudi.getEndUserById(userID);
+		Flight flight = fdi.getFlightById(flightID);
 		
 		try {
-			fd.makeReservation(user, flight, fClass);
+			fdi.makeReservation(user, flight, fClass);
 		} catch (FullFlightException ffe) {
 			//Return a key-value pair that lets front-end know that flight is full
 		}
@@ -283,9 +311,7 @@ public class EndUserController {
 	@PostMapping("/checkin")
 	@ResponseBody
 	public ResponseEntity<Reservation> checkIn(@RequestParam("flightID") int flightID) {
-		ReservationDao rd = new ReservationDaoImpl();
-		FlightDao fd = new FlightDaoImpl();
-		Reservation reservation = rd.checkIn(flightID);
+		Reservation reservation = rdi.checkIn(flightID);
 		
 		return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
 		
@@ -295,11 +321,7 @@ public class EndUserController {
 	@PostMapping("/cancel")
 	@ResponseBody
 	public ResponseEntity<Reservation> cancel(@RequestParam("flightID") int flightID) {
-		ReservationDao rd = new ReservationDaoImpl();
-		FlightDao fd = new FlightDaoImpl();
-		Reservation reservation = rd.cancel(flightID);
-		
-		Flight flight = fd.getFlightById(flightID);
+		Reservation reservation = rdi.cancel(flightID);
 
 		return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
 	}

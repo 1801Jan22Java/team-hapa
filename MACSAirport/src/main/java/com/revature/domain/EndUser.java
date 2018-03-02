@@ -2,13 +2,23 @@ package com.revature.domain;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.revature.formatted.LoginInfo;
 
 @Entity 
 @Table(name="END_USER")
@@ -160,6 +170,11 @@ public class EndUser implements Serializable {
 
 	public void setNoFly(boolean noFly) {
 		this.noFly = noFly;
+	}
+
+	
+	public LoginInfo convertToLoginInfo() {
+		return new LoginInfo(this.getFirstname(), this.getId(), this.getTypeId());
 	}
 
 	@Override

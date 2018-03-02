@@ -3,20 +3,35 @@ package com.revature.driver;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.revature.dao.*;
-import com.revature.domain.*;
+import com.revature.dao.CityDao;
+import com.revature.dao.CityDaoImpl;
+import com.revature.dao.CommonLookupDao;
+import com.revature.dao.CommonLookupDaoImpl;
+import com.revature.dao.CountryDao;
+import com.revature.dao.CountryDaoImpl;
+import com.revature.dao.EndUserDao;
+import com.revature.dao.EndUserDaoImpl;
+import com.revature.dao.FeedbackDao;
+import com.revature.dao.FeedbackDaoImpl;
+import com.revature.dao.FlightDao;
+import com.revature.dao.FlightDaoImpl;
+import com.revature.dao.ReservationDao;
+import com.revature.dao.ReservationDaoImpl;
+import com.revature.dao.StateDao;
+import com.revature.dao.StateDaoImpl;
+import com.revature.domain.City;
+import com.revature.domain.CommonLookup;
+import com.revature.domain.Country;
+import com.revature.domain.EndUser;
+import com.revature.domain.Feedback;
+import com.revature.domain.Flight;
+import com.revature.domain.Reservation;
+import com.revature.domain.State;
 import com.revature.util.HibernateUtil;
 
 public class Driver {
@@ -251,7 +266,7 @@ public class Driver {
 		
 		Flight f1 = new Flight(3, new Date(), 105.85, 180, cl1, arrivalCity);
 		f1.setId(fd.addFlight(f1));
-		
+		s.close();
 	}
 	
 	static void commonlookupInit() {

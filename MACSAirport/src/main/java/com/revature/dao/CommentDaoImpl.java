@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.*;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.revature.domain.Comment;
@@ -34,6 +34,7 @@ public class CommentDaoImpl implements CommentDao{
 		return c;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Comment> getAllComments() {

@@ -6,10 +6,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.revature.domain.*;
+import com.revature.domain.CommonLookup;
 import com.revature.util.HibernateUtil;
 
 @Repository("commonLookupDaoImpl")
@@ -23,6 +22,7 @@ public class CommonLookupDaoImpl implements CommonLookupDao {
 		return thisCommonLookup;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public CommonLookup getCommonLookupByName(String refKey, String refValue) {
 		Session s = HibernateUtil.getSession();
@@ -32,7 +32,7 @@ public class CommonLookupDaoImpl implements CommonLookupDao {
 			c.add(Restrictions.eq("refKey", refKey));
 			c.add(Restrictions.eq("refValue", refValue));
 			List<CommonLookup> commonLookups = c.list();
-			thisCommonLookup = (CommonLookup) commonLookups.get(0);
+			thisCommonLookup = commonLookups.get(0);
 		} catch (Exception e) {
 			// This state could not be found
 			thisCommonLookup = null;

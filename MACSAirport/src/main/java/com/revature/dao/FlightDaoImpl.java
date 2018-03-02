@@ -3,13 +3,11 @@ package com.revature.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.revature.domain.City;

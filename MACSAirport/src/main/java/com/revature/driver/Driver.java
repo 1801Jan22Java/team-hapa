@@ -105,7 +105,7 @@ public class Driver {
 		final int AVG_MPH = 550;
 		
 		ArrayList<City> allCities = (ArrayList<City>) cid.getAllCities();
-		ArrayList<Flight> allFlights = (ArrayList<Flight>) fd.getAllFlights();
+		ArrayList<Flight> allFlights = (ArrayList<Flight>) fd.getAllPendingFlights();
 		if (allFlights != null) {
 			Flight[] newFlights = new Flight[TOTAL_GATES+1];
 			for (int i = 0; i < TOTAL_GATES+1; i++) {

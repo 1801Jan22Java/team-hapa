@@ -16,5 +16,5 @@ public interface FlightDao {
 	public void cancelReservation(EndUser user, Flight f);
 	public List<Flight> getMostRecent10Departures();
 	public List<Flight> getMostRecent10Arrivals();
-	public List<Flight> getAllFlights();
+	public List<Flight> getAllPendingFlights();
 }

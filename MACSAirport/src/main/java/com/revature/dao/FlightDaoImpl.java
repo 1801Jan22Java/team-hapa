@@ -130,9 +130,10 @@ public class FlightDaoImpl implements FlightDao {
 	}
 	
 	@Override
-	public List<Flight> getAllFlights() {
+	public List<Flight> getAllPendingFlights() {
 		Session s = HibernateUtil.getSession();
 		Criteria c = s.createCriteria(Flight.class);
+		c.add(Restrictions.ge("time", new Date()));
 		c.addOrder( Order.desc("time") );
 		List<Flight> allFlights = c.list();
 		if (allFlights.size() < 1) {

@@ -20,7 +20,6 @@
 	            <artifactId>platform-bom</artifactId>
 	            <version>4.3.3.RELEASE</version>
 	            <scope>import</scope>
-			<type>war</type>
 	        </dependency>
 	    </dependencies>
 	</dependencyManagement>

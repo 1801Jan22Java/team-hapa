@@ -78,10 +78,15 @@ export class SessionService {
     }
     return false;
   }
+  
   checkLoggedIn(): boolean{
     if (parseInt(localStorage.getItem("user_type"))>=1 &&parseInt(localStorage.getItem("user_type")) !=undefined ){
       return true;
     }
     return false;
+  }
+
+  getUserId(): number {
+    return parseInt(localStorage.getItem("user_id"));
   }
 }

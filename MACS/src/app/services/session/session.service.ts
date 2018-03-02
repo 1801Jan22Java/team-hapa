@@ -8,7 +8,7 @@ import { of } from 'rxjs/observable/of';
 
 
 @Injectable()
-export class SessionService {
+export class SessionService  {
   /*
   Keeps track of 2 session 'objects': the Observable and LocalStorage.
 
@@ -28,26 +28,14 @@ export class SessionService {
   // Check for session using the auth Observable first.
   // If nothing is found, check localStorage
   // If nothing is found, leave Observable as-is.
-  constructor(private http: HttpClient) {
-    let sub: Subscription = this.auth.subscribe(
-      data => {
-        if (data[0] == null) {
+  constructor(private http: HttpClient) { }
 
-          // check localStorage
-          let auth: auth = this.getSession();
-          let array: auth[] = [auth]
-          
-          // check validity of user id and type
-          if(auth.user_id!=-1 && auth.user_type!=-1 && auth.user_id!=null && auth.user_type!=null){
-            // set observable to reset the session
-            this.auth = of(array);
-          }
-        }
-      }
-    )
-
+  getAuth(): Observable<auth[]>{
+    if(this.auth[0] == null){
+      this.auth = of([this.getSession()]);
+    }
+    return this.auth;
   }
-
 
   setSession(username: string, password: string) {
     let u: user = { username, password };
@@ -56,6 +44,7 @@ export class SessionService {
     this.auth = this.http.post<auth[]>('util/login', u);
 
     // Login must subscribe in order to store the session in localStorage
+    // Store in local storage asap.
     this.auth.subscribe(
       // On successful login, store user_id and user_type into localStorage
       data => {
@@ -64,6 +53,12 @@ export class SessionService {
       },
       error => console.log(error)
     );
+
+    // For testing purposes
+    localStorage.setItem("user_id", "1");
+    localStorage.setItem("user_type", "1");
+    this.auth = of([this.getSession()]);
+    
   }
 
   // Retrieve object values from localStorage
@@ -76,8 +71,8 @@ export class SessionService {
   clearSession() {
     this.auth = new Observable<auth[]>();
 
-    localStorage.setItem("user_id", "-1");
-    localStorage.setItem("user_type", "-1");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user_type");
   }
 
 }

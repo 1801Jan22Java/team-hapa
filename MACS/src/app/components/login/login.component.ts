@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SessionService } from '../../services/session/session.service';
 
 @Component({
@@ -8,10 +10,24 @@ import { SessionService } from '../../services/session/session.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private session: SessionService) { }
+  // Set form validation here
+  form = new FormGroup({
+    email: new FormControl("", Validators.required),
+    password: new FormControl("", Validators.required)
+  })
+
+  constructor(private session: SessionService, private router : Router) { }
 
   ngOnInit() {
 
+  }
+
+  onSubmit(){
+    let email = this.form.get("email").value;
+    let password = this.form.get("password").value;
+
+    this.session.setSession(email, password);
+    this.router.navigateByUrl('reservation/history');
   }
   // this.check();
 

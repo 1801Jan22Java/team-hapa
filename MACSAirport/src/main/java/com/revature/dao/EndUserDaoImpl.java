@@ -9,11 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.revature.domain.EndUser;
-import com.revature.domain.Flight;
 import com.revature.domain.Reservation;
 import com.revature.util.HibernateUtil;
 
@@ -28,6 +26,7 @@ public class EndUserDaoImpl implements EndUserDao {
 		return thisEndUser;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public EndUser getEndUserByEmail(String email) {
 		
@@ -37,7 +36,7 @@ public class EndUserDaoImpl implements EndUserDao {
 			Criteria c = s.createCriteria(EndUser.class);
 			c.add(Restrictions.eq("email", email));
 			List<EndUser> endUsers = c.list();
-			thisEndUser = (EndUser) endUsers.get(0);
+			thisEndUser = endUsers.get(0);
 		} catch (Exception e) {
 			// This state could not be found
 			thisEndUser = null;
@@ -46,6 +45,7 @@ public class EndUserDaoImpl implements EndUserDao {
 		return thisEndUser;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<EndUser> getAllEndUsers(){

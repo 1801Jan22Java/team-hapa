@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import com.revature.domain.*;
+import com.revature.domain.State;
 import com.revature.util.HibernateUtil;
 
 public class StateDaoImpl implements StateDao {
@@ -20,6 +20,7 @@ public class StateDaoImpl implements StateDao {
 		return thisState;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public State getStateByName(String name) {
 		
@@ -29,7 +30,7 @@ public class StateDaoImpl implements StateDao {
 			Criteria c = s.createCriteria(State.class);
 			c.add(Restrictions.eq("name", name));
 			List<State> states = c.list();
-			thisState = (State) states.get(0);
+			thisState = states.get(0);
 			System.out.println(thisState.toString());
 		} catch (Exception e) {
 			// This state could not be found

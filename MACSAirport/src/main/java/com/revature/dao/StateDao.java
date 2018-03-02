@@ -1,6 +1,6 @@
 package com.revature.dao;
 
-import com.revature.domain.*;
+import com.revature.domain.State;
 
 public interface StateDao {
 

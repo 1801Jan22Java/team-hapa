@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.revature.domain.*;
+import com.revature.domain.Country;
 import com.revature.util.HibernateUtil;
 
 @Repository("countryDaoImpl")
@@ -22,6 +22,7 @@ public class CountryDaoImpl implements CountryDao {
 		return thisCountry;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Country getCountryByName(String name) {
 		
@@ -31,7 +32,7 @@ public class CountryDaoImpl implements CountryDao {
 			Criteria c = s.createCriteria(Country.class);
 			c.add(Restrictions.eq("name", name));
 			List<Country> countries = c.list();
-			thisCountry = (Country) countries.get(0);
+			thisCountry = countries.get(0);
 			System.out.println(thisCountry.toString());
 		} catch (Exception e) {
 			// This state could not be found

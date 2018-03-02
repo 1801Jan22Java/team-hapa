@@ -142,6 +142,10 @@ public class Driver {
 				}
 			}
 		} else {
+			Flight[] newFlights = new Flight[TOTAL_GATES+1];
+			for (int i = 0; i < TOTAL_GATES+1; i++) {
+				newFlights[i] = null;
+			}
 			for (int i = 1; i <= TOTAL_GATES; i++) {
 				// no flights are scheduled past this moment
 				
@@ -152,7 +156,16 @@ public class Driver {
 				String nextType = TYPES[randomMethod.nextInt(TYPES.length)];// returns number between 0 and the last index of the array
 				CommonLookup cl1 = cld.getCommonLookupByName("FLIGHT_TYPE", nextType);
 				
-				newCity = allCities.get(randomMethod.nextInt(allCities.size())); // returns number between 0 and the last index of the array
+				boolean foundMatch = false;
+				do {
+					newCity = allCities.get(randomMethod.nextInt(allCities.size())); // returns number between 0 and the last index of the array
+					foundMatch = false;
+					for (Flight nf : newFlights) {
+						if (nf != null && (nf.getCity().getId() == newCity.getId())) {
+							foundMatch = true;
+						}
+					}
+				} while (foundMatch);
 				
 				double distance = cd.distanceBetween(homeCity, newCity);
 				int newDurationMin = (int) (distance / AVG_MPH * 60.0);
@@ -160,6 +173,7 @@ public class Driver {
 				double newCost = AVG_COST_PER_MILE_2012 * distance;
 				
 				Flight newFlight = new Flight(i, newTime, newCost, newDurationMin, cl1, newCity);
+				newFlights[i] = newFlight;
 				newFlight.setId(fd.addFlight(newFlight));
 			}
 		}

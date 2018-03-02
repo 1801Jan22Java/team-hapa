@@ -155,7 +155,7 @@ public class Driver {
 					double distance = cd.distanceBetween(homeCity, newCity);
 					int newDurationMin = (int) (distance / AVG_MPH * 60.0);
 					
-					double newCost = AVG_COST_PER_MILE_2012 * distance;
+					double newCost = (AVG_COST_PER_MILE_2012 * distance) + STANDARD_FEE;
 					
 					Flight newFlight = new Flight(f.getGate(), newTime, newCost, newDurationMin, cl1, newCity);
 					newFlights[f.getGate()] = newFlight;
@@ -186,7 +186,7 @@ public class Driver {
 				double distance = cd.distanceBetween(homeCity, newCity);
 				int newDurationMin = (int) (distance / AVG_MPH * 60.0);
 				
-				double newCost = AVG_COST_PER_MILE_2012 * distance;
+				double newCost = (AVG_COST_PER_MILE_2012 * distance) + STANDARD_FEE;
 				
 				Flight newFlight = new Flight(i, newTime, newCost, newDurationMin, cl1, newCity);
 				newFlights[i] = newFlight;

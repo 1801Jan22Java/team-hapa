@@ -1,34 +1,34 @@
-<form action = "register" method = "POST">
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
   <p>First Name:
-    <input name="setFirstName" type="text">
+    <input formControlName="firstname" name="setFirstName" type="text">
   </p>
   <p>Last Name:
-    <input name="setLastName" type="text">
+    <input formControlName="lastname" name="setLastName" type="text">
   </p>
   <p>Email:
-    <input name="setEmail" type="email">
+    <input formControlName="email" name="setEmail" type="email">
   </p>
   <p>Username:
-    <input name="setUsername" type="text">
+    <input formControlName="username" name="setUsername" type="text">
   </p>
   <p>Password:
-    <input name="setPassword" type="password">
+    <input formControlName="password" name="setPassword" type="password">
   </p>
   <p>Confirm Password:
-    <input name="setConfirmedPassword" type="password">
+    <input formControlName="confirmPassword" name="setConfirmedPassword" type="password">
   </p>
   <br>
   <p>
     Security Question 1: What is your mother's maiden name?
-    <input name="setQ1Answer" type="text">
+    <input formControlName="q1" name="setQ1Answer" type="text">
   </p>
   <p>
     Security Question 2: What city were you born in?
-    <input name="setQ2Answer" type="text">
+    <input formControlName="q2" name="setQ2Answer" type="text">
   </p>
   <p>
     Security Question 3: What are the last 4 digits of your social security number?
-    <input name="setQ3Answer" type="number">
+    <input formControlName="q3" name="setQ3Answer" type="number">
   </p>
   <br>
   <input type="submit" value="Register">

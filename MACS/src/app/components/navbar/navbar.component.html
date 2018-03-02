@@ -12,27 +12,40 @@
         </a>
       </li>
     </ul>
-    <ul class="navbar-nav">
+
+
+    <ul class="navbar-nav" *ngIf="this.session.checkAdmin()">
       <li class="nav-item">
         <a class="nav-link" routerLink="admin/users">View Users</a>
       </li>
     </ul>
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" *ngIf="this.session.checkAdmin()">
       <li class="nav-item">
         <a class="nav-link" routerLink="admin/feedback">View Feedback</a>
       </li>
     </ul>
-    <ul class="navbar-nav">
+
+
+
+    <ul class="navbar-nav" *ngIf="this.session.checkLoggedIn()">
       <li class="nav-item">
         <a class="nav-link" routerLink="profile">Username</a>
       </li>
     </ul>
-    <ul class="navbar-nav">
+
+    <ul class="navbar-nav" *ngIf="!this.session.checkLoggedIn()">
       <li class="nav-item">
         <a class="nav-link" routerLink="register">Register</a>
       </li>
     </ul>
-    <ul class="navbar-nav">
+
+    <ul class="navbar-nav" *ngIf="this.session.checkLoggedIn()"> 
+      <li class="nav-item">
+        <a class="nav-link" routerLink="home" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav" *ngIf="!this.session.checkLoggedIn()">
       <li class="nav-item">
         <a class="nav-link" routerLink="login">Login</a>
       </li>

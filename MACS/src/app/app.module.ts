@@ -24,14 +24,14 @@ import { CheckInComponent } from './components/check-in/check-in.component';
 import { FlightSearchResultsComponent } from './components/flight-search-results/flight-search-results.component';
 import { TrackFlightStatusResultsComponent } from './components/track-flight-status-results/track-flight-status-results.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { FlightSearchService } from './services/flight-search/flight-search.service';
 import { LoginComponent } from './components/login/login.component';
 import { FlightDetailsComponent } from './components/flight-details/flight-details.component';
 import { AdminFeedbackComponent } from './components/admin-feedback/admin-feedback.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 
-
-
+//Services
+import { FlightSearchService } from './services/flight-search/flight-search.service';
+import { SessionService } from './services/session/session.service';
 
 // Create an array of routes.
 // Commented out to impelement app-router externally
@@ -76,7 +76,7 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [FlightSearchService],
+  providers: [FlightSearchService, SessionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

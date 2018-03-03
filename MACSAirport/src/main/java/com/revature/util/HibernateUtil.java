@@ -8,6 +8,7 @@ import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
 
+
 	private static SessionFactory mySessionFactory;
 	
 	private static SessionFactory getSessionFactory(String filename) {

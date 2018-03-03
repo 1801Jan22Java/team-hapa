@@ -2,14 +2,14 @@ package com.revature.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Component;
 
 import com.revature.domain.Feedback;
 import com.revature.util.HibernateUtil;
 
+@Component("feedBackDaoImpl")
 public class FeedbackDaoImpl implements FeedbackDao {
 
 	@Override
@@ -36,7 +36,6 @@ public class FeedbackDaoImpl implements FeedbackDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
 	public List<Feedback> getAllFeedback() {
 		Session s = HibernateUtil.getSession();
 
@@ -48,12 +47,13 @@ public class FeedbackDaoImpl implements FeedbackDao {
 	}
 
 	@Override
-	@Transactional
 	public void deleteFeedback(Feedback thisFeedback) {
 		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
 
 		s.delete(thisFeedback);
 		
+		tx.commit();
 		s.close();
 	}
 }

@@ -209,7 +209,9 @@ public class Driver {
 				newFlight.setId(fd.addFlight(newFlight));
 			}
 		}
-
+	}
+	
+	public static void feedbackInit() {
 		EndUserDao eud = new EndUserDaoImpl();
 		FeedbackDao fed = new FeedbackDaoImpl();
 
@@ -219,7 +221,6 @@ public class Driver {
 		
 		fe1.setId(fed.addFeedback(fe1));
 	}
-
 	
 	public static void reservationInit() {
 		ReservationDao rd = new ReservationDaoImpl();
@@ -235,8 +236,7 @@ public class Driver {
 		Reservation r1 = new Reservation(eu1, f1, clstatus, cltype);
 		rd.addReservation(r1);
 	}
-
-
+	
 	public static void endUserInit() {
 		CommonLookupDao cld = new CommonLookupDaoImpl();
 		EndUserDao eud = new EndUserDaoImpl();
@@ -245,8 +245,7 @@ public class Driver {
 		EndUser ed1 = new EndUser("John", "Doe", "john@doe.com", "password", cl1, "answer1", "answer2", "answer3");
 		eud.addEndUser(ed1);
 	}
-
-
+	
 	public static void flightInit() {
 		Session s = HibernateUtil.getSession();
 		FlightDao fd = new FlightDaoImpl();
@@ -270,7 +269,6 @@ public class Driver {
 		f1.setId(fd.addFlight(f1));
 		s.close();
 	}
-	
 	
 	public static void commonlookupInit() {
 		CommonLookupDao cld = new CommonLookupDaoImpl();
@@ -299,8 +297,7 @@ public class Driver {
 		cl8.setId(cld.addCommonLookup(cl8));
 		
 	}
-
-
+	
 	public static void routeInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
@@ -327,7 +324,6 @@ public class Driver {
 		System.out.println("Distance between Phoenix and New York City is " + distance);
 		
 	}
-	
 	
 	public static void allRoutes() {
 		CityDao cd = new CityDaoImpl();
@@ -363,8 +359,7 @@ public class Driver {
 			}
 		}
 	}
-
-
+	
 	public static void stateInit() {
 		StateDao sd = new StateDaoImpl();
 		State[] states = {
@@ -426,8 +421,7 @@ public class Driver {
 			s.setId(sd.addState(s));
 		}
 	}
-
-
+	
 	public static void countryInit() {
 		CountryDao cd = new CountryDaoImpl();
 		Country[] countries = {
@@ -522,8 +516,7 @@ public class Driver {
 			c.setId(cd.addCountry(c));
 		}
 	}
-
-
+	
 	public static void usCityInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
@@ -617,8 +610,6 @@ public class Driver {
 				new City("Glendale", 245895, 33.5331, -112.1899, sd.getStateByName( "Arizona"), cod.getCountryByName("United States") ),
 				new City("Reno", 245255, 39.5491, -119.8499, sd.getStateByName( "Nevada"), cod.getCountryByName("United States") ),
 				new City("Norfolk", 245115, 36.923, -76.2446, sd.getStateByName( "Virginia"), cod.getCountryByName("United States") ),
-				new City("Winston–Salem", 242203, 36.1027, -80.261, sd.getStateByName( "North Carolina"), cod.getCountryByName("United States") ),
-				new City("North Las Vegas", 238702, 36.2857, -115.0939, sd.getStateByName( "Nevada"), cod.getCountryByName("United States") ),
 				new City("Irving", 238289, 32.8577, -96.97, sd.getStateByName( "Texas"), cod.getCountryByName("United States") ),
 				new City("Chesapeake", 237940, 36.6794, -76.3018, sd.getStateByName( "Virginia"), cod.getCountryByName("United States") ),
 				new City("Gilbert", 237133, 33.3103, -111.7431, sd.getStateByName( "Arizona"), cod.getCountryByName("United States") ),
@@ -847,8 +838,7 @@ public class Driver {
 		}
 		
 	}
-
-
+	
 	public static void intlCityInit() {
 		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
@@ -859,7 +849,6 @@ public class Driver {
 				new City("Oran", 1560329, 35.6970697, -0.630798799999979, null, cod.getCountryByName( "Algeria") ),
 				new City("Luanda", 2825311, -8.83998759999999, 13.2894367999999, null, cod.getCountryByName( "Angola") ),
 				new City("Buenos Aires", 3054300, -34.6036844, -58.3815591, null, cod.getCountryByName( "Argentina") ),
-				new City("Córdoba", 1330023, -31.4200832999999, -64.1887760999999, null, cod.getCountryByName( "Argentina") ),
 				new City("Rosario", 1193605, -32.9442426, -60.6505387999999, null, cod.getCountryByName( "Argentina") ),
 				new City("Yerevan", 1060138, 40.1791857, 44.4991029, null, cod.getCountryByName( "Armenia") ),
 				new City("Melbourne", 135959, -37.8136276, 144.963057599999, null, cod.getCountryByName( "Australia") ),

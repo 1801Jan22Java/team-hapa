@@ -50,7 +50,7 @@ public class FlightDaoImpl implements FlightDao {
 		Session s = HibernateUtil.getSession();
 		CommonLookup cl = new CommonLookupDaoImpl().getCommonLookupByName("FLIGHT_TYPE", "Departure");
 		List<Flight> flights = s.createCriteria(Flight.class)
-				.add( Restrictions.eq("City", c) )
+				.add( Restrictions.eq("city", c) )
 				.add( Restrictions.ge("time", date) )
 				.add( Restrictions.eq("type", cl) )
 				.list();
@@ -69,7 +69,7 @@ public class FlightDaoImpl implements FlightDao {
 		} else {
 			type = cldi.getCommonLookupByName("RESERVATION_TYPE", "Economy");
 		}
-		int count = (Integer) s.createCriteria(Reservation.class)
+		long count = (Long) s.createCriteria(Reservation.class)
 				.add( Restrictions.eq("flight", f) )
 				.add( Restrictions.eq("status", reservedStatus) )
 				.add( Restrictions.eq("type", type) )
@@ -99,6 +99,7 @@ public class FlightDaoImpl implements FlightDao {
 		} catch (Exception e) {
 			tx.rollback();
 		}
+		tx.commit();
 		s.close();
 	}
 
@@ -108,8 +109,9 @@ public class FlightDaoImpl implements FlightDao {
 		Session s = HibernateUtil.getSession();
 		List<Flight> flights = s.createCriteria(Flight.class)
 				.add( Restrictions.eq("type", new CommonLookupDaoImpl().getCommonLookupByName("FLIGHT_TYPE", "Departure")) )
-				.add( Restrictions.ge("time", new Date(System.currentTimeMillis())) )
+				.add( Restrictions.ge("time", new Date()) )
 				.addOrder( Order.asc("time") )
+				.setMaxResults(10)
 				.list();
 		s.close();
 		return flights;
@@ -121,14 +123,14 @@ public class FlightDaoImpl implements FlightDao {
 		Session s = HibernateUtil.getSession();
 		List<Flight> flights = s.createCriteria(Flight.class)
 				.add( Restrictions.eq("type", new CommonLookupDaoImpl().getCommonLookupByName("FLIGHT_TYPE", "Arrival")) )
-				.add( Restrictions.le("time", new Date(System.currentTimeMillis())) )
+				.add( Restrictions.le("time", new Date()) )
 				.addOrder( Order.desc("time") )
+				.setMaxResults(10)
 				.list();
 		s.close();
 		return flights;
 	}
-
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Flight> getAllPendingFlights() {

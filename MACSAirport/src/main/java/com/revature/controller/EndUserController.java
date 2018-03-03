@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,10 +19,10 @@ import com.revature.dao.CityDaoImpl;
 import com.revature.dao.CommonLookupDaoImpl;
 import com.revature.dao.CountryDao;
 import com.revature.dao.CountryDaoImpl;
-import com.revature.dao.EndUserDaoImpl;
-import com.revature.dao.FeedbackDaoImpl;
+import com.revature.dao.EndUserDao;
+import com.revature.dao.FeedbackDao;
 import com.revature.dao.FlightDaoImpl;
-import com.revature.dao.ReservationDaoImpl;
+import com.revature.dao.ReservationDao;
 import com.revature.dao.StateDao;
 import com.revature.dao.StateDaoImpl;
 import com.revature.domain.City;
@@ -43,16 +44,16 @@ public class EndUserController {
 	CommonLookupDaoImpl cldi;
 	
 	@Autowired
-	EndUserDaoImpl eudi;
+	EndUserDao eudi;
 	
 	@Autowired
-	FeedbackDaoImpl fd;
+	FeedbackDao fd;
 	
 	@Autowired
 	FlightDaoImpl fdi;
 	
 	@Autowired
-	ReservationDaoImpl rdi;
+	ReservationDao rdi;
 	
 	/*
 	 * EndUser Controller Methods

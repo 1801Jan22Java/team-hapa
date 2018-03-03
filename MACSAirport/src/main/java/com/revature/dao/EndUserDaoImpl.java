@@ -10,13 +10,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.revature.domain.EndUser;
 import com.revature.domain.Reservation;
 import com.revature.util.HibernateUtil;
 
-@Repository("endUserDaoImpl")
+@Component("endUserDaoImpl")
 public class EndUserDaoImpl implements EndUserDao {
 
 	@Override

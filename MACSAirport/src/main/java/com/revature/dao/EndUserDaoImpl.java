@@ -2,16 +2,12 @@ package com.revature.dao;
 
 import java.util.List;
 
-
-import javax.transaction.Transactional;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import com.revature.domain.EndUser;
 import com.revature.domain.Reservation;
@@ -49,7 +45,6 @@ public class EndUserDaoImpl implements EndUserDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
 	public List<EndUser> getAllEndUsers(){
 		Session s = HibernateUtil.getSession();
 		
@@ -76,12 +71,13 @@ public class EndUserDaoImpl implements EndUserDao {
 	}
 	
 	@Override
-	@Transactional
 	public void updateEndUser(EndUser u) {
 		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
 				
 		s.merge(u);
 		
+		tx.commit();
 		s.close();
 	}
 

@@ -92,7 +92,8 @@ const appRoutes: Routes = [
   { path: 'app-flight-search', component: FlightSearchComponent },
   { path: 'app-flight-reservation', component: FlightReservationComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
-  { path: 'app-check-in-component', component: CheckInComponent }
+  { path: 'app-check-in-component', component: CheckInComponent },
+  { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.revature.domain.EndUser;
 
-public interface EndUserDao {
-	
-	public void createEndUser(EndUser u);
-	
-	public void updateEndUser(EndUser u);
+import com.revature.domain.Reservation;
 
-	public EndUser readUserById(int endUserID);
-	
-	public List<EndUser> viewAllEndUsers();
+public interface EndUserDao {
+	public EndUser getEndUserById(int id);
+	public EndUser getEndUserByEmail(String email);
+	public List<EndUser> getAllEndUsers();
+	public int addEndUser(EndUser thisEndUser);
+	public void updateEndUser(EndUser u);
+	public List<Reservation> getReservationHistory(EndUser user);
 }

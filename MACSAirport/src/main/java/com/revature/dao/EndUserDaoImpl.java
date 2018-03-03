@@ -2,69 +2,98 @@ package com.revature.dao;
 
 import java.util.List;
 
-import org.hibernate.*;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
 import com.revature.domain.EndUser;
+import com.revature.domain.Reservation;
 import com.revature.util.HibernateUtil;
 
-public class EndUserDaoImpl implements EndUserDao{
+@Repository("endUserDaoImpl")
+public class EndUserDaoImpl implements EndUserDao {
 
 	@Override
-	public void createEndUser(EndUser u) {
+	public EndUser getEndUserById(int id) {
 		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
-		
-		s.persist(u);
-		
-		tx.commit();
+		EndUser thisEndUser = (EndUser) s.get(EndUser.class, id);
 		s.close();
+		return thisEndUser;
 	}
 	
-	
-	//Passing in a User object with the modified details.
-	
-	//Can also use with password reset; be sure to hash
-	//the password and add it to this User object before
-	//calling this method.
-	
-	//No fly can simply change the noFly member variable.
+	@SuppressWarnings("unchecked")
 	@Override
-	public void updateEndUser(EndUser u) {
-		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
-				
-		s.merge(u);
+	public EndUser getEndUserByEmail(String email) {
 		
-		tx.commit();
+		Session s = HibernateUtil.getSession();
+		EndUser thisEndUser = null;
+		try {
+			Criteria c = s.createCriteria(EndUser.class);
+			c.add(Restrictions.eq("email", email));
+			List<EndUser> endUsers = c.list();
+			thisEndUser = endUsers.get(0);
+		} catch (Exception e) {
+			// This state could not be found
+			thisEndUser = null;
+		}
 		s.close();
+		return thisEndUser;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
 	@Override
-	public EndUser readUserById(int endUserID) {
+	@Transactional
+	public List<EndUser> getAllEndUsers(){
 		Session s = HibernateUtil.getSession();
-		EndUser user = (EndUser) s.get(EndUser.class,  endUserID);
-		
-		s.close();
-		return user;
-	}
-	
-	
-	
-	@Override
-	public List<EndUser> viewAllEndUsers(){
-		Session s = HibernateUtil.getSession();
-		Transaction tx = s.beginTransaction();
 		
 		List<EndUser> endUserList = s.createQuery("from EndUser").list();
 		
-		tx.commit();
 		s.close();
 		
 		return endUserList;
 		
 	}
+
+	@Override
+	public int addEndUser(EndUser thisEndUser) {
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+		int result = (int) s.save(thisEndUser);
+		try {
+			tx.commit();
+		} catch (Exception e) {
+			result = 0;
+			tx.rollback();
+		}
+		return result;
+	}
 	
-	
-	
+	@Override
+	@Transactional
+	public void updateEndUser(EndUser u) {
+		Session s = HibernateUtil.getSession();
+				
+		s.merge(u);
+		
+		s.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Reservation> getReservationHistory(EndUser user) {
+		Session s = HibernateUtil.getSession();
+		
+		List<Reservation> reservations = s.createCriteria(Reservation.class)
+				.add( Restrictions.eq("endUser", user) )
+				.addOrder( Order.desc("creationDate") ).list();
+		
+		s.close();
+		return reservations;
+	}
 }

@@ -1,7 +1,5 @@
 package com.revature.dao;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
@@ -37,7 +35,7 @@ public class ReservationDaoImpl implements ReservationDao {
 	}
 
 	@Override
-	@Transactional
+	@Deprecated
 	public Reservation checkIn(int flightID) {
 		Session s = HibernateUtil.getSession();
 		Transaction tx = s.beginTransaction();
@@ -60,7 +58,7 @@ public class ReservationDaoImpl implements ReservationDao {
 	
 
 	@Override
-	@Transactional
+	@Deprecated
 	public Reservation cancel(int flightID) {
 		Session s = HibernateUtil.getSession();
 		Transaction tx = s.beginTransaction();

@@ -152,7 +152,7 @@ public class Flight implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Flight [id=" + id + ", gate=" + gate + ", time=" + time + ", cost=" + cost + ", duration=" + duration
+		return "Flight [gate=" + gate + ", time=" + time + ", cost=" + cost + ", duration=" + duration
 				+ ", type=" + type + ", city=" + city + ", reservations=" + reservations + "]";
 	}
 

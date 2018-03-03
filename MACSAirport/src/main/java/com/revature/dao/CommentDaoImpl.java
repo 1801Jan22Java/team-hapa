@@ -2,8 +2,6 @@ package com.revature.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +12,6 @@ import com.revature.util.HibernateUtil;
 public class CommentDaoImpl implements CommentDao{
 
 	@Override
-	@Transactional
 	public void createComment(Comment c) {
 		Session s = HibernateUtil.getSession();
 		
@@ -36,7 +33,6 @@ public class CommentDaoImpl implements CommentDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
 	public List<Comment> getAllComments() {
 		Session s = HibernateUtil.getSession();
 

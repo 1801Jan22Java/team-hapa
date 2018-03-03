@@ -19,7 +19,7 @@ public class FlightDaoTests {
 		// Tested by other functions
 	}
 	
-	//@Test
+	@Test
 	final public void testSearchFlight() {
 		FlightDao fd = new FlightDaoImpl();
 		StateDao sd = new StateDaoImpl();
@@ -53,7 +53,7 @@ public class FlightDaoTests {
 		Assert.assertTrue(doesNotContainF2);
 	}
 	
-	//@Test
+	@Test
 	final public void testMakeReservation() {
 		FlightDao fd = new FlightDaoImpl();
 		StateDao sd = new StateDaoImpl();
@@ -106,7 +106,7 @@ public class FlightDaoTests {
 		}
 	}
 	
-	//@Test
+	@Test
 	final public void testCancelReservation() {
 		FlightDao fd = new FlightDaoImpl();
 		StateDao sd = new StateDaoImpl();
@@ -150,7 +150,7 @@ public class FlightDaoTests {
 		Assert.assertTrue(resultant);
 	}
 	
-	//@Test
+	@Test
 	final public void testgetMostRecent10Departures() {
 		FlightDao fd = new FlightDaoImpl();
 		StateDao sd = new StateDaoImpl();

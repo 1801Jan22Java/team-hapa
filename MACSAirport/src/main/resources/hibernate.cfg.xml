@@ -14,6 +14,7 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- map domain object classes -->
 		<mapping class="com.revature.domain.City"/>
+		<mapping class="com.revature.domain.Comment"/>
 		<mapping class="com.revature.domain.CommonLookup"/>
 		<mapping class="com.revature.domain.Country"/>
 		<mapping class="com.revature.domain.EndUser"/>

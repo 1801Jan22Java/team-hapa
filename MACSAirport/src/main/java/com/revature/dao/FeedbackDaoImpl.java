@@ -6,10 +6,13 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.revature.domain.Feedback;
 import com.revature.util.HibernateUtil;
 
+@Component("feedBackDaoImpl")
 public class FeedbackDaoImpl implements FeedbackDao {
 
 	@Override

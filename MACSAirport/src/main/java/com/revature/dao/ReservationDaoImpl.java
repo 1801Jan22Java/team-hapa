@@ -40,6 +40,7 @@ public class ReservationDaoImpl implements ReservationDao {
 	@Transactional
 	public Reservation checkIn(int flightID) {
 		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
 		
 		CommonLookupDao cldi = new CommonLookupDaoImpl();
 		CommonLookup reservedStatus = cldi.getCommonLookupByName("RESERVATION_STATUS", "Checked In");
@@ -51,6 +52,7 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		s.merge(thisReservation);
 		
+		tx.commit();
 		s.close();
 		
 		return thisReservation;
@@ -61,6 +63,7 @@ public class ReservationDaoImpl implements ReservationDao {
 	@Transactional
 	public Reservation cancel(int flightID) {
 		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
 
 		CommonLookupDao cldi = new CommonLookupDaoImpl();
 		
@@ -73,6 +76,7 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		s.merge(thisReservation);
 		
+		tx.commit();
 		s.close();
 		return thisReservation;
 	}

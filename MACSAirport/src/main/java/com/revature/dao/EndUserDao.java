@@ -3,7 +3,6 @@ package com.revature.dao;
 import java.util.List;
 
 import com.revature.domain.EndUser;
-
 import com.revature.domain.Reservation;
 
 public interface EndUserDao {

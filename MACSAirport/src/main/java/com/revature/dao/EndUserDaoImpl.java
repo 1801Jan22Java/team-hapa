@@ -79,9 +79,11 @@ public class EndUserDaoImpl implements EndUserDao {
 	@Transactional
 	public void updateEndUser(EndUser u) {
 		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
 				
 		s.merge(u);
 		
+		tx.commit();
 		s.close();
 	}
 

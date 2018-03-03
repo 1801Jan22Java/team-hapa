@@ -4,9 +4,7 @@ import org.junit.Test;
 import org.junit.Assert;
 
 import com.revature.dao.*;
-import com.revature.domain.City;
-import com.revature.domain.Country;
-import com.revature.domain.State;
+import com.revature.domain.*;
 
 public class CityDaoTests {
 	

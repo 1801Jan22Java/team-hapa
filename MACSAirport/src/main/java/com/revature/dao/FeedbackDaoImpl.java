@@ -54,9 +54,11 @@ public class FeedbackDaoImpl implements FeedbackDao {
 	@Transactional
 	public void deleteFeedback(Feedback thisFeedback) {
 		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
 
 		s.delete(thisFeedback);
 		
+		tx.commit();
 		s.close();
 	}
 }

@@ -61,6 +61,26 @@ public class CityDaoImpl implements CityDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	public City getCityByOnlyName(String cityName) {
+		Session s = HibernateUtil.getSession();
+		
+		City thisCity = null;
+		
+		try {
+			Criteria c = s.createCriteria(City.class);
+			c.add(Restrictions.eq("name", cityName));
+			List<City> cities = c.list();
+			thisCity = cities.get(0);
+		} catch (Exception e) {
+			// This city could not be found
+			thisCity = null;
+		}
+		s.close();
+		return thisCity;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public City getIntlCityByName(String cityName, Country thisCountry) {
 		Session s = HibernateUtil.getSession();
 		

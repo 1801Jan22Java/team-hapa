@@ -1,10 +1,15 @@
 package com.revature.dao;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.revature.domain.CommonLookup;
+import com.revature.domain.Flight;
 import com.revature.domain.Reservation;
 import com.revature.util.HibernateUtil;
 
@@ -19,6 +24,25 @@ public class ReservationDaoImpl implements ReservationDao {
 		return thisReservation;
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Reservation getReservationByFlight(Flight flight) {
+		Session s = HibernateUtil.getSession();
+		Reservation thisReservation = null;
+		try {
+			Criteria c = s.createCriteria(Reservation.class);
+			c.add(Restrictions.eq("flight", flight));
+			List<Reservation> reservations = c.list();
+			thisReservation = reservations.get(0);
+		} catch (Exception e) {
+			// This reservation could not be found
+			thisReservation = null;
+		}
+		
+		s.close();
+		return thisReservation;
+	}
 
 	@Override
 	public int addReservation(Reservation thisReservation) {

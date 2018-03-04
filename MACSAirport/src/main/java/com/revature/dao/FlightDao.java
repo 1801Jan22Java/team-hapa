@@ -10,6 +10,7 @@ import com.revature.exception.FullFlightException;
 
 public interface FlightDao {
 	public Flight getFlightById(int id);
+	public List<Flight> getFlightsByUserId(int userId);
 	public int addFlight(Flight thisFlight);
 	public List<Flight> searchFlight(Date date, City c);
 	public void makeReservation(EndUser user, Flight f, boolean firstClass) throws FullFlightException;

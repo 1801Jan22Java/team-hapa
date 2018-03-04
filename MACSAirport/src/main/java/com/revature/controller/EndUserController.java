@@ -1,15 +1,14 @@
 package com.revature.controller;
 
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,24 +16,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.revature.dao.CityDao;
 import com.revature.dao.CityDaoImpl;
 import com.revature.dao.CommonLookupDaoImpl;
-import com.revature.dao.CountryDao;
-import com.revature.dao.CountryDaoImpl;
 import com.revature.dao.EndUserDao;
 import com.revature.dao.FeedbackDao;
 import com.revature.dao.FlightDaoImpl;
 import com.revature.dao.ReservationDao;
-import com.revature.dao.StateDao;
-import com.revature.dao.StateDaoImpl;
 import com.revature.domain.City;
 import com.revature.domain.CommonLookup;
-import com.revature.domain.Country;
 import com.revature.domain.EndUser;
 import com.revature.domain.Feedback;
 import com.revature.domain.Flight;
 import com.revature.domain.Reservation;
-import com.revature.domain.State;
 import com.revature.exception.FullFlightException;
+import com.revature.formatted.EmailPass;
+import com.revature.formatted.FlightDetails;
+import com.revature.formatted.FlightID;
+import com.revature.formatted.FlightReservation;
+import com.revature.formatted.FlightSearchInfo;
 import com.revature.formatted.LoginInfo;
+import com.revature.formatted.PasswordChange;
+import com.revature.formatted.ProfileAutofill;
+import com.revature.formatted.ProfileChange;
+import com.revature.formatted.RegistrationInfo;
+import com.revature.formatted.ReservationDetails;
+import com.revature.formatted.UserID;
 
 @Controller("endUserController")
 @RequestMapping("/util")
@@ -62,99 +66,99 @@ public class EndUserController {
 	//Returns the EndUser who just registered their account, parsed into JSON
 	@PostMapping("/register")
 	@ResponseBody
-	public ResponseEntity<LoginInfo> registerAccount(@RequestParam("firstName") String firstName,
-									@RequestParam("lastName") String lastName,
-									@RequestParam("email") String email,
-									@RequestParam("password") String password,
-									@RequestParam("type") String type,
-									@RequestParam("answer1") String answer1,
-									@RequestParam("answer2") String answer2,
-									@RequestParam("answer3") String answer3
-									) {
+	public ResponseEntity<LoginInfo> registerAccount(@RequestBody RegistrationInfo userInfo) {
 
-		CommonLookup cl1;
-		if(type.equals("Passenger")) {
-			cl1 = cldi.getCommonLookupByName("END_USER_TYPE", "Passenger");
-		}
-		else {
-			cl1 = cldi.getCommonLookupByName("END_USER_TYPE", "Employee");
-		}
-		EndUser newUser = new EndUser(firstName, lastName, email, password, cl1,
-				answer1, answer2, answer3);
+		EndUser user = userInfo.createUser();
+		eudi.addEndUser(user);
 		
-		eudi.addEndUser(newUser);
-		
-		return new ResponseEntity<LoginInfo>(newUser.convertToLoginInfo(), HttpStatus.OK);
+		return new ResponseEntity<LoginInfo>(user.convertToLoginInfo(), HttpStatus.OK);
 	}
 	
-	
+	@PostMapping("/fillprofile")
+	@ResponseBody
+	public ResponseEntity<EndUser> profile(@RequestBody ProfileAutofill newId) {
+		EndUser user = eudi.getEndUserById(newId.getId());
+		return new ResponseEntity<EndUser>(user, HttpStatus.OK);
+	}
 	
 	@PostMapping("/profile")
 	@ResponseBody
-	public ResponseEntity<EndUser> profile(@RequestParam("userID") int userID,
-			@RequestParam("firstName") String firstName,
-			@RequestParam("lastName") String lastName,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password
-			) {
+	public String profile(@RequestBody ProfileChange changes) {
 
 		
-		EndUser user = eudi.getEndUserById(userID);
+		EndUser user = eudi.getEndUserByEmail(changes.getEmail());
+		boolean success = true;
 		
 		//Change info if fields aren't blank
-		if(!firstName.equals("")) {
-			user.setFirstname(firstName);
+		if(!changes.getFirstname().equals("")) {
+			user.setFirstname(changes.getFirstname());
 		}
-		if(!lastName.equals("")) {
-			user.setLastname(lastName);
+		if(!changes.getLastname().equals("")) {
+			user.setLastname(changes.getLastname());
 		}
-		if(!email.equals("")) {
-			user.setEmail(email);
+		//If the user entered a NEW email.
+		if(!changes.getEmail().equals("") && !user.getEmail().equals(changes.getEmail())) {
+			EndUser existingEmailCheck = eudi.getEndUserByEmail(changes.getEmail());
+			if(existingEmailCheck == null) {
+				user.setEmail(changes.getEmail());
+			}
+			else {
+				success = false;
+			}
 		}
-		if(!password.equals("")) {
-			user.setPassword(password);
+		if(!changes.getNewpassword().equals("")) {
+			user.setPassword(changes.getNewpassword());
+		}
+		if(!changes.getAnswer1().equals("")) {
+			user.setSecretAnswer1(changes.getAnswer1());
+		}
+		if(!changes.getAnswer2().equals("")) {
+			user.setSecretAnswer2(changes.getAnswer2());
+		}
+		if(!changes.getAnswer3().equals("")) {
+			user.setSecretAnswer3(changes.getAnswer3());
 		}
 		
-		eudi.updateEndUser(user);
-		
-		return new ResponseEntity<EndUser>(user, HttpStatus.OK);
+		if(success) {
+			eudi.updateEndUser(user);
+			//return new ResponseEntity<EndUser>(user, HttpStatus.OK);
+			return "done";
+		}
+		return "bad";
 	}
 	
 	
 	@PostMapping("/reset")
 	@ResponseBody
-	public ResponseEntity<EndUser> profile(@RequestParam("email") String email,
-			@RequestParam("firstAnswer") String answer1,
-			@RequestParam("secondAnswer") String answer2,
-			@RequestParam("thirdAnswer") String answer3,
-			@RequestParam("password") String password) {
+	public ResponseEntity<LoginInfo> profile(@RequestBody PasswordChange newFields) {
 
 		
-		EndUser user = eudi.getEndUserByEmail(email);
+		EndUser user = eudi.getEndUserById(newFields.getId());
 		
 		//Change info if fields aren't blank
-		if(user.getSecretAnswer1().equals(answer1) &&
-				user.getSecretAnswer2().equals(answer2) &&
-				user.getSecretAnswer3().equals(answer3)) {
-			user.setPassword(password);
+		if(user.getSecretAnswer1().equals(newFields.getAnswer1()) &&
+				user.getSecretAnswer2().equals(newFields.getAnswer2()) &&
+				user.getSecretAnswer3().equals(newFields.getAnswer3())) {
+			user.setPassword(newFields.getNewpassword());
 		}
 		
 		eudi.updateEndUser(user);
+		
 
-
-		return new ResponseEntity<EndUser>(user, HttpStatus.OK);
+		return new ResponseEntity<LoginInfo>(user.convertToLoginInfo(), HttpStatus.OK);
 	}
 	
 	
 	@RequestMapping("/login")
 	@ResponseBody
-	public ResponseEntity<LoginInfo> login(@RequestParam("email") String email,
-						@RequestParam("password") String password) {
+	public ResponseEntity<LoginInfo> login(@RequestBody EmailPass user
+						/*@RequestParam("email") String email,
+						@RequestParam("password") String password*/) {
 		LoginInfo thisUser = null;
 		
-		EndUser toCheck = eudi.getEndUserByEmail(email);
+		EndUser toCheck = eudi.getEndUserByEmail(user.getEmail());
 		
-		if(email.equals(toCheck.getEmail()) && password.equals(toCheck.getPassword())) {
+		if(user.getPassword().equals(toCheck.getPassword())) {
 			thisUser = toCheck.convertToLoginInfo();
 			return new ResponseEntity<LoginInfo>(thisUser, HttpStatus.OK);
 		}
@@ -174,8 +178,8 @@ public class EndUserController {
 	
 	@RequestMapping("/admin/nofly")
 	@ResponseBody
-	public ResponseEntity<EndUser> noFly(@RequestParam("userID") int userID) {
-		EndUser user = eudi.getEndUserById(userID);
+	public ResponseEntity<EndUser> noFly(@RequestBody PasswordChange userID) {
+		EndUser user = eudi.getEndUserById(userID.getId());
 		
 		user.setNoFly(true);
 		eudi.updateEndUser(user);
@@ -228,27 +232,14 @@ public class EndUserController {
 	
 	@PostMapping("/flight-search")
 	@ResponseBody
-	public ResponseEntity<List<Flight>> flightSearch(@RequestParam("earliestDate") Date earliestDate,
-								@RequestParam("city") String ci,
-								@RequestParam("state") String s,
-								@RequestParam("country") String co) {
+	public ResponseEntity<List<Flight>> flightSearch(@RequestBody FlightSearchInfo search) {
 
-		StateDao sd = new StateDaoImpl();
 		CityDao cd = new CityDaoImpl();
-		CountryDao cod = new CountryDaoImpl();
 		List<Flight> flightList = null;
+		City city = cd.getCityByOnlyName(search.getDestination());
 
-
-		if(co.equals("United States")) {
-			State state = sd.getStateByName(s);
-			Country country = cod.getCountryByName(co);
-			City city = cd.getCityByName(ci, state, country);
-			flightList = fdi.searchFlight(earliestDate, city);
-		} else {
-			Country country = cod.getCountryByName(co);
-			City city = cd.getIntlCityByName(ci, country);
-			flightList = fdi.searchFlight(earliestDate, city);
-		}
+		//Parse search.getEarliestDate() into a Date object here.
+		//flightList = fdi.searchFlight(search.getEarliestDate(), city);
 		
 		return new ResponseEntity<List<Flight>>(flightList, HttpStatus.OK);
 	}
@@ -256,11 +247,31 @@ public class EndUserController {
 	
 	@PostMapping("/flight-details")
 	@ResponseBody
-	public ResponseEntity<Flight> flightDetails(@RequestParam("flightID") int flightID) {
-		Flight flight = fdi.getFlightById(flightID);
+	public ResponseEntity<FlightDetails> flightDetails(@RequestBody FlightID flightId) {
+		Flight flight = fdi.getFlightById(flightId.getId());
 		
+		//Get the status
+		Reservation reservation = rdi.getReservationByFlight(flight);
+		CommonLookup cl = null;
+		if(reservation != null) {
+			cl = reservation.getStatus();
+		}
+		else {
+			cl = cldi.getCommonLookupByName("RESERVATION_STATUS", "Cancelled");
+		}
+		
+		FlightDetails flightDetails = new FlightDetails(flight, cl);
 
-		return new ResponseEntity<Flight>(flight, HttpStatus.OK);
+		return new ResponseEntity<FlightDetails>(flightDetails, HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/flight-history")
+	@ResponseBody
+	public ResponseEntity<List<Flight>> flightHistory(@RequestBody UserID id) {
+		List<Flight> flights = fdi.getFlightsByUserId(id.getId());
+		
+		return new ResponseEntity<List<Flight>>(flights, HttpStatus.OK);
 	}
 	
 	
@@ -282,25 +293,32 @@ public class EndUserController {
 	
 	@PostMapping("/reserve")
 	@ResponseBody
-	public ResponseEntity<Flight> reserveFlight(@RequestParam("flightID") int flightID,
-								@RequestParam("userID") int userID,
-								@RequestParam("firstClass") int firstClass) {
-		boolean fClass = false;
-		if(firstClass != 0) {
-			fClass = true;
-		}
+	public ResponseEntity<ReservationDetails> reserveFlight(@RequestBody FlightReservation newReservation) {
 		
-		EndUser user = eudi.getEndUserById(userID);
-		Flight flight = fdi.getFlightById(flightID);
+		CommonLookup clType = cldi.getCommonLookupByName("RESERVATION_TYPE", newReservation.getType());
+		CommonLookup clStatus = cldi.getCommonLookupByName("RESERVATION_STATUS", "Reserved");
+		
+		EndUser user = eudi.getEndUserById(newReservation.getUserID());
+		Flight flight = fdi.getFlightById(newReservation.getFlightID());
+		
+		
+		ReservationDetails rd = new ReservationDetails(flight, clStatus, clType);
 		
 		try {
-			fdi.makeReservation(user, flight, fClass);
+			if(clType.getRefValue().equals("First Class")) {
+				fdi.makeReservation(user, flight, true);
+			}
+			else {
+				fdi.makeReservation(user, flight, false);
+			}
+				
 		} catch (FullFlightException ffe) {
-			//Return a key-value pair that lets front-end know that flight is full
+			clStatus.setRefValue("Cancelled");
+			rd.setStatus(clStatus);
+			return new ResponseEntity<ReservationDetails>(rd, HttpStatus.BAD_REQUEST);
 		}
 		
-
-		return new ResponseEntity<Flight>(flight, HttpStatus.OK);
+		return new ResponseEntity<ReservationDetails>(rd, HttpStatus.OK);
 	}
 	
 	
@@ -311,10 +329,12 @@ public class EndUserController {
 	
 	@PostMapping("/checkin")
 	@ResponseBody
-	public ResponseEntity<Reservation> checkIn(@RequestParam("flightID") int flightID) {
-		Reservation reservation = rdi.checkIn(flightID);
+	public ResponseEntity<ReservationDetails> checkIn(@RequestBody FlightID flightID) {
+		Reservation reservation = rdi.checkIn(flightID.getId());
 		
-		return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+		ReservationDetails reservationDetails = new ReservationDetails(reservation.getFlight(), reservation.getStatus(), reservation.getType());
+		
+		return new ResponseEntity<ReservationDetails>(reservationDetails, HttpStatus.OK);
 		
 	}
 	

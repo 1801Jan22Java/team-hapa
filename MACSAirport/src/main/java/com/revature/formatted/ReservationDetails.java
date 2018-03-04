@@ -3,19 +3,20 @@ package com.revature.formatted;
 import com.revature.domain.CommonLookup;
 import com.revature.domain.Flight;
 
-public class FlightDetails {
-
+public class ReservationDetails {
 	
-	public FlightDetails(Flight flight, CommonLookup status) {
+	public ReservationDetails(Flight flight, CommonLookup status, CommonLookup type) {
 		super();
 		this.flight = flight;
 		this.status = status;
+		this.type = type;
 	}
 	
 	
 	private Flight flight;
 	private CommonLookup status;	//refValue = Reserved or Cancelled
 									//null = default (not reserved)
+	private CommonLookup type;		//refValue = "First Class" or "Economy"
 	
 	
 	public Flight getFlight() {
@@ -30,5 +31,10 @@ public class FlightDetails {
 	public void setStatus(CommonLookup status) {
 		this.status = status;
 	}
-	
+	public CommonLookup getType() {
+		return type;
+	}
+	public void setType(CommonLookup type) {
+		this.type = type;
+	}
 }

@@ -1,14 +1,20 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
+
 import com.revature.dao.CommonLookupDaoImpl;
 import com.revature.domain.EndUser;
 
+@Component("registrationInfo")
 public class RegistrationInfo {
 	
 	
+	public RegistrationInfo() {
+		super();
+	}
 	public RegistrationInfo(String firstname, String lastname, String email, String password, String type,
 			String answer1, String answer2, String answer3) {
-		super();
+		this();
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;

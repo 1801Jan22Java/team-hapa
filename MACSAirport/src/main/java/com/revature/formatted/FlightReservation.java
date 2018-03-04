@@ -1,8 +1,14 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
+
+@Component("flightReservation")
 public class FlightReservation {
-	public FlightReservation(int flightID, int userID, String type) {
+	public FlightReservation() {
 		super();
+	}
+	public FlightReservation(int flightID, int userID, String type) {
+		this();
 		this.flightID = flightID;
 		this.userID = userID;
 		this.type = type;

@@ -1,9 +1,15 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
+
+@Component("flightSearchInfo")
 public class FlightSearchInfo {
 
-	public FlightSearchInfo(String earliestDate, String destination) {
+	public FlightSearchInfo() {
 		super();
+	}
+	public FlightSearchInfo(String earliestDate, String destination) {
+		this();
 		this.earliestDate = earliestDate;
 		this.destination = destination;
 	}

@@ -1,10 +1,16 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
+
 import com.revature.domain.CommonLookup;
 
+@Component("loginInfo")
 public class LoginInfo {
-	public LoginInfo(String firstName, int userID, CommonLookup type) {
+	public LoginInfo() {
 		super();
+	}
+	public LoginInfo(String firstName, int userID, CommonLookup type) {
+		this();
 		this.firstName = firstName;
 		this.userID = userID;
 		this.type = type;

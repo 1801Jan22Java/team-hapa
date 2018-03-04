@@ -1,8 +1,15 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
+
+@Component("userID")
 public class UserID {
-	public UserID(int id) {
+	public UserID() {
 		super();
+	}
+
+	public UserID(int id) {
+		this();
 		this.id = id;
 	}
 

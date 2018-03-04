@@ -1,16 +1,20 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
+
+@Component("emailPass")
 public class EmailPass {
 
+	public EmailPass() {}
+	
 	public EmailPass(String email, String password) {
-		super();
+		this();
 		this.email = email;
 		this.password = password;
 	}
 	
 	private String email;
 	private String password;
-	
 	
 	
 	public String getEmail() {

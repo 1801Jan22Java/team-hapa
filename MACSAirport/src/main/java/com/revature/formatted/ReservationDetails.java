@@ -1,12 +1,18 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
+
 import com.revature.domain.CommonLookup;
 import com.revature.domain.Flight;
 
+@Component("reservationDetails")
 public class ReservationDetails {
 	
-	public ReservationDetails(Flight flight, CommonLookup status, CommonLookup type) {
+	public ReservationDetails() {
 		super();
+	}
+	public ReservationDetails(Flight flight, CommonLookup status, CommonLookup type) {
+		this();
 		this.flight = flight;
 		this.status = status;
 		this.type = type;

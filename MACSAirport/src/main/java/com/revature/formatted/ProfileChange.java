@@ -1,7 +1,25 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
 
+@Component("profileChange")
 public class ProfileChange {
+	
+	public ProfileChange() {
+		super();
+	}
+
+	public ProfileChange(String firstname, String lastname, String email, String newpassword, String answer1,
+			String answer2, String answer3) {
+		this();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.newpassword = newpassword;
+		this.answer1 = answer1;
+		this.answer2 = answer2;
+		this.answer3 = answer3;
+	}
 	
 	private String firstname;
 	private String lastname;

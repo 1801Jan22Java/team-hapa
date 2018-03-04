@@ -1,9 +1,16 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
+
+@Component("flightID")
 public class FlightID {
 
-	public FlightID(int id) {
+	public FlightID() {
 		super();
+	}
+
+	public FlightID(int id) {
+		this();
 		this.id = id;
 	}
 

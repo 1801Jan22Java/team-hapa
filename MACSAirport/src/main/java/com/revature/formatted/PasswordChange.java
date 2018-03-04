@@ -1,10 +1,15 @@
 package com.revature.formatted;
 
+import org.springframework.stereotype.Component;
 
+@Component("passwordChange")
 public class PasswordChange {
 	
-	public PasswordChange(int id, String answer1, String answer2, String answer3, String newpassword) {
+	public PasswordChange() {
 		super();
+	}
+	public PasswordChange(int id, String answer1, String answer2, String answer3, String newpassword) {
+		this();
 		this.id = id;
 		this.answer1 = answer1;
 		this.answer2 = answer2;

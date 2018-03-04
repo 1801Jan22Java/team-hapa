@@ -5,7 +5,9 @@ import { RegistrationInfo } from '../../types/registration';
 import { Observable } from 'rxjs/Observable';
 
 import { SessionService } from '../../services/session/session.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account-registration',
@@ -54,30 +56,31 @@ export class AccountRegistrationComponent implements OnInit {
 
     this.http.post<any>(
       'http://localhost:8080/MACSAirport/util/register',
-      registrationInfo)
-      .subscribe(
-        data => {
-          console.log(data)
-          // this.router.navigateByUrl('/home');
-          this.emailErrorMessage = '';
-          // Login after registering
-          // this.session.login(
-          //   this.form.get("email").value,
-          //   this.form.get("password").value)
-          //   .subscribe(
-          //     data1 => {
-          //       this.session.setSession(data);
-          //       this.router.navigateByUrl('reservation/history');
-          //       this.emailErrorMessage = "";
-              // }
-            // )
+      registrationInfo).subscribe(
+        data=>{
+          this.session.setSession(data);
+          this.router.navigateByUrl("home");
         },
-        error => {
-          this.emailErrorMessage = "Email Taken";
-        }
+        error=>this.emailErrorMessage = "Email already taken."
       )
 
-    this.router.navigateByUrl('');
-  }
+  } 
+
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an ErrorObservable with a user-facing error message
+    return new ErrorObservable(
+      'Something bad happened; please try again later.');
+  };
 
 }

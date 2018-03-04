@@ -14,4 +14,5 @@ public interface CityDao {
 	public City getCityByName(String cityName, State thisState, Country thisCountry);
 	public List<City> getAllCities();
 	City getIntlCityByName(String cityName, Country thisCountry);
+	City getCityByOnlyName(String cityName);
 }

@@ -29,6 +29,19 @@ public class FlightDaoImpl implements FlightDao {
 		s.close();
 		return thisFlight;
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Flight> getFlightsByUserId(int userId){
+		Session s = HibernateUtil.getSession();
+		List<Flight> flights = s.createCriteria(Flight.class)
+				.add( Restrictions.lt("time", new Date()) )
+				.addOrder( Order.desc("time") )
+				.list();
+		return flights;
+	}
+	
 
 	@Override
 	public int addFlight(Flight thisFlight) {

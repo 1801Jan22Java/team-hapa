@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { auth } from '../../types/auth';
 import { user } from '../../types/user';
 import { Subscription } from 'rxjs';
@@ -28,55 +28,68 @@ export class SessionService {
 
   constructor(private http: HttpClient) { }
 
-  private user_id : string = "user_id"
-  private user_type : string = "user_type";
+  // Keys for localStorage
+  private user_id: string = "userID"
+  private firstName: string = "firstName"
+  private user_type: string = "user_type";
 
-  setSession(username: string, password: string) {
-    let u: user = { username, password };
+  public session$ : Observable<auth>;
+  public sub: Subscription;
 
+  setSession(email: string, password: string) : Observable<any>{
+    let u: user = { email, password };
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Access-Control-Allow-Origin':'*'
+      })
+    };
     // // Send a user object, and get an auth object array back.
-    this.http.post<auth[]>('util/login', u).subscribe(
-      // On successful login, store user_id and user_type into localStorage.
-      // Set the class variables.
-      data => {
-        localStorage.setItem(this.user_id, data[0].user_id.toString());
-        localStorage.setItem(this.user_type, data[0].user_type.toString());
-      },
-      error => console.log(error)
-    );
+    this.session$ =  this.http.post<auth>('http://localhost:8080/MACSAirport/util/login', u, httpOptions);
 
-    // For testing purposes
-    localStorage.setItem(this.user_id, username);
-    localStorage.setItem(this.user_type, password);
+    return this.session$;
+    // // For local testing purposes
+    // localStorage.setItem(this.user_id, email);
+    // localStorage.setItem(this.user_type, password);
   }
 
-  getSession(): auth {
-    let user_id = parseInt(localStorage.getItem(this.user_id))
-    let user_type = parseInt(localStorage.getItem(this.user_type))
-    return { user_id, user_type }
+  getSession(): Observable<auth>{
+    return this.session$;
+  }
+
+  setLocalStorage(data){
+    localStorage.setItem(this.user_id, data.userID.toString());
+    localStorage.setItem(this.firstName, data.firstName.toString());
+    localStorage.setItem(this.user_type, data.type.refValue.toString());
+    console.log(data.userID.toString())
+    console.log(data.firstName.toString())
+    console.log(data.type.refValue.toString())
   }
 
   clearSession() {
     localStorage.removeItem(this.user_id);
+    localStorage.removeItem(this.firstName);
     localStorage.removeItem(this.user_type);
   }
 
   // Implementation specific code
-  checkAdmin():boolean {
-    if (parseInt(localStorage.getItem(this.user_type))==2){
+  checkAdmin(): boolean {
+    
+    if (localStorage.getItem(this.user_type) == "Employee") {
+
       return true;
     }
     return false;
   }
-  checkUser():boolean {
-    if (parseInt(localStorage.getItem(this.user_type))==1){
+  checkUser(): boolean {
+    if (localStorage.getItem(this.user_type) == "Passenger") {
       return true;
     }
     return false;
   }
-  
-  checkLoggedIn(): boolean{
-    if (parseInt(localStorage.getItem(this.user_type))>=1 &&parseInt(localStorage.getItem(this.user_type)) !=undefined ){
+
+  checkLoggedIn(): boolean {
+    if (localStorage.getItem(this.user_type) == "Employee" ||
+      localStorage.getItem(this.user_type) == "Passenger") {
       return true;
     }
     return false;
@@ -84,5 +97,11 @@ export class SessionService {
 
   getUserId(): number {
     return parseInt(localStorage.getItem(this.user_id));
+  }
+  getFirstName(): string {
+    return localStorage.getItem(this.firstName);
+  }
+  getUserType(): string {
+    return localStorage.getItem(this.user_type);
   }
 }

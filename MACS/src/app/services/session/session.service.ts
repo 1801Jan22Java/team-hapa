@@ -33,36 +33,44 @@ export class SessionService {
   private firstName: string = "firstName"
   private user_type: string = "user_type";
 
-  public session$ : Observable<auth>;
-  public sub: Subscription;
+  public session$: Observable<auth>;
+  public firstname: string;
 
-  setSession(email: string, password: string) : Observable<any>{
+  login(email: string, password: string): Observable<any> {
     let u: user = { email, password };
     const httpOptions = {
-      headers: new HttpHeaders({ 
-        'Access-Control-Allow-Origin':'*'
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
       })
     };
-    // // Send a user object, and get an auth object array back.
-    this.session$ =  this.http.post<auth>('http://localhost:8080/MACSAirport/util/login', u, httpOptions);
-
+    
     return this.session$;
     // // For local testing purposes
     // localStorage.setItem(this.user_id, email);
     // localStorage.setItem(this.user_type, password);
   }
 
-  getSession(): Observable<auth>{
+  getSession(): Observable<auth> {
     return this.session$;
   }
 
-  setLocalStorage(data){
-    localStorage.setItem(this.user_id, data.userID.toString());
-    localStorage.setItem(this.firstName, data.firstName.toString());
+  setSession(data) {
+    if (data.firstName == null) {
+      localStorage.setItem(this.user_id, "Profile");
+    } else {
+      // Set firstname whenever the session is set.
+      // This is primarily for the navbar to display
+      // the firstname.
+      this.firstname = data.firstName
+      localStorage.setItem(this.firstName, data.firstName.toString());
+    }
+
+    if(data.userID == null){
+      localStorage.setItem(this.user_id, "0");
+    }else{
+      localStorage.setItem(this.user_id, data.userID.toString());
+    }
     localStorage.setItem(this.user_type, data.type.refValue.toString());
-    console.log(data.userID.toString())
-    console.log(data.firstName.toString())
-    console.log(data.type.refValue.toString())
   }
 
   clearSession() {
@@ -73,7 +81,7 @@ export class SessionService {
 
   // Implementation specific code
   checkAdmin(): boolean {
-    
+
     if (localStorage.getItem(this.user_type) == "Employee") {
 
       return true;

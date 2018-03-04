@@ -7,9 +7,7 @@
   </p>
   <p>Email:
     <input formControlName="email" name="setEmail" type="email">
-  </p>
-  <p>Username:
-    <input formControlName="username" name="setUsername" type="text">
+    <span>{{emailErrorMessage}}</span>
   </p>
   <p>Password:
     <input formControlName="password" name="setPassword" type="password">
@@ -20,15 +18,15 @@
   <br>
   <p>
     Security Question 1: What is your mother's maiden name?
-    <input formControlName="q1" name="setQ1Answer" type="text">
+    <input formControlName="answer1" name="setQ1Answer" type="text">
   </p>
   <p>
     Security Question 2: What city were you born in?
-    <input formControlName="q2" name="setQ2Answer" type="text">
+    <input formControlName="answer2" name="setQ2Answer" type="text">
   </p>
   <p>
     Security Question 3: What are the last 4 digits of your social security number?
-    <input formControlName="q3" name="setQ3Answer" type="number">
+    <input formControlName="answer3" name="setQ3Answer" type="number">
   </p>
   <br>
   <input type="submit" value="Register">

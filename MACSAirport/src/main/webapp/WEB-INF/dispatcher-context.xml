@@ -15,7 +15,8 @@
 	<!-- Enable MVC annotations -->
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<mvc:cors>
-		<mvc:mapping path="/**" />
+		<mvc:mapping path="/**" 
+		allowed-origins="http://localhost:4200"/>
 	</mvc:cors>
 	
 	<!-- Set up the view resolver! -->
@@ -32,5 +33,5 @@
 	</bean>
 
 	<!-- Enable static resource retrieval -->
-	<mvc:resources mapping="/**" location="/WEB-INF/static/"></mvc:resources>
+	<mvc:resources mapping="/**" location="/WEB-INF/"></mvc:resources>
 </beans>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SessionService } from '../../services/session/session.service';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -10,11 +12,21 @@ import { SessionService } from '../../services/session/session.service';
 })
 export class LoginComponent implements OnInit {
 
+  login$: Observable<any>;
+
   // Set form validation here
   form = new FormGroup({
-    email: new FormControl("", Validators.required),
+    email: new FormControl("", [
+      Validators.required,
+      Validators.email]),
     password: new FormControl("", Validators.required)
   })
+
+  // Error message
+  message: string = "";
+  // Subscription, used to close subscription to 
+  // prevent memory leaks.
+  sub: Subscription;
 
   constructor(private session: SessionService, private router: Router) { }
 
@@ -26,25 +38,17 @@ export class LoginComponent implements OnInit {
     let email = this.form.get("email").value;
     let password = this.form.get("password").value;
 
-    this.session.setSession(email, password);
-
-    if (this.session.checkUser()) {
-      this.router.navigateByUrl('reservation/history');
-    } else {
-      this.router.navigateByUrl('home');
-    }
+    this.sub = this.session.setSession(email, password).subscribe(
+      // On successful login, store user_id and user_type into localStorage.
+      // Set the class variables.
+      data => {
+        // Set session into localstorage, reroute, and clear message.
+        this.session.setLocalStorage(data);
+        this.router.navigateByUrl('reservation/history');
+        this.message = "";
+      },
+      error => this.message = "Wrong Credentials"
+    );
   }
-  // this.check();
-
-  // To allow only one result.
-  // check(){
-  //   let keepGoing =true;
-  //   while(keepGoing){
-  //     if(this.flights.length>0){
-  //       this.sub.unsubscribe();
-  //       keepGoing=false;
-  //     }
-  //   }
-  // }
 
 }

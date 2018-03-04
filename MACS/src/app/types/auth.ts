@@ -1,4 +1,9 @@
 export interface auth {
-    user_id: number,
-    user_type: number
+    userID: number,
+    firstName: string,
+    type: {
+        id: number,
+        refKey: string,
+        refValue: string
+    },
 }

@@ -12,8 +12,6 @@
         </a>
       </li>
     </ul>
-
-
     <ul class="navbar-nav" *ngIf="this.session.checkAdmin()">
       <li class="nav-item">
         <a class="nav-link" routerLink="admin/users">View Users</a>
@@ -25,11 +23,9 @@
       </li>
     </ul>
 
-
-
     <ul class="navbar-nav" *ngIf="this.session.checkLoggedIn()">
       <li class="nav-item">
-        <a class="nav-link" routerLink="profile">Username</a>
+        <a class="nav-link" routerLink="profile">{{this.session.getFirstName()}}</a>
       </li>
     </ul>
 

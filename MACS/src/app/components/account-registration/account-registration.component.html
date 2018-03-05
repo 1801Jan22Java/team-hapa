@@ -1,0 +1,33 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <p>First Name:
+    <input formControlName="firstname" name="setFirstName" type="text">
+  </p>
+  <p>Last Name:
+    <input formControlName="lastname" name="setLastName" type="text">
+  </p>
+  <p>Email:
+    <input formControlName="email" name="setEmail" type="email">
+    <span>{{emailErrorMessage}}</span>
+  </p>
+  <p>Password:
+    <input formControlName="password" name="setPassword" type="password">
+  </p>
+  <p>Confirm Password:
+    <input formControlName="confirmPassword" name="setConfirmedPassword" type="password">
+  </p>
+  <br>
+  <p>
+    Security Question 1: What is your mother's maiden name?
+    <input formControlName="answer1" name="setQ1Answer" type="text">
+  </p>
+  <p>
+    Security Question 2: What city were you born in?
+    <input formControlName="answer2" name="setQ2Answer" type="text">
+  </p>
+  <p>
+    Security Question 3: What are the last 4 digits of your social security number?
+    <input formControlName="answer3" name="setQ3Answer" type="number">
+  </p>
+  <br>
+  <input type="submit" value="Register">
+</form>

@@ -24,9 +24,6 @@ export class LoginComponent implements OnInit {
 
   // Error message
   message: string = "";
-  // Subscription, used to close subscription to 
-  // prevent memory leaks.
-  sub: Subscription;
 
   constructor(private session: SessionService, private router: Router) { }
 
@@ -38,12 +35,12 @@ export class LoginComponent implements OnInit {
     let email = this.form.get("email").value;
     let password = this.form.get("password").value;
 
-    this.sub = this.session.setSession(email, password).subscribe(
+    this.session.login(email, password).subscribe(
       // On successful login, store user_id and user_type into localStorage.
       // Set the class variables.
       data => {
         // Set session into localstorage, reroute, and clear message.
-        this.session.setLocalStorage(data);
+        this.session.setSession(data);
         this.router.navigateByUrl('reservation/history');
         this.message = "";
       },

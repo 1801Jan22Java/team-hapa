@@ -20,26 +20,80 @@ import { ViewFlightHistoryComponent } from '../components/view-flight-history/vi
 import { CheckInComponent } from '../components/check-in/check-in.component';
 import { FlightSearchResultsComponent } from '../components/flight-search-results/flight-search-results.component';
 import { TrackFlightStatusResultsComponent } from '../components/track-flight-status-results/track-flight-status-results.component';
+import { LoginComponent } from '../components/login/login.component';
+import { FlightDetailsComponent } from '../components/flight-details/flight-details.component'
+import { AdminFeedbackComponent } from '../components/admin-feedback/admin-feedback.component';
+import { AdminUsersComponent } from '../components/admin-users/admin-users.component';
+
+// Route guards
+import { AuthGuardService } from '../services/auth-guard/auth-guard.service';
+import { UserAuthGuardService } from '../services/user-auth-guard/user-auth-guard.service';
+import { VisitorAuthGuardService } from '../services/visitor-auth-guard/visitor-auth-guard.service';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
 
   { path: 'flightsearch', component: FlightSearchResultsComponent },
   { path: 'flightstatus', component: TrackFlightStatusResultsComponent },
+  { path: 'flight/details', component: FlightDetailsComponent },
 
-  { path: 'register', component: AccountRegistrationComponent },
+  {
+    path: 'register',
+    component: AccountRegistrationComponent,
+    canActivate: [VisitorAuthGuardService]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [VisitorAuthGuardService]
+  },
+
+  {
+    path: 'feedback',
+    component: SubmitFeedbackComponent,
+    canActivate: [UserAuthGuardService]
+  },
+  {
+    path: 'profile',
+    component: ChangeAccountDetailsComponent,
+    canActivate: [UserAuthGuardService]
+  },
+  {
+    path: 'reservation/history',
+    component: ViewFlightHistoryComponent,
+    canActivate: [UserAuthGuardService]
+  },
+  {
+    path: 'reservation/confirm',
+    component: ViewReservationsComponent,
+    canActivate: [UserAuthGuardService]
+  },
+  {
+    path: 'checkin',
+    component: ViewItineraryComponent,
+    canActivate: [UserAuthGuardService]
+  },
+
+  {
+    path: 'admin/feedback',
+    component: AdminFeedbackComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'admin/users',
+    component: AdminUsersComponent,
+    canActivate: [AuthGuardService]
+  },
+
+  { path: 'reservation/confirm', component: ViewReservationsComponent },
 
   { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },
   { path: 'app-flight-reservation', component: FlightReservationComponent },
-  { path: 'app-change-account-details', component: ChangeAccountDetailsComponent },
-  { path: 'app-view-reservations', component: ViewReservationsComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
-  { path: 'app-view-itinerary', component: ViewItineraryComponent },
-  { path: 'app-submit-feedback', component: SubmitFeedbackComponent },
-  { path: 'app-view-flight-history', component: ViewFlightHistoryComponent },
-  { path: 'app-check-in-component', component: CheckInComponent }
+  { path: 'app-check-in-component', component: CheckInComponent },
+  { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({

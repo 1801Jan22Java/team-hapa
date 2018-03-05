@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// Commented out, creating a new routermodule modle
-// import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -24,9 +24,17 @@ import { CheckInComponent } from './components/check-in/check-in.component';
 import { FlightSearchResultsComponent } from './components/flight-search-results/flight-search-results.component';
 import { TrackFlightStatusResultsComponent } from './components/track-flight-status-results/track-flight-status-results.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
+import { FlightDetailsComponent } from './components/flight-details/flight-details.component';
+import { AdminFeedbackComponent } from './components/admin-feedback/admin-feedback.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 
-
-
+//Services
+import { FlightSearchService } from './services/flight-search/flight-search.service';
+import { SessionService } from './services/session/session.service';
+import { AuthGuardService } from './services/auth-guard/auth-guard.service';
+import { UserAuthGuardService } from './services/user-auth-guard/user-auth-guard.service';
+import { VisitorAuthGuardService } from './services/visitor-auth-guard/visitor-auth-guard.service';
 
 // Create an array of routes.
 // Commented out to impelement app-router externally
@@ -56,15 +64,27 @@ import { FooterComponent } from './components/footer/footer.component';
     FlightSearchResultsComponent,
     TrackFlightStatusResultsComponent,
     FooterComponent,
+    LoginComponent,
+    FlightDetailsComponent,
+    AdminFeedbackComponent,
+    AdminUsersComponent,
   ],
   imports: [
     BrowserModule,
     // Add Router Module. First example is with appRoutes hard coded in 
     // AppModule. Commented out to implement app-router externally
     // RouterModule.forRoot(appRoutes)
-    AppRouterModule
+    AppRouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    FlightSearchService,
+    SessionService,
+    AuthGuardService,
+    UserAuthGuardService,
+    VisitorAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

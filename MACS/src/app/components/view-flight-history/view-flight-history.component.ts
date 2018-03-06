@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FlightHistoryService } from '../../services/flight-history/flight-history.service';
+import { FlightDetailService } from '../../services/flight-detail/flight-detail.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { flight } from '../../types/flight';
 import { Observable } from 'rxjs/Observable';
@@ -18,7 +19,7 @@ export class ViewFlightHistoryComponent implements OnInit {
 
   flights: flight[];
 
-  constructor(private router: Router, private service: FlightHistoryService) { }
+  constructor(private router: Router, private service: FlightHistoryService, private details: FlightDetailService) { }
 
   ngOnInit() {
     this.service.getFlightHistory();
@@ -27,6 +28,11 @@ export class ViewFlightHistoryComponent implements OnInit {
         this.flights = data;
       }
     );
+  }
+
+  flightDetails(flight: flight){
+    this.details.setFlightDetails(flight);
+    this.router.navigateByUrl("flight/details");
   }
 
   

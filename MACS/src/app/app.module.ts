@@ -35,6 +35,9 @@ import { SessionService } from './services/session/session.service';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 import { UserAuthGuardService } from './services/user-auth-guard/user-auth-guard.service';
 import { VisitorAuthGuardService } from './services/visitor-auth-guard/visitor-auth-guard.service';
+import { ChangeAccountDetailsService } from './services/change-account-details/change-account-details.service';
+import { FlightHistoryService } from './services/flight-history/flight-history.service';
+import { FillAccountDetailsService } from './services/fill-account-details/fill-account-details.service';
 import { FlightDetailService } from './services/flight-detail/flight-detail.service';
 
 // Create an array of routes.
@@ -86,6 +89,9 @@ import { FlightDetailService } from './services/flight-detail/flight-detail.serv
     AuthGuardService,
     UserAuthGuardService,
     VisitorAuthGuardService,
+    ChangeAccountDetailsService,
+    FlightHistoryService,
+    FillAccountDetailsService,
     FlightDetailService
   ],
   bootstrap: [AppComponent]

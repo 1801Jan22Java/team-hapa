@@ -11,16 +11,19 @@
         <!-- ...and other info as needed -->
         <th>Make a Reservation</th>
       </tr>
-      <tr *ngFor="let flight of flights">
-        <td>{{flight.city.country.name}}</td>
-        <td>{{flight.city.name}}</td>
-        <td>{{flight.time | date: "short"}}</td>
-        <td>{{flight.duration}}</td>
-        <td>{{flight.cost}}</td>
-        <td>{{flight.gate}}</td>
-        <td><button (click)="flightDetails(flight)" >Flight Details</button></td>
-      </tr>
+        <tr *ngFor="let flight of flights">
+          <td>{{flight.city.country.name}}</td>
+          <td>{{flight.city.name}}</td>
+          <td>{{flight.time | date: "short"}}</td>
+          <td>{{flight.duration}}</td>
+          <td>{{flight.cost}}</td>
+          <td>{{flight.gate}}</td>
+          <td><button (click)="flightDetails(flight)" >Flight Details</button></td>
+        </tr>
     </table>
     <p></p>
+  </div>
+  <div class="hidden">
+    <p>No results found!</p>
   </div>
 </div>

@@ -22,9 +22,14 @@ export class FlightSearchResultsComponent implements OnInit {
   flights: flight[];
 
   ngOnInit() {
+    let hiddenDiv = document.getElementsByClassName("hidden") as HTMLCollectionOf<HTMLElement>;
+    hiddenDiv[0].style.visibility = "hidden";
     this.service.flightResults.subscribe(
       data => {
         this.flights = data;
+        if (this.flights.length == 0) {
+          hiddenDiv[0].style.visibility = "visible";
+        }
       }
     );
   }
@@ -33,4 +38,5 @@ export class FlightSearchResultsComponent implements OnInit {
     this.details.setFlightDetails(flight);
     this.router.navigateByUrl("flight/details")
   }
+
 }

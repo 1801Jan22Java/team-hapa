@@ -25,7 +25,7 @@ export class ChangeAccountDetailsComponent implements OnInit {
                       answer3: new FormControl("")
                       });
 
-  constructor(private changeAccountDetails: ChangeAccountDetailsService, private http: HttpClient) { }
+  constructor(private changeAccountDetails: ChangeAccountDetailsService) { }
 
 
   ngOnInit() {

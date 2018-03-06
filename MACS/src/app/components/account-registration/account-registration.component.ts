@@ -18,6 +18,7 @@ export class AccountRegistrationComponent implements OnInit {
 
 
   emailErrorMessage: string;
+  passwordErrorMessage: string;
   registerResponse: Observable<any>;
 
   constructor(
@@ -54,16 +55,19 @@ export class AccountRegistrationComponent implements OnInit {
       answer3: this.form.get("answer3").value
     }
 
-    this.http.post<any>(
-      'http://localhost:8080/MACSAirport/util/register',
-      registrationInfo).subscribe(
-        data=>{
-          this.session.setSession(data);
-          this.router.navigateByUrl("home");
-        },
-        error=>this.emailErrorMessage = "Email already taken."
+    if(registrationInfo.password == this.form.get("confirmPassword").value){1
+      this.http.post<any>(
+        'http://localhost:8080/MACSAirport/util/register',
+        registrationInfo).subscribe(
+          data=>{
+            this.session.setSession(data);
+            this.router.navigateByUrl("home");
+          },
+          error=>this.emailErrorMessage = "Email already taken."
       )
-
+    } else {
+      this.passwordErrorMessage = "Passwords do not match."
+    }
   } 
 
 

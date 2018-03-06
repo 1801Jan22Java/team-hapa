@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FlightSearchService } from '../../services/flight-search/flight-search.service';
 import { Subscription } from 'rxjs';
 import { flight } from '../../types/flight';
+import { FlightDetailService } from '../../services/flight-detail/flight-detail.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,7 +13,11 @@ import { flight } from '../../types/flight';
 })
 export class FlightSearchResultsComponent implements OnInit {
 
-  constructor(private service: FlightSearchService) { }
+  constructor(
+    private service: FlightSearchService,
+    private details: FlightDetailService,
+    private router: Router
+  ) { }
 
   flights: flight[];
 
@@ -23,7 +29,8 @@ export class FlightSearchResultsComponent implements OnInit {
     );
   }
 
-  flightDetails(flightId: number){
-    console.log(flightId);
+  flightDetails(flight: flight) {
+    this.details.setFlightDetails(flight);
+    this.router.navigateByUrl("flight/details")
   }
 }

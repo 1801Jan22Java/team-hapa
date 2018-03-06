@@ -1,33 +1,33 @@
 <div class="jumbotron">
-  <h1 class="display-4">PHX to LA</h1>
+  <h1 class="display-4">{{flight.city.name}}</h1>
   <div class="row">
     <div class="col-sm-3">
 
-      <p class="lead">Time: </p>
+      <p class="lead">{{flight.time | date:"long" }}</p>
     </div>
     <div class="col-sm-3">
-      <p class="lead">Boarding: </p>
+      <p class="lead">Gate: {{flight.gate}}</p>
     </div>
 
   </div>
   <div class="row">
-    <p class="lead">Duration: </p>
+    <p class="lead">Duration: {{flight.duration}} minutes</p>
   </div>
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-3" *ngIf="this.session.checkUser()">
       <a routerLink="../../reservation/confirm">Reserve</a>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3" *ngIf="this.session.checkUser()">
       <a routerLink="../../checkin">Check In</a>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3" *ngIf="this.session.checkUser()">
       <a routerLink="../../reservation/history">Cancel</a>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-3">
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3" *ngIf="this.session.checkUser()">
       <a routerLink="../../checkin">Boarding Pass</a>
     </div>
   </div>

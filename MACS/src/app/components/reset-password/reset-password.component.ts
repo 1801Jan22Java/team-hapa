@@ -20,12 +20,14 @@ export class ResetPasswordComponent implements OnInit {
 
   form = new FormGroup({email: new FormControl(""),
                       password: new FormControl(""),
+                      confirmPassword: new FormControl(""),
                       answer1: new FormControl(""),
                       answer2: new FormControl(""),
                       answer3: new FormControl("")
                       });
 
   private message: string = "";
+  private passwordErrorMessage: string = "";
   
   // Keys for localStorage
   private user_id: string = "userID"
@@ -42,14 +44,20 @@ export class ResetPasswordComponent implements OnInit {
     let answer2 = this.form.get("answer2").value;
     let answer3 = this.form.get("answer3").value;
     let passwordInfo: passwordreset = { email, answer1, answer2, answer3, newpassword };
-    this.service.updatePassword(passwordInfo).subscribe(
-      data => {
-        this.session.setSession(data);
-        this.router.navigateByUrl('reservation/history');
-      },
-      error => {
-        this.message = "Answer(s) were incorrect!";
-      }
-    )
+    if(newpassword == this.form.get("confirmPassword").value && newpassword != ""){
+      this.service.updatePassword(passwordInfo).subscribe(
+        data => {
+          this.session.setSession(data);
+          this.router.navigateByUrl('reservation/history');
+        },
+        error => {
+          this.message = "Answer(s) were incorrect!";
+        }
+      )
+    } else if (newpassword == "") {
+      this.passwordErrorMessage = "Please enter a password."
+    } else {
+      this.passwordErrorMessage = "Passwords do not match."
+    }
   }
 }

@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
       // Set the class variables.
       data => {
         // Set session into localstorage, reroute, and clear message.
+        this.session.clearSession();
         this.session.setSession(data);
         this.router.navigateByUrl('reservation/history');
         this.message = "";

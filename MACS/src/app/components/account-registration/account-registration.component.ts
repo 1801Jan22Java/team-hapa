@@ -55,7 +55,7 @@ export class AccountRegistrationComponent implements OnInit {
       answer3: this.form.get("answer3").value
     }
 
-    if(registrationInfo.password == this.form.get("confirmPassword").value){1
+    if(registrationInfo.password == this.form.get("confirmPassword").value){
       this.http.post<any>(
         'http://localhost:8080/MACSAirport/util/register',
         registrationInfo).subscribe(

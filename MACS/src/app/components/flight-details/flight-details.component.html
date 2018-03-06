@@ -14,13 +14,13 @@
     <p class="lead">Duration: {{flight.duration}} minutes</p>
   </div>
   <div class="row">
-    <div class="col-sm-3" *ngIf="this.session.checkUser()">
+    <div class="col-sm-3" *ngIf="this.session.checkUser() && this.status=='Cancelled' && this.available">
       <a routerLink="../../reservation/confirm">Reserve</a>
     </div>
-    <div class="col-sm-3" *ngIf="this.session.checkUser()">
+    <div class="col-sm-3" *ngIf="this.session.checkUser() && this.status!='Cancelled' && this.avialable">
       <a routerLink="../../checkin">Check In</a>
     </div>
-    <div class="col-sm-3" *ngIf="this.session.checkUser()">
+    <div class="col-sm-3" *ngIf="this.session.checkUser() && this.status=='Reserved' && this.available">
       <a routerLink="../../reservation/history">Cancel</a>
     </div>
   </div>

@@ -31,6 +31,7 @@ import com.revature.domain.Flight;
 import com.revature.domain.Reservation;
 import com.revature.exception.FullFlightException;
 import com.revature.formatted.EmailPass;
+import com.revature.formatted.FeedbackInfo;
 import com.revature.formatted.FlightDetails;
 import com.revature.formatted.FlightID;
 import com.revature.formatted.FlightReservation;
@@ -199,9 +200,8 @@ public class EndUserController {
 	
 	@PostMapping("/feedback")
 	@ResponseBody
-	public ResponseEntity<Feedback> addFeedback(@RequestParam("userID") int userID,
-								@RequestParam("message") String message) {
-		Feedback feedback = new Feedback(eudi.getEndUserById(userID), message);
+	public ResponseEntity<Feedback> addFeedback(@RequestBody FeedbackInfo fbInfo) {
+		Feedback feedback = new Feedback(eudi.getEndUserById(fbInfo.getUserId()), fbInfo.getMessage());
 		fd.addFeedback(feedback);
 		
 		return new ResponseEntity<Feedback>(feedback, HttpStatus.OK);
@@ -221,7 +221,7 @@ public class EndUserController {
 	
 	@PostMapping("/admin/read")
 	@ResponseBody
-	public ResponseEntity<Feedback> deleteFeedback(@RequestParam("feedbackID") int feedbackID) {
+	public ResponseEntity<Feedback> deleteFeedback(@RequestBody int feedbackID) {
 		Feedback feedback = fd.getFeedbackById(feedbackID);
 		fd.deleteFeedback(feedback);
 
@@ -353,7 +353,7 @@ public class EndUserController {
 	
 	@PostMapping("/cancel")
 	@ResponseBody
-	public ResponseEntity<Reservation> cancel(@RequestParam("flightID") int flightID) {
+	public ResponseEntity<Reservation> cancel(@RequestBody int flightID) {
 		Reservation reservation = rdi.cancel(flightID);
 
 		return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);

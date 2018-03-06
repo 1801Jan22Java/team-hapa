@@ -39,6 +39,7 @@ import { ChangeAccountDetailsService } from './services/change-account-details/c
 import { FlightHistoryService } from './services/flight-history/flight-history.service';
 import { FillAccountDetailsService } from './services/fill-account-details/fill-account-details.service';
 import { FlightDetailService } from './services/flight-detail/flight-detail.service';
+import { BoardingPassComponent } from './components/boarding-pass/boarding-pass.component';
 
 // Create an array of routes.
 // Commented out to impelement app-router externally
@@ -72,6 +73,7 @@ import { FlightDetailService } from './services/flight-detail/flight-detail.serv
     FlightDetailsComponent,
     AdminFeedbackComponent,
     AdminUsersComponent,
+    BoardingPassComponent,
   ],
   imports: [
     BrowserModule,

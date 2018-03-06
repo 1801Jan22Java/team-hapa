@@ -1,5 +1,5 @@
 export interface passwordreset {
-    id : string,
+    email : string,
     answer1 : string,
     answer2 : string,
     answer3 : string,

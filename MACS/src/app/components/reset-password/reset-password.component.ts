@@ -18,12 +18,14 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(private service : ResetPasswordService, private session : SessionService, private router : Router) { }
 
-  form = new FormGroup({password: new FormControl(""),
+  form = new FormGroup({email: new FormControl(""),
+                      password: new FormControl(""),
                       answer1: new FormControl(""),
                       answer2: new FormControl(""),
                       answer3: new FormControl("")
                       });
 
+  private message: string = "";
   
   // Keys for localStorage
   private user_id: string = "userID"
@@ -34,16 +36,19 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    let email = this.form.get("email").value;
     let newpassword = this.form.get("password").value;
     let answer1 = this.form.get("answer1").value;
     let answer2 = this.form.get("answer2").value;
-    let answer3 = this.form.get("answer3").value
-    let id = localStorage.getItem(this.user_id);
-    let passwordInfo: passwordreset = { id, answer1, answer2, answer3, newpassword };
+    let answer3 = this.form.get("answer3").value;
+    let passwordInfo: passwordreset = { email, answer1, answer2, answer3, newpassword };
     this.service.updatePassword(passwordInfo).subscribe(
       data => {
         this.session.setSession(data);
         this.router.navigateByUrl('reservation/history');
+      },
+      error => {
+        this.message = "Answer(s) were incorrect!";
       }
     )
   }

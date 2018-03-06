@@ -35,6 +35,7 @@ import { SessionService } from './services/session/session.service';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 import { UserAuthGuardService } from './services/user-auth-guard/user-auth-guard.service';
 import { VisitorAuthGuardService } from './services/visitor-auth-guard/visitor-auth-guard.service';
+import { ChangeAccountDetailsService } from './services/change-account-details/change-account-details.service';
 
 // Create an array of routes.
 // Commented out to impelement app-router externally
@@ -84,7 +85,8 @@ import { VisitorAuthGuardService } from './services/visitor-auth-guard/visitor-a
     SessionService,
     AuthGuardService,
     UserAuthGuardService,
-    VisitorAuthGuardService],
+    VisitorAuthGuardService,
+    ChangeAccountDetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,15 +1,27 @@
 <div class="container">
     <div class="row">
-      <table id="flightTable">
+      <table id="flightTable" class="table">
         <tr>
-          <th>Origin</th>
-          <th>Destination</th>
-          <th>Departure Time</th>
-          <th>Arrival Time</th>
+          <th>Country</th>
+          <th>City</th>
+          <th>Departure</th>
+          <th>Duration (Minutes)</th>
+          <th>Cost</th>
+          <th>Gate</th>
           <!-- ...and other info as needed -->
+          <th>Make a Reservation</th>
         </tr>
         <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
         <!-- Pulls entries from the table containing records of past flights -->
+        <tr *ngFor="let flight of flights">
+          <td>{{flight.city.country.name}}</td>
+          <td>{{flight.city.name}}</td>
+          <td>{{flight.time | date: "short"}}</td>
+          <td>{{flight.duration}}</td>
+          <td>{{flight.cost}}</td>
+          <td>{{flight.gate}}</td>
+          <td><button (click)="flightDetails(flight.id)" >Flight Details</button></td>
+        </tr>
       </table>
     </div>
   </div>

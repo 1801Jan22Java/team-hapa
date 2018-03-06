@@ -67,9 +67,9 @@ export class SessionService {
       localStorage.setItem(this.firstName, data.firstName.toString());
     }
 
-    if(data.userID == null){
+    if (data.userID == null) {
       localStorage.setItem(this.user_id, "0");
-    }else{
+    } else {
       localStorage.setItem(this.user_id, data.userID.toString());
     }
     localStorage.setItem(this.user_type, data.type.refValue.toString());

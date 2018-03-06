@@ -20,17 +20,29 @@ export class FlightReservationComponent implements OnInit {
 
   flight: flight;
   available: boolean;
+  selected: string;
 
   ngOnInit() {
     this.flight = this.details.flight;
-    this.http.post<flightDetails>('http://localhost:8080/MACSAirport/util/flight-details', {id: this.flight.id})
-      .subscribe(
-        data=>{
-          let time = data.flight.time;
-          let date = new Date(time);
-          let now= new Date();
-          this.available = date > now;
-        }
-      );
+    this.selected = "Economy";
+  }
+
+  confirm() {
+    let fr = {
+      flightID: 1,
+      userID: this.session.getUserId(),
+      type: this.selected
+    }
+    console.log(fr);
+    this.http.post<{id: number}>("http://localhost:8080/MACSAirport/util/reserve",
+      fr
+    ).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  setSelected(val: string){
+    this.selected = val;
+    console.log(val)
   }
 }

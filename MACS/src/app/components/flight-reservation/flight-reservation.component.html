@@ -13,16 +13,17 @@
     <p class="lead">Duration: {{flight.duration}} minutes</p>
   </div>
   <div class="row">
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      <label class="btn btn-secondary active">
-        <input type="radio" name="options" id="first" autocomplete="off" checked> First Class
-      </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="options" id="economy" autocomplete="off"> Economy
-      </label>
-    </div>
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{selected}}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item" type="button" (click)="setSelected('First Class')">First Class</button>
+            <button class="dropdown-item" type="button" (click)="setSelected('Economy')">Economy</button>
+          </div>
+        </div>
     <div class="col-sm-3">
-      <a routerLink="../../reservation/confirm">Confirm</a>
+      <button (click)="confirm()">Confirm</button>
     </div>
   </div>
 

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChangeAccountDetailsService } from '../../services/change-account-details/change-account-details.service';
+import { FillAccountDetailsService } from '../../services/fill-account-details/fill-account-details.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { updateinfo } from '../../types/updateinfo';
+import { enduser } from '../../types/enduser';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
 
@@ -14,7 +16,15 @@ import { Subscription } from 'rxjs';
 })
 export class ChangeAccountDetailsComponent implements OnInit {
 
-  changeAccountDetails$: Observable<any>
+  public firstname: string = "";
+  public lastname: string = "";
+  public email: string = "";
+  public newpassword: string = "";
+  public answer1: string = "";
+  public answer2: string = "";
+  public answer3: string = "";
+
+  public user: enduser;
 
   form = new FormGroup({firstname: new FormControl(""),
                       lastname: new FormControl(""),
@@ -25,20 +35,24 @@ export class ChangeAccountDetailsComponent implements OnInit {
                       answer3: new FormControl("")
                       });
 
-  constructor(private changeAccountDetails: ChangeAccountDetailsService) { }
+  constructor(private changeAccountDetails: ChangeAccountDetailsService,
+              private fillAccountDetails: FillAccountDetailsService) { }
 
 
   ngOnInit() {
+    this.fillAccountDetails.autofill().subscribe(
+      data => {
+        this.firstname = data.firstname;
+        this.lastname = data.lastname;
+        this.email = data.email;
+        this.answer1 = data.secretAnswer1;
+        this.answer2 = data.secretAnswer2;
+        this.answer3 = data.secretAnswer3;
+      }
+    );
   }
 
   onSubmit() {
-    let firstname: string = "";
-    let lastname: string = "";
-    let email: string = "";
-    let newpassword: string = "";
-    let answer1: string = "";
-    let answer2: string = "";
-    let answer3: string = "";
 
     let firstname_ = "";
     let lastname_ = "";
@@ -60,12 +74,12 @@ export class ChangeAccountDetailsComponent implements OnInit {
 
     this.changeAccountDetails.update(firstname_, lastname_, email_, newpassword_, answer1_, answer2_, answer3_).subscribe(
       data => {
-        firstname = data.firstname;
-        lastname = data.lastname;
-        email = data.email;
-        answer1 = data.answer1;
-        answer2 = data.answer2;
-        answer3 = data.answer3;
+        this.firstname = data.firstname;
+        this.lastname = data.lastname;
+        this.email = data.email;
+        this.answer1 = data.answer1;
+        this.answer2 = data.answer2;
+        this.answer3 = data.answer3;
         console.log(data);
       }
     );

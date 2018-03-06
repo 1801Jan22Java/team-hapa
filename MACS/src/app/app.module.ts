@@ -37,6 +37,7 @@ import { UserAuthGuardService } from './services/user-auth-guard/user-auth-guard
 import { VisitorAuthGuardService } from './services/visitor-auth-guard/visitor-auth-guard.service';
 import { ChangeAccountDetailsService } from './services/change-account-details/change-account-details.service';
 import { FlightHistoryService } from './services/flight-history/flight-history.service';
+import { FillAccountDetailsService } from './services/fill-account-details/fill-account-details.service';
 
 // Create an array of routes.
 // Commented out to impelement app-router externally
@@ -88,7 +89,8 @@ import { FlightHistoryService } from './services/flight-history/flight-history.s
     UserAuthGuardService,
     VisitorAuthGuardService,
     ChangeAccountDetailsService,
-    FlightHistoryService],
+    FlightHistoryService,
+    FillAccountDetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

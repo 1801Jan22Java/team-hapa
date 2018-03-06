@@ -66,7 +66,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'reservation/confirm',
-    component: ViewReservationsComponent,
+    component: FlightReservationComponent,
     canActivate: [UserAuthGuardService]
   },
   {

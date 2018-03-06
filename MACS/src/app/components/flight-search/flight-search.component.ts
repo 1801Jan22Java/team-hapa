@@ -14,6 +14,8 @@ export class FlightSearchComponent implements OnInit {
  
   }
 
+  valuedate = new Date();
+
   form = new FormGroup({
     date: new FormControl("", Validators.required),
     destination: new FormControl("", Validators.required)
@@ -24,9 +26,12 @@ export class FlightSearchComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // console.log(this.form.get('date').value);
-    this.service.searchOpenFlights(this.form.get('date').value, this.form.get('destination').value);
-    this.router.navigateByUrl('flightsearch');
+    let date = this.form.get("date").value;
+    let destination = this.form.get("destination").value;
+
+    this.service.getFlightResults(date, destination);
+    
+    this.router.navigateByUrl('flightsearch')
   }
 
 }

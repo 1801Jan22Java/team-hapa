@@ -1,6 +1,8 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FlightSearchService } from '../../services/flight-search/flight-search.service';
 import { Subscription } from 'rxjs';
+import { flight } from '../../types/flight';
+
 
 @Component({
   selector: 'app-flight-search-results',
@@ -11,25 +13,17 @@ export class FlightSearchResultsComponent implements OnInit {
 
   constructor(private service: FlightSearchService) { }
 
-  public flights: any[];
-  public sub : Subscription;
+  flights: flight[];
 
   ngOnInit() {
-    this.sub = this.service.displayOpenFlights()
-      .subscribe(data => this.flights=data, error => console.log(error));
-    // this.check();
+    this.service.flightResults.subscribe(
+      data => {
+        this.flights = data;
+      }
+    );
   }
 
-  // To allow only one result.
-  // check(){
-  //   let keepGoing =true;
-  //   while(keepGoing){
-  //     if(this.flights.length>0){
-  //       this.sub.unsubscribe();
-  //       keepGoing=false;
-  //     }
-  //   }
-  // }
-
-
+  flightDetails(flightId: number){
+    console.log(flightId);
+  }
 }

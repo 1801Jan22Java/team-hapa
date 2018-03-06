@@ -1,29 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { of } from 'rxjs/observable/of';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable'
+import { auth } from '../../types/auth';
+import { flight } from '../../types/flight';
 
 @Injectable()
 export class FlightSearchService {
 
   constructor(private http: HttpClient) { }
 
-  // Temporary storage for observable
-  observable: Observable<any>;
+  flightResults: Observable<flight[]>;
 
-  // Test using array
-  array: String[] = ["flight number", "flight info", "flight fluff"];
-
-  searchOpenFlights(date: String, destination: String){
-    // return this.http.get(date + " " + destination);
-
-    // Placeholder
-    // return of(this.array);
-    this.observable= this.http.get('/assets/httpTest.json');
+  getFlightResults(earliestDate: string, destination: string) {
+    this.flightResults = this.http.post<flight[]>('http://localhost:8080/MACSAirport/util/flight-search',
+      { earliestDate: earliestDate, destination: destination });
   }
 
-  displayOpenFlights():Observable<any>{
-    return this.observable;
+  getObservable(): Observable<flight[]>{
+    return this.flightResults;
   }
-
+  
 }

@@ -1,6 +1,9 @@
 package com.revature.controller;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -234,13 +237,21 @@ public class EndUserController {
 	@PostMapping("/flight-search")
 	@ResponseBody
 	public ResponseEntity<List<Flight>> flightSearch(@RequestBody FlightSearchInfo search) {
-
 		CityDao cd = new CityDaoImpl();
 		List<Flight> flightList = null;
 		City city = cd.getCityByOnlyName(search.getDestination());
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+		String strDate = search.getEarliestDate();
+		Date date = null;
+		try {
+			date = sdf.parse(strDate);
+		} catch (ParseException e) {
+			
+		}
+		
 		//Parse search.getEarliestDate() into a Date object here.
-		//flightList = fdi.searchFlight(search.getEarliestDate(), city);
+		flightList = fdi.searchFlight(date, city);
 		
 		return new ResponseEntity<List<Flight>>(flightList, HttpStatus.OK);
 	}

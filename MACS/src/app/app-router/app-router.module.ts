@@ -44,6 +44,11 @@ const appRoutes: Routes = [
     canActivate: [VisitorAuthGuardService]
   },
   {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    canActivate: [VisitorAuthGuardService]
+  },
+  {
     path: 'login',
     component: LoginComponent,
     canActivate: [VisitorAuthGuardService]

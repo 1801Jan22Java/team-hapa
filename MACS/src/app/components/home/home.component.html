@@ -19,7 +19,7 @@
 </div>
 
 <div class="row text-center">
-  <div class="col-md-12 mb-1">
-    <button (click)="addFlights()" >Add Flights</button> &nbsp; &bull; &nbsp;  <a href="#">View All Passengers</a> &nbsp; &bull; &nbsp;  <a href="#">View All Feedback</a>
+  <div class="col-md-12 mb-1" *ngIf="this.session.checkAdmin()">
+    <button (click)="addFlights()" class="btn-warning">Add Flights</button>
   </div>
 </div>

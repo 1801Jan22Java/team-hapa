@@ -67,6 +67,7 @@ public class Flight implements Serializable {
 	@JoinColumn(name="CITY_ID")
 	private City city; // City departing to or arriving from
 
+
 	public int getId() {
 		return id;
 	}
@@ -122,6 +123,7 @@ public class Flight implements Serializable {
 	public void setUserId(City city) {
 		this.city = city;
 	}
+
 
 	public CommonLookup getType() {
 		return type;

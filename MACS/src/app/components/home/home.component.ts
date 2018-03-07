@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { FlightSearchComponent } from "../flight-search/flight-search.component";
 import { HttpClient } from '@angular/common/http';
 import { flight } from '../../types/flight';
+import { SessionService } from '../../services/session/session.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { flight } from '../../types/flight';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private session: SessionService) { }
 
   ngOnInit() {
   }

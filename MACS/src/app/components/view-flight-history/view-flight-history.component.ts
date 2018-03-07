@@ -19,7 +19,7 @@ export class ViewFlightHistoryComponent implements OnInit {
   // Keys for localStorage
   private user_id: string = "userID"
   private firstName: string = "firstName"
-  private user_type: string = "user_type";
+  private user_type: string = "user_type"; 
 
   flightHistory$: Observable<any>;
 

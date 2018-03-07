@@ -35,7 +35,6 @@ export class FlightReservationComponent implements OnInit {
       userID: this.session.getUserId(),
       type: this.selected
     }
-    console.log(fr)
     this.http.post<{id: number}>("http://localhost:8080/MACSAirport/util/reserve",
       fr
     ).subscribe(data => {
@@ -46,6 +45,5 @@ export class FlightReservationComponent implements OnInit {
 
   setSelected(val: string){
     this.selected = val;
-    console.log(val)
   }
 }

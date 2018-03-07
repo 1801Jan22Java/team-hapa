@@ -1,27 +1,30 @@
+<br>
+<h1 class="h3 mb-3 font-weight-normal text-center">Flight History</h1>
+<br>
 <div class="container">
-    <div class="row">
-      <table id="flightTable" class="table">
-        <tr>
-          <th>Country</th>
-          <th>City</th>
-          <th>Departure</th>
-          <th>Duration (Minutes)</th>
-          <th>Cost</th>
-          <th>Gate</th>
-          <!-- ...and other info as needed -->
-          <th>Make a Reservation</th>
-        </tr>
-        <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
-        <!-- Pulls entries from the table containing records of past flights -->
-        <tr *ngFor="let flight of flights">
-          <td>{{flight.city.country.name}}</td>
-          <td>{{flight.city.name}}</td>
-          <td>{{flight.time | date: "short"}}</td>
-          <td>{{flight.duration}}</td>
-          <td>{{flight.cost}}</td>
-          <td>{{flight.gate}}</td>
-          <td><button (click)="flightDetails(flight)" >Flight Details</button></td>
-        </tr>
-      </table>
-    </div>
+  <div class="row">
+    <table id="flightTable" class="table">
+      <tr>
+        <th>Country</th>
+        <th>City</th>
+        <th>Departure</th>
+        <th class="text-nowrap">Duration</th>
+        <th>Cost</th>
+        <th>Gate</th>
+        <!-- ...and other info as needed -->
+        <th></th>
+      </tr>
+      <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
+      <!-- Pulls entries from the table containing records of past flights -->
+      <tr *ngFor="let flight of flights">
+        <td>{{flight.city.country.name}}</td>
+        <td>{{flight.city.name}}</td>
+        <td class="text-nowrap">{{flight.time | date: "short"}}</td>
+        <td class="text-nowrap">{{flight.duration/60 | number:'1.0-0'}} hr {{flight.duration%60}} min</td>
+        <td>${{flight.cost | number:'1.0-2'}}</td>
+        <td>{{flight.gate}}</td>
+        <td><button class="btn btn-primary btn-block" (click)="flightDetails(flight)" >Details</button></td>
+      </tr>
+    </table>
   </div>
+</div>

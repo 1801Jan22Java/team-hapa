@@ -1,13 +1,19 @@
-<div *ngFor="let feedback of feedbackList"> 
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">{{feedback.endUser.firstname}} {{feedback.endUser.lastname}}</h5>
-      <p class="card-text">
-        {{feedback.message}}
-        <br>
-        {{feedback.creationDate}}
-      </p>
-      <!-- <a routerLink="" class="btn btn-primary">Delete</a> -->
+<br>
+<h1 class="h3 mb-3 font-weight-normal text-center">Customer Feedback</h1>
+<br>
+<div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-6">
+    <div *ngFor="let feedback of feedbackList"> 
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{feedback.endUser.firstname}} {{feedback.endUser.lastname}}</h5>
+          <p class="card-text">"{{feedback.message}}"</p>
+          <p class="card-text text-nowrap">{{feedback.creationDate | date: "short"}}</p>
+          <!-- <a routerLink="" class="btn btn-primary">Delete</a> -->
+        </div>
+      </div>
     </div>
   </div>
-</div> 
+  <div class="col-sm-3"></div>
+</div>

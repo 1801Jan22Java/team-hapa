@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { flightDetails } from '../../types/flightDetails';
 import { flight } from '../../types/flight';
 import { SessionService } from '../../services/session/session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-flight-reservation',
@@ -15,7 +16,8 @@ export class FlightReservationComponent implements OnInit {
   constructor(
     private details: FlightDetailService,
     private http: HttpClient,
-    private session: SessionService
+    private session: SessionService,
+    private router: Router
   ) { }
 
   flight: flight;
@@ -33,16 +35,15 @@ export class FlightReservationComponent implements OnInit {
       userID: this.session.getUserId(),
       type: this.selected
     }
-    console.log(fr);
     this.http.post<{id: number}>("http://localhost:8080/MACSAirport/util/reserve",
       fr
     ).subscribe(data => {
-      console.log(data);
+      
     });
+    this.router.navigateByUrl('checkin');
   }
 
   setSelected(val: string){
     this.selected = val;
-    console.log(val)
   }
 }

@@ -14,6 +14,9 @@
     <p class="lead">Duration: {{flight.duration}} minutes</p>
   </div>
   <div class="row">
+    <p class="lead">{{flight.cost | currency: 'USD'}}</p>
+  </div>
+  <div class="row">
     <div>
     <div class="col-sm-3" *ngIf="this.session.checkUser() && this.status=='Cancelled' && this.available">
       <a routerLink="../../reservation/confirm">Reserve</a>

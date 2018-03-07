@@ -13,15 +13,22 @@
     <p class="lead">Duration: {{flight.duration}} minutes</p>
   </div>
   <div class="row">
-      <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{selected}}
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item" type="button" (click)="setSelected('First Class')">First Class</button>
-            <button class="dropdown-item" type="button" (click)="setSelected('Economy')">Economy</button>
-          </div>
-        </div>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        {{selected}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <button class="dropdown-item" type="button" (click)="setSelected('First Class')">First Class</button>
+        <button class="dropdown-item" type="button" (click)="setSelected('Economy')">Economy</button>
+      </div>
+    </div>
+    <div class="col-sm-3" *ngIf="selected=='First Class'">
+      <div>{{flight.cost + 100 | currency: 'USD'}}</div>
+    </div>
+    <div class="col-sm-3" *ngIf="selected=='Economy'">
+      <div>{{flight.cost | currency: 'USD'}}</div>
+    </div>
     <div class="col-sm-3">
       <button (click)="confirm()">Confirm</button>
     </div>

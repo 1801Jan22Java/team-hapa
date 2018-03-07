@@ -34,16 +34,18 @@ export class FlightDetailsComponent implements OnInit {
     this.http.post<{ id: number, status: { refValue: string } }>('http://localhost:8080/MACSAirport/util/check-reserved',
       {
         userID: this.session.getUserId(),
-        flightID: this.flight.id
+        flightID: this.flight.id,
+
       })
       .subscribe(
         data => {
           this.reservation = data.id;
           this.status = data.status.refValue;
-          console.log(status)
+          console.log(this.reservation + " " + this.status+" "+ this.available)
         },
         error => {
-          this.status = error.status.refValue;
+          this.status = "Cancelled";
+          console.log(this.reservation + " " + this.status+" "+ this.available)
         }
       )
   }

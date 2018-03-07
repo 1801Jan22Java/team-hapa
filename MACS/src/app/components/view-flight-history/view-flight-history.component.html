@@ -13,14 +13,14 @@
         </tr>
         <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
         <!-- Pulls entries from the table containing records of past flights -->
-        <tr *ngFor="let flight of flights">
-          <td>{{flight.city.country.name}}</td>
-          <td>{{flight.city.name}}</td>
-          <td>{{flight.time | date: "short"}}</td>
-          <td>{{flight.duration}}</td>
-          <td>{{flight.cost}}</td>
-          <td>{{flight.gate}}</td>
-          <td><button (click)="flightDetails(flight)" >Flight Details</button></td>
+        <tr *ngFor="let reservation of reservations">
+          <td>{{reservation.flight.city.country.name}}</td>
+          <td>{{reservation.flight.city.name}}</td>
+          <td>{{reservation.flight.time | date: "short"}}</td>
+          <td>{{reservation.flight.duration}}</td>
+          <td>{{reservation.flight.cost}}</td>
+          <td>{{reservation.flight.gate}}</td>
+          <td><button (click)="flightDetails(reservation.flight)" >Flight Details</button></td>
         </tr>
       </table>
     </div>

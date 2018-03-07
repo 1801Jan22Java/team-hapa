@@ -3,6 +3,7 @@ package com.revature.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,7 @@ import com.revature.formatted.ProfileChange;
 import com.revature.formatted.RegistrationInfo;
 import com.revature.formatted.ReservationDetails;
 import com.revature.formatted.UserID;
+import com.revature.util.FlightService;
 
 
 @Controller("endUserController")
@@ -227,6 +229,12 @@ public class EndUserController {
 
 		//Can simply return nothing if we want to.
 		return new ResponseEntity<Feedback>(feedback, HttpStatus.OK);
+	}
+	
+	@PostMapping("/admin/add-flights")
+	@ResponseBody
+	public ResponseEntity<ArrayList<Flight>> addFlights() {
+		return new ResponseEntity<ArrayList<Flight>>(FlightService.addFlights(), HttpStatus.OK);
 	}
 	
 

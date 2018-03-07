@@ -64,7 +64,7 @@ export class SessionService {
       // This is primarily for the navbar to display
       // the firstname.
       this.firstname = data.firstName
-      localStorage.setItem(this.firstName, data.firstName.toString());
+      localStorage.setItem(this.firstName, data.firstName);
     }
 
     if (data.userID == null) {

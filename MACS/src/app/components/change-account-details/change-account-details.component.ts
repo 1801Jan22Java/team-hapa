@@ -26,6 +26,8 @@ export class ChangeAccountDetailsComponent implements OnInit {
 
   public user: enduser;
 
+  private emailErrorMessage: string = "";
+
   form = new FormGroup({firstname: new FormControl(""),
                       lastname: new FormControl(""),
                       email: new FormControl(""),
@@ -80,7 +82,9 @@ export class ChangeAccountDetailsComponent implements OnInit {
         this.answer1 = data.answer1;
         this.answer2 = data.answer2;
         this.answer3 = data.answer3;
-        console.log(data);
+      },
+      error => {
+        this.emailErrorMessage = "Email already exists."
       }
     );
   }

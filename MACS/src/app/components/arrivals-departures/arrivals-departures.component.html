@@ -12,10 +12,10 @@
             <th></th>
           </tr>
           <tr *ngFor="let arrival of arrivals">
-            <td>{{arrival.time | date: "short"}}</td>
+            <td class="text-nowrap">{{arrival.time | date: "short"}}</td>
             <td>{{arrival.city.name}}, {{arrival.city.country.name}}</td>
             <td>{{arrival.gate}}</td>
-            <td><button (click)="flightDetails(arrival)" >Flight Details</button></td>
+            <td><button class="btn btn-primary btn-block" (click)="flightDetails(arrival)" >Details</button></td>
           </tr>
           <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
         </table>
@@ -30,10 +30,10 @@
               <th></th>
           </tr>
           <tr *ngFor="let departure of departures">
-              <td>{{departure.time | date: "short"}}</td>
+              <td class="text-nowrap">{{departure.time | date: "short"}}</td>
               <td>{{departure.city.name}}, {{departure.city.country.name}}</td>
               <td>{{departure.gate}}</td>
-              <td><button (click)="flightDetails(departure)" >Flight Details</button></td>
+              <td><button class="btn btn-primary btn-block" (click)="flightDetails(departure)" >Details</button></td>
             </tr>
           <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
         </table>

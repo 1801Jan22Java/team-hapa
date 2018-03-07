@@ -6,9 +6,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.revature.domain.CommonLookup;
+import com.revature.domain.EndUser;
 import com.revature.domain.Flight;
 import com.revature.domain.Reservation;
 import com.revature.util.HibernateUtil;
@@ -16,6 +18,12 @@ import com.revature.util.HibernateUtil;
 @Repository("reservationDaoImpl")
 public class ReservationDaoImpl implements ReservationDao {
 
+	@Autowired
+	EndUserDao eudi;
+
+	@Autowired
+	FlightDao fdi;
+	
 	@Override
 	public Reservation getReservationById(int id) {
 		Session s = HibernateUtil.getSession();
@@ -42,6 +50,45 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		s.close();
 		return thisReservation;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Reservation> getReservationsByUserID(int userID) {
+		Session s = HibernateUtil.getSession();
+		List<Reservation> reservations = null;
+		try {
+			Criteria c = s.createCriteria(Reservation.class);
+			c.add(Restrictions.eqOrIsNull("id", userID));
+			reservations = c.list();
+			
+		} catch (Exception e) {
+			reservations = null;
+		}
+		
+		s.close();
+		return reservations;
+	}
+	
+	@Override
+	public Reservation getReservationByUserAndFlightID(int userID, int flightID) {
+		Session s = HibernateUtil.getSession();
+		Reservation reservation = null;
+		List<Reservation> reservations = null;
+		
+		EndUser user = eudi.getEndUserById(userID);
+		Flight flight = fdi.getFlightById(flightID);
+		
+		try {
+			Criteria c = s.createCriteria(Reservation.class);
+			c.add(Restrictions.eq("endUser", user));
+			c.add(Restrictions.eq("flight", flight));
+			reservations = c.list();
+			reservation = reservations.get(0);
+		} catch (Exception e) {
+			reservation = null;
+		}
+		return reservation;
 	}
 
 	@Override

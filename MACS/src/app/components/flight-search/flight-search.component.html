@@ -1,7 +1,13 @@
+<h1 class="h3 mb-3 font-weight-normal text-center">Find Earliest Flight</h1>
 <form (ngSubmit)='onSubmit()' [formGroup]="form">
-  <input type="date" name="date" value=" " 
-    formControlName="date">
-  <label for="destination">Destination</label>
-  <input type="text" name="destination" formControlName="destination">
-  <input type="submit" value="Search Flights">
+  <div class="form-group">
+    <label for="destination">Destination</label>
+    <input class="form-control" type="text" name="destination" id="destination" formControlName="destination">
+  </div>
+  <div class="form-group">
+    <label for="date">Earliest Departure Date</label>
+    <input class="form-control" type="date" name="date" id="date" value=" " formControlName="date">
+  </div>
+  
+  <input class="btn btn-primary btn-block" type="submit" value="Search Flights">
 </form>

@@ -1,5 +1,10 @@
+<h1 class="h3 mb-3 font-weight-normal text-center">Track Flight</h1>
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
-  <input type="text" formControlName="flightID">
-  <input  type="submit" value="Search by Flight ID">
+  <div class="form-group">
+    <label for="flightID">Flight Number</label>
+    <input type="text" formControlName="flightID" name="flightID" id="flightID"  class="form-control" required>
+  </div>
+  <input class="btn btn-primary btn-block" type="submit" value="Find Flight">
+  
 </form>
 

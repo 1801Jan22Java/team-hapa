@@ -31,6 +31,7 @@ import com.revature.domain.Feedback;
 import com.revature.domain.Flight;
 import com.revature.domain.Reservation;
 import com.revature.exception.FullFlightException;
+import com.revature.formatted.CheckReserved;
 import com.revature.formatted.EmailPass;
 import com.revature.formatted.FeedbackInfo;
 import com.revature.formatted.FlightDetails;
@@ -356,6 +357,19 @@ public class EndUserController {
 		
 		return new ResponseEntity<ReservationDetails>(reservationDetails, HttpStatus.OK);
 		
+	}
+
+	@PostMapping("/check-reserved")
+	@ResponseBody
+	public ResponseEntity<Reservation> checkIfReserved(@RequestBody CheckReserved checkReserved) {
+		Reservation reservation = rdi.getReservationByUserAndFlightID(checkReserved.getUserID(),
+				checkReserved.getFlightID());
+
+		if (reservation != null) {
+			return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+		}
+		return new ResponseEntity<Reservation>(reservation, HttpStatus.BAD_REQUEST);
+
 	}
 	
 	

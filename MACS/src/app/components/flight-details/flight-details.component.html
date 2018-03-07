@@ -15,7 +15,7 @@
   </div>
   <div class="row">
     <div>
-    <!-- <div class="col-sm-3" *ngIf="this.session.checkUser() && this.status=='Cancelled' && this.available"> -->
+    <div class="col-sm-3" *ngIf="this.session.checkUser() && this.status=='Cancelled' && this.available">
       <a routerLink="../../reservation/confirm">Reserve</a>
     </div>
     <div class="col-sm-3" *ngIf="this.session.checkUser() && this.status!='Cancelled' && this.avialable">

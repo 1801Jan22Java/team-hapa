@@ -24,7 +24,13 @@ export class FlightDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.flight = this.details.getFlightDetails();
-    this.http.post<flightDetails>('http://localhost:8080/MACSAirport/util/flight-details', {id: this.flight.id})
+    this.http.post<flightDetails>('http://localhost:8080/MACSAirport/util/check-reserved', 
+    {
+      userID: this.session.getUserId(),
+      flightID: this.flight.id
+    }
+    
+  )
       .subscribe(
         data=>{
           this.status = data.status.refValue;

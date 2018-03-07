@@ -29,7 +29,7 @@ export class FlightReservationComponent implements OnInit {
 
   confirm() {
     let fr = {
-      flightID: 1,
+      flightID: this.flight.id,
       userID: this.session.getUserId(),
       type: this.selected
     }

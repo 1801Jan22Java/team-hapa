@@ -136,8 +136,8 @@ public class FlightDaoImpl implements FlightDao {
 		Session s = HibernateUtil.getSession();
 		List<Flight> flights = s.createCriteria(Flight.class)
 				.add( Restrictions.eq("type", new CommonLookupDaoImpl().getCommonLookupByName("FLIGHT_TYPE", "Arrival")) )
-				.add( Restrictions.le("time", new Date()) )
-				.addOrder( Order.desc("time") )
+				.add( Restrictions.ge("time", new Date()) )
+				.addOrder( Order.asc("time") )
 				.setMaxResults(10)
 				.list();
 		s.close();

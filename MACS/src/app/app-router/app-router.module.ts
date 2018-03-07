@@ -93,7 +93,7 @@ const appRoutes: Routes = [
 
   { path: 'reservation/confirm', component: ViewReservationsComponent },
 
-  { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
+  { path: 'pending', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },
   { path: 'app-flight-reservation', component: FlightReservationComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },

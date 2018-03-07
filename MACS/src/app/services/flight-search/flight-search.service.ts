@@ -19,5 +19,9 @@ export class FlightSearchService {
   getObservable(): Observable<flight[]>{
     return this.flightResults;
   }
+
+  displayArrivalsDepartures():Observable<any>{
+    return this.http.post('http://localhost:8080/MACSAirport/util/all-flights', '');
+  }
   
 }

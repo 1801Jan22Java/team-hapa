@@ -24,20 +24,21 @@ export class FlightDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.flight = this.details.getFlightDetails();
-    this.http.post<flightDetails>('http://localhost:8080/MACSAirport/util/check-reserved', 
-    {
-      userID: this.session.getUserId(),
-      flightID: this.flight.id
-    }
-    
-  )
+    let time = this.flight.time;
+    let date = new Date(time);
+    let now = new Date();
+    this.available = date > now;
+    this.http.post<flightDetails>('http://localhost:8080/MACSAirport/util/check-reserved',
+      {
+        userID: this.session.getUserId(),
+        flightID: this.flight.id
+      })
       .subscribe(
-        data=>{
-          this.status = data.status.refValue;
-          let time = data.flight.time;
-          let date = new Date(time);
-          let now= new Date();
-          this.available = date > now;
+        data => {
+          this.status="Reserved";
+        },
+        error=>{
+          this.status="Cancelled";
         }
       )
   }

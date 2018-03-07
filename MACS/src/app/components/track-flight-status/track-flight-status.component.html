@@ -1,5 +1,5 @@
-<form (ngSubmit)="onSubmit()">
-  <input type="text">
-  <input type="submit" value="Search by Flight ID">
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <input type="text" formControlName="flightID">
+  <input  type="submit" value="Search by Flight ID">
 </form>
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.revature.dao.CityDao;
 import com.revature.dao.CityDaoImpl;
-import com.revature.dao.CommonLookupDaoImpl;
+import com.revature.dao.CommonLookupDao;
 import com.revature.dao.EndUserDao;
 import com.revature.dao.FeedbackDao;
-import com.revature.dao.FlightDaoImpl;
+import com.revature.dao.FlightDao;
 import com.revature.dao.ReservationDao;
 import com.revature.domain.City;
 import com.revature.domain.CommonLookup;
@@ -53,7 +53,7 @@ import com.revature.util.FlightService;
 public class EndUserController {
 	
 	@Autowired
-	CommonLookupDaoImpl cldi;
+	CommonLookupDao cldi;
 	
 	@Autowired
 	EndUserDao eudi;
@@ -62,7 +62,7 @@ public class EndUserController {
 	FeedbackDao fd;
 	
 	@Autowired
-	FlightDaoImpl fdi;
+	FlightDao fdi;
 	
 	@Autowired
 	ReservationDao rdi;
@@ -78,8 +78,12 @@ public class EndUserController {
 
 		EndUser user = userInfo.createUser();
 		eudi.addEndUser(user);
+		LoginInfo li = user.convertToLoginInfo();
 		
-		return new ResponseEntity<LoginInfo>(user.convertToLoginInfo(), HttpStatus.OK);
+		Logger log = Logger.getRootLogger();
+		log.info("New user created by Id: " + li.getUserID());
+		
+		return new ResponseEntity<LoginInfo>(li, HttpStatus.OK);
 	}
 	
 	@PostMapping("/fillprofile")
@@ -168,6 +172,10 @@ public class EndUserController {
 		
 		if(user.getPassword().equals(toCheck.getPassword())) {
 			thisUser = toCheck.convertToLoginInfo();
+			
+			Logger log = Logger.getRootLogger();
+			log.info("User by Id: " + thisUser.getUserID() + "has logged in");
+			
 			return new ResponseEntity<LoginInfo>(thisUser, HttpStatus.OK);
 		}
 		
@@ -217,8 +225,11 @@ public class EndUserController {
 	@ResponseBody
 	public ResponseEntity<List<Feedback>> getAllFeedback() {
 		List<Feedback> feedbackList = fd.getAllFeedback();
-
-		return new ResponseEntity<List<Feedback>>(feedbackList, HttpStatus.OK);
+		if(feedbackList != null) {
+			return new ResponseEntity<List<Feedback>>(feedbackList, HttpStatus.OK);
+		}
+		return new ResponseEntity<List<Feedback>>(feedbackList, HttpStatus.BAD_REQUEST);
+		
 	}
 	
 	@PostMapping("/admin/users")

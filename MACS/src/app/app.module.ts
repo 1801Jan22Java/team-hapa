@@ -39,7 +39,7 @@ import { ChangeAccountDetailsService } from './services/change-account-details/c
 import { FlightHistoryService } from './services/flight-history/flight-history.service';
 import { FillAccountDetailsService } from './services/fill-account-details/fill-account-details.service';
 import { FlightDetailService } from './services/flight-detail/flight-detail.service';
-
+import { AdminFeedbackService } from './services/admin-feedback/admin-feedback.service';
 import { ResetPasswordService } from './services/reset-password/reset-password.service';
 
 
@@ -74,7 +74,6 @@ import { ResetPasswordService } from './services/reset-password/reset-password.s
     LoginComponent,
     FlightDetailsComponent,
     AdminFeedbackComponent,
-
     AdminUsersComponent
   ],
   imports: [
@@ -97,7 +96,8 @@ import { ResetPasswordService } from './services/reset-password/reset-password.s
     FlightHistoryService,
     FillAccountDetailsService,
     FlightDetailService,
-    ResetPasswordService
+    ResetPasswordService,
+    AdminFeedbackService
   ],
   bootstrap: [AppComponent]
 })

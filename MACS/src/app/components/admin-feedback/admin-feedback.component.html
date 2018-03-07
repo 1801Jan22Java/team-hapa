@@ -1,13 +1,13 @@
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Username</h5>
-    <p class="card-text">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel elit sollicitudin nunc interdum mollis auctor quis tortor.
-      Vestibulum scelerisque tempor ornare. Maecenas feugiat libero quis elit efficitur, eget commodo dolor efficitur. Donec
-      vel arcu sit amet velit tincidunt rutrum vel eget orci. Curabitur sit amet dui ac lectus imperdiet placerat. Etiam
-      lobortis tellus non erat tristique ullamcorper. Phasellus eget elit vel nunc vestibulum tempor at eget eros. Nullam
-      nec lobortis dui.
-    </p>
-    <a routerLink="" class="btn btn-primary">Delete</a>
+<div *ngFor="let feedback of feedbackList"> 
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{feedback.endUser.firstname}} {{feedback.endUser.lastname}}</h5>
+      <p class="card-text">
+        {{feedback.message}}
+        <br>
+        {{feedback.creationDate}}
+      </p>
+      <a routerLink="" class="btn btn-primary">Delete</a>
+    </div>
   </div>
-</div>
+</div> 

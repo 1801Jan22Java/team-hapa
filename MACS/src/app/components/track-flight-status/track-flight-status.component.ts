@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FlightSearchService } from '../../services/flight-search/flight-search.service';
+import { HttpClient } from '@angular/common/http';
+import { flight } from '../../types/flight';
+import { FlightDetailService } from '../../services/flight-detail/flight-detail.service';
+import { flightDetails } from '../../types/flightDetails';
 
 @Component({
   selector: 'app-track-flight-status',
@@ -10,19 +14,32 @@ import { FlightSearchService } from '../../services/flight-search/flight-search.
 })
 export class TrackFlightStatusComponent implements OnInit {
 
-  constructor(private router: Router, private service: FlightSearchService) {
- 
+  flight: flight;
+
+  constructor(private router: Router,
+    private service: FlightSearchService,
+    private http: HttpClient,
+    private details: FlightDetailService) {
+
   }
   form = new FormGroup({
-    date: new FormControl("", Validators.required),
-    destination: new FormControl("", Validators.required)
+    flightID: new FormControl("", Validators.required)
   })
 
   ngOnInit() {
   }
 
-  onSubmit(){
-    this.router.navigateByUrl('flight/details');
+  onSubmit() {
+    let id = parseInt(this.form.get("flightID").value);
+    console.log(id)
+    this.http.post<flightDetails>('http://localhost:8080/MACSAirport/util/flight-details',
+      { id: id }
+    ).subscribe(
+      data => {
+        this.details.setFlightDetails(data.flight);
+        this.router.navigateByUrl('flight/details');
+      }
+    ) 
   }
 
 }

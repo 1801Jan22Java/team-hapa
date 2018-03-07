@@ -39,7 +39,11 @@ import { ChangeAccountDetailsService } from './services/change-account-details/c
 import { FlightHistoryService } from './services/flight-history/flight-history.service';
 import { FillAccountDetailsService } from './services/fill-account-details/fill-account-details.service';
 import { FlightDetailService } from './services/flight-detail/flight-detail.service';
+
+import { BoardingPassComponent } from './components/boarding-pass/boarding-pass.component';
+
 import { ResetPasswordService } from './services/reset-password/reset-password.service';
+
 
 // Create an array of routes.
 // Commented out to impelement app-router externally
@@ -72,7 +76,9 @@ import { ResetPasswordService } from './services/reset-password/reset-password.s
     LoginComponent,
     FlightDetailsComponent,
     AdminFeedbackComponent,
-    AdminUsersComponent
+
+    AdminUsersComponent,
+    BoardingPassComponent
   ],
   imports: [
     BrowserModule,

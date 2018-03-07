@@ -7,10 +7,10 @@ import { flightDetails } from '../../types/flightDetails';
 
 @Component({
   selector: 'app-view-reservations',
-  templateUrl: './view-reservations.component.html',
-  styleUrls: ['./view-reservations.component.css']
+  templateUrl: './boarding-pass.component.html',
+  styleUrls: ['./boarding-pass.component.css']
 })
-export class ViewReservationsComponent implements OnInit {
+export class BoardingPassComponent implements OnInit {
 
   constructor(
     private details: FlightDetailService,

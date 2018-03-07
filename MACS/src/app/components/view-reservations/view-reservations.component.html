@@ -1,17 +1,46 @@
-<div class="container">
-    <div class="row">
-      <table id="flightTable">
-        <tr>
-          <th>Origin</th>
-          <th>Destination</th>
-          <th>Departure Time</th>
-          <th>Arrival Time</th>
-          <!-- ...and other info as needed -->
-          <th>View Itinerary</th>
-          <th>Cancel Reservation</th>
-        </tr>
-        <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
-        <!-- Create buttons that allow Users to cancel the corresponding flight -->
-      </table>
+<div class="jumbotron">
+  <h1 class="display-4">{{flight.city.name}}</h1>
+  <div class="row">
+    <div class="col-sm-3">
+
+      <p class="lead">{{flight.time | date:"long" }}</p>
+    </div>
+    <div class="col-sm-3">
+      <p class="lead">Gate: {{flight.gate}}</p>
+    </div>
+    <!-- "Barcode generated with TEC-IT Barcode Software"  -->
+    <table>
+      <tr>
+        <td style='padding:10px; text-align:center; font-size:15px; font-family:Arial,Helvetica;'>
+          <a href='https://www.tec-it.com' title='Barcode Software by TEC-IT'>
+            <img src='https://www.tec-it.com/pics/banner/web/TEC-IT_Banner_120x42.gif' alt='Barcode Software by TEC-IT' border='0' />
+          </a>
+          <br/>
+          <a href='https://www.tec-it.com' title='Barcode Software by TEC-IT'>Barcode Software</a>
+        </td>
+        <td>
+          <img src='https://barcode.tec-it.com/barcode.ashx?data=This+is+a+PDF417+by+TEC-IT&code=PDF417&dpi=96&dataseparator=' alt='Barcode Generator TEC-IT'
+          />
+        </td>
+      </tr>
+    </table>
+
+  </div>
+  <div class="row">
+    <p class="lead">Duration: {{flight.duration}} minutes</p>
+  </div>
+
+  <div class="btn-group btn-group-toggle row" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+      <input type="radio" name="options" id="first" autocomplete="off" checked> First Class
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" id="economy" autocomplete="off"> Economy
+    </label>
+  </div>
+  <div class="row">
+    <div class="col-sm-3" *ngIf="this.session.checkUser() && this.available">
+      <a routerLink="../../reservation/confirm"></a>
     </div>
   </div>
+</div>

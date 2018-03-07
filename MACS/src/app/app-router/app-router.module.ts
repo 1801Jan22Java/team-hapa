@@ -24,6 +24,7 @@ import { LoginComponent } from '../components/login/login.component';
 import { FlightDetailsComponent } from '../components/flight-details/flight-details.component'
 import { AdminFeedbackComponent } from '../components/admin-feedback/admin-feedback.component';
 import { AdminUsersComponent } from '../components/admin-users/admin-users.component';
+import { BoardingPassComponent } from '../components/boarding-pass/boarding-pass.component';
 
 // Route guards
 import { AuthGuardService } from '../services/auth-guard/auth-guard.service';
@@ -71,7 +72,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'reservation/confirm',
-    component: ViewReservationsComponent,
+    component: FlightReservationComponent,
     canActivate: [UserAuthGuardService]
   },
   {
@@ -91,7 +92,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService]
   },
 
-  { path: 'reservation/confirm', component: ViewReservationsComponent },
+  { path: 'reservation/pass', component: BoardingPassComponent },
 
   { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },

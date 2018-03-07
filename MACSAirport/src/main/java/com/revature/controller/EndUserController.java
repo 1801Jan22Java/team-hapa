@@ -225,8 +225,11 @@ public class EndUserController {
 	@ResponseBody
 	public ResponseEntity<List<Feedback>> getAllFeedback() {
 		List<Feedback> feedbackList = fd.getAllFeedback();
-
-		return new ResponseEntity<List<Feedback>>(feedbackList, HttpStatus.OK);
+		if(feedbackList != null) {
+			return new ResponseEntity<List<Feedback>>(feedbackList, HttpStatus.OK);
+		}
+		return new ResponseEntity<List<Feedback>>(feedbackList, HttpStatus.BAD_REQUEST);
+		
 	}
 	
 	@PostMapping("/admin/users")

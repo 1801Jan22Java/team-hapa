@@ -67,8 +67,7 @@ public class Flight implements Serializable {
 	@JoinColumn(name="CITY_ID")
 	private City city; // City departing to or arriving from
 	
-	@OneToMany(mappedBy="flight",fetch=FetchType.EAGER)
-	private List<Reservation> reservations;
+
 
 	public int getId() {
 		return id;
@@ -126,13 +125,7 @@ public class Flight implements Serializable {
 		this.city = city;
 	}
 
-	public List<Reservation> getReservations() {
-		return reservations;
-	}
 
-	public void setReservations(List<Reservation> reservations) {
-		this.reservations = reservations;
-	}
 
 	public CommonLookup getType() {
 		return type;
@@ -153,7 +146,7 @@ public class Flight implements Serializable {
 	@Override
 	public String toString() {
 		return "Flight [gate=" + gate + ", time=" + time + ", cost=" + cost + ", duration=" + duration
-				+ ", type=" + type + ", city=" + city + ", reservations=" + reservations + "]";
+				+ ", type=" + type + ", city=" + city + "]";
 	}
 
 }

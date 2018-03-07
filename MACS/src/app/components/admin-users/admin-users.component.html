@@ -7,15 +7,13 @@
         <th>Email</th>
         <th>No Fly</th>
         <th></th>
-        <th></th>
       </tr>
       <tr *ngFor="let user of users">
           <td>{{user.creationDate | date: "short"}}</td>
           <td>{{user.firstname}} {{user.lastname}}</td>
           <td>{{user.email}}</td>
           <td>{{user.noFly}}</td>
-          <td><a href="">Fly</a></td>
-          <td><a href="">No Fly</a></td>
+          <td><button (click)="noFly(user)" *ngIf="!user.noFly">No Fly</button></td>
         </tr>
       <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
       <!-- Create buttons that allow Users to book the corresponding flight -->

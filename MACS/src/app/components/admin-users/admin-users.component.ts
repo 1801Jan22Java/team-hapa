@@ -19,6 +19,7 @@ export class AdminUsersComponent implements OnInit {
 
   public users: any[];
   public sub : Subscription;
+  public aUser : enduser;
 
   ngOnInit() {
     this.http.post<any>(
@@ -28,6 +29,13 @@ export class AdminUsersComponent implements OnInit {
         this.users=data;
         console.log(this.users);
       });
+  }
+
+  noFly(thisUser) {
+
+    this.http.post<enduser>('http://localhost:8080/MACSAirport/util/admin/nofly', { id : thisUser.id }).subscribe(
+      data => thisUser.noFly = true
+    );
   }
 
 }

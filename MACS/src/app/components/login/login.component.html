@@ -1,18 +1,37 @@
-<h1>Login</h1>
-<div class="">
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+<br>
+<h1 class="h5 mb-3 font-weight-normal text-danger text-center">{{message}}</h1>
+<h1 class="h3 mb-3 font-weight-normal text-center">Login</h1>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+  <div class="col-sm-4"></div>
 </div>
-<h1>{{message}}</h1>
-<a routerLink="../reset-password">Forgot Password?</a>
-<a routerLink="../register">Register</a>
+<br>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <a routerLink="../reset-password">Forgot Password?</a>
+  </div>
+  <div class="col-sm-4"></div>
+</div>
+<br>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <a routerLink="../register">Register</a>
+  </div>
+  <div class="col-sm-4"></div>
+</div>

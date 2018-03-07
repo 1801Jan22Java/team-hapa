@@ -41,6 +41,7 @@ import { FillAccountDetailsService } from './services/fill-account-details/fill-
 import { FlightDetailService } from './services/flight-detail/flight-detail.service';
 import { AdminFeedbackService } from './services/admin-feedback/admin-feedback.service';
 import { ResetPasswordService } from './services/reset-password/reset-password.service';
+import { SubmitFeedbackService } from './services/submit-feedback/submit-feedback.service';
 
 
 // Create an array of routes.
@@ -97,7 +98,8 @@ import { ResetPasswordService } from './services/reset-password/reset-password.s
     FillAccountDetailsService,
     FlightDetailService,
     ResetPasswordService,
-    AdminFeedbackService
+    AdminFeedbackService,
+    SubmitFeedbackService
   ],
   bootstrap: [AppComponent]
 })

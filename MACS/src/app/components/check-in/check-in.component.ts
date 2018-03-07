@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FlightDetailService } from '../../services/flight-detail/flight-detail.service';
+import { flight } from '../../types/flight';
 
 @Component({
   selector: 'app-check-in',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckInComponent implements OnInit {
 
-  constructor() { }
+  constructor(private details: FlightDetailService) { }
+
+  flight: flight;
 
   ngOnInit() {
+    this.flight = this.details.getFlightDetails();
   }
 
 }

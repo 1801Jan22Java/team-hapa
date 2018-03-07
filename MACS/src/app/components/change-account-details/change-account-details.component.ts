@@ -72,8 +72,6 @@ export class ChangeAccountDetailsComponent implements OnInit {
     answer2_ = this.form.get("answer2").value;
     answer3_ = this.form.get("answer3").value;
 
-    console.log(firstname_);
-
     this.changeAccountDetails.update(firstname_, lastname_, email_, newpassword_, answer1_, answer2_, answer3_).subscribe(
       data => {
         this.firstname = data.firstname;

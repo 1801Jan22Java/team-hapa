@@ -194,7 +194,7 @@ public class EndUserController {
 	
 	@RequestMapping("/admin/nofly")
 	@ResponseBody
-	public ResponseEntity<EndUser> noFly(@RequestBody PasswordChange userID) {
+	public ResponseEntity<EndUser> noFly(@RequestBody UserID userID) {
 		EndUser user = eudi.getEndUserById(userID.getId());
 		
 		user.setNoFly(true);

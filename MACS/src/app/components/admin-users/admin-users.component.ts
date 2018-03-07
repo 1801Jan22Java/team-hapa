@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { enduser } from '../../types/enduser';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-users',
@@ -7,9 +12,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminUsersComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
+
+  public users: any[];
+  public sub : Subscription;
 
   ngOnInit() {
+    this.http.post<any>(
+      'http://localhost:8080/MACSAirport/util/admin/users',
+      '').subscribe(
+        data=>{
+        this.users=data;
+        console.log(this.users);
+      });
   }
 
 }

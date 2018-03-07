@@ -9,6 +9,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
+import com.revature.domain.CommonLookup;
 import com.revature.domain.EndUser;
 import com.revature.domain.Reservation;
 import com.revature.util.HibernateUtil;
@@ -47,8 +48,16 @@ public class EndUserDaoImpl implements EndUserDao {
 	@Override
 	public List<EndUser> getAllEndUsers(){
 		Session s = HibernateUtil.getSession();
-		
-		List<EndUser> endUserList = s.createQuery("from EndUser").list();
+		CommonLookupDao cld = new CommonLookupDaoImpl();
+		List<EndUser> endUserList = null;
+		try {
+			Criteria c = s.createCriteria(EndUser.class);
+			c.add(Restrictions.eq("type", cld.getCommonLookupByName("END_USER_TYPE", "Passenger")));
+			endUserList = c.list();
+		} catch (Exception e) {
+			// Users could not be found
+			endUserList = null;
+		}
 		
 		s.close();
 		

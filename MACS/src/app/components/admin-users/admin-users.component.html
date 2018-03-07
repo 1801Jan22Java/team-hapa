@@ -1,13 +1,22 @@
 <div class="container">
   <div class="row">
-    <table id="flightTable">
+    <table id="flightTable" class="table">
       <tr>
-        <th>Username</th>
+        <th>Date</th>
+        <th>Name</th>
         <th>Email</th>
-        <th>Status</th>
-        <th><a href="">Fly</a></th>
-        <th><a href="">No Fly</a></th>
+        <th>No Fly</th>
+        <th></th>
+        <th></th>
       </tr>
+      <tr *ngFor="let user of users">
+          <td>{{user.creationDate | date: "short"}}</td>
+          <td>{{user.firstname}} {{user.lastname}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.noFly}}</td>
+          <td><a href="">Fly</a></td>
+          <td><a href="">No Fly</a></td>
+        </tr>
       <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
       <!-- Create buttons that allow Users to book the corresponding flight -->
     </table>

@@ -221,6 +221,14 @@ public class EndUserController {
 		return new ResponseEntity<List<Feedback>>(feedbackList, HttpStatus.OK);
 	}
 	
+	@PostMapping("/admin/users")
+	@ResponseBody
+	public ResponseEntity<List<EndUser>> getAllUsers() {
+		List<EndUser> userList = eudi.getAllEndUsers();
+
+		return new ResponseEntity<List<EndUser>>(userList, HttpStatus.OK);
+	}
+	
 	
 	@PostMapping("/admin/read")
 	@ResponseBody

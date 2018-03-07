@@ -1,5 +1,6 @@
 package com.revature.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,13 +36,17 @@ public class FlightDaoImpl implements FlightDao {
 	@Override
 	public List<Flight> getFlightsByUserId(int userId){
 		Session s = HibernateUtil.getSession();
-		List<Flight> flights = s.createCriteria(Flight.class)
-				.add( Restrictions.lt("time", new Date()) )
-				.addOrder( Order.desc("time") )
+		EndUser u = new EndUserDaoImpl().getEndUserById(userId);
+		List<Reservation> reservations = s.createCriteria(Reservation.class)
+				.add( Restrictions.eq("endUser", u) )
 				.list();
+		List<Flight> flights = new ArrayList<>();
+		for (Reservation r : reservations) {
+			flights.add(r.getFlight());
+		}
+		s.close();
 		return flights;
 	}
-	
 
 	@Override
 	public int addFlight(Flight thisFlight) {
@@ -54,6 +59,7 @@ public class FlightDaoImpl implements FlightDao {
 			result = 0;
 			tx.rollback();
 		}
+		s.close();
 		return result;
 	}
 

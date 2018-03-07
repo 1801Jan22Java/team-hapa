@@ -240,9 +240,14 @@ public class Driver {
 	public static void endUserInit() {
 		CommonLookupDao cld = new CommonLookupDaoImpl();
 		EndUserDao eud = new EndUserDaoImpl();
-		CommonLookup cl1 = cld.getCommonLookupByName("END_USER_TYPE", "Passenger");
+//		CommonLookup cl1 = cld.getCommonLookupByName("END_USER_TYPE", "Passenger");
+//		
+//		EndUser ed1 = new EndUser("John", "Doe", "john@doe.com", "password", cl1, "answer1", "answer2", "answer3");
+//		eud.addEndUser(ed1);
 		
-		EndUser ed1 = new EndUser("John", "Doe", "john@doe.com", "password", cl1, "answer1", "answer2", "answer3");
+		CommonLookup cl1 = cld.getCommonLookupByName("END_USER_TYPE", "Employee");
+		
+		EndUser ed1 = new EndUser("Bob", "Ross", "bob@macs.com", "password", cl1, "answer1", "answer2", "answer3");
 		eud.addEndUser(ed1);
 	}
 	

@@ -45,6 +45,11 @@ const appRoutes: Routes = [
     canActivate: [VisitorAuthGuardService]
   },
   {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    canActivate: [VisitorAuthGuardService]
+  },
+  {
     path: 'login',
     component: LoginComponent,
     canActivate: [VisitorAuthGuardService]
@@ -89,7 +94,7 @@ const appRoutes: Routes = [
 
   { path: 'reservation/pass', component: BoardingPassComponent },
 
-  { path: 'app-arrivals-departures', component: ArrivalsDeparturesComponent },
+  { path: 'pending', component: ArrivalsDeparturesComponent },
   { path: 'app-flight-search', component: FlightSearchComponent },
   { path: 'app-flight-reservation', component: FlightReservationComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },

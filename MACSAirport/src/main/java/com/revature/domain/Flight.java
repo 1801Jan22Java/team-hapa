@@ -66,7 +66,6 @@ public class Flight implements Serializable {
 	@OneToOne
 	@JoinColumn(name="CITY_ID")
 	private City city; // City departing to or arriving from
-	
 
 
 	public int getId() {
@@ -124,7 +123,6 @@ public class Flight implements Serializable {
 	public void setUserId(City city) {
 		this.city = city;
 	}
-
 
 
 	public CommonLookup getType() {

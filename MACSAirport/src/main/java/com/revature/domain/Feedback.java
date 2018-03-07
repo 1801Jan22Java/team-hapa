@@ -85,5 +85,13 @@ public class Feedback implements Serializable {
 		return "Feedback [endUser=" + endUser + ", message=" + message + "]";
 	}
 
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
 	
 }

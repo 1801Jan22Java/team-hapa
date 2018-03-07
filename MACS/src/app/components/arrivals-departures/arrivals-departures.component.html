@@ -1,11 +1,41 @@
+<br>
 <div class="container">
   <div class="row">
-    <table id="arrivalDepartureTable">
-      <tr>
-        <th>Arrivals</th>
-        <th>Departures</th>
-      </tr>
-      <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
-    </table>
+      <div class="col-1"></div>
+      <div class="col-5 table-responsive">
+        <h1 class="h3 mb-3 font-weight-normal text-center">Arrivals</h1>
+        <table class="table table-striped table-sm" id="arrivalTable">
+          <tr>
+            <th>Time</th>
+            <th>City</th>
+            <th>Gate</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let arrival of arrivals">
+            <td>{{arrival.time | date: "short"}}</td>
+            <td>{{arrival.city.name}}, {{arrival.city.country.name}}</td>
+            <td>{{arrival.gate}}</td>
+            <td><button (click)="flightDetails(arrival)" >Flight Details</button></td>
+          </tr>
+          <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
+        </table>
+      </div>
+      <div class="col-5 table-responsive">
+        <h1 class="h3 mb-3 font-weight-normal text-center">Departures</h1>
+        <table class="table table-striped table-sm" id="departureTable">
+          <tr>
+              <th>Time</th>
+              <th>City</th>
+              <th>Gate</th>
+              <th></th>
+          </tr>
+          <tr *ngFor="let departure of departures">
+              <td>{{departure.time | date: "short"}}</td>
+              <td>{{departure.city.name}}, {{departure.city.country.name}}</td>
+              <td>{{departure.gate}}</td>
+              <td><button (click)="flightDetails(departure)" >Flight Details</button></td>
+            </tr>
+          <!-- Dynamically fill table with parsed JSON using TypeScript (?) -->
+        </table>
   </div>
 </div>

@@ -2,7 +2,9 @@
 <form (ngSubmit)='onSubmit()' [formGroup]="form">
   <div class="form-group">
     <label for="destination">Destination</label>
-    <input class="form-control" type="text" name="destination" id="destination" formControlName="destination">
+<select class="form-control" name="destination" id="dest" formControlName="destination" >
+  <option *ngFor="let destination of destinations" value={{destination}}>{{destination}}</option>
+</select>
   </div>
   <div class="form-group">
     <label for="date">Earliest Departure Date</label>

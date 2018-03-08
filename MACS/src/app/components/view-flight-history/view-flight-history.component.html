@@ -2,8 +2,8 @@
 <h1 class="h3 mb-3 font-weight-normal text-center">Flight History</h1>
 <br>
 <div class="container">
-  <div class="row">
-    <table id="flightTable" class="table">
+  <div class="row table-responsive">
+    <table id="flightTable" class="table table-striped table-sm">
       <tr>
         <th>Country</th>
         <th>City</th>
@@ -21,9 +21,9 @@
         <td>{{flight.city.name}}</td>
         <td class="text-nowrap">{{flight.time | date: "short"}}</td>
         <td class="text-nowrap">{{flight.duration/60 | number:'1.0-0'}} hr {{flight.duration%60}} min</td>
-        <td>${{flight.cost | number:'1.0-2'}}</td>
+        <td>{{flight.cost | currency: 'USD'}}</td>
         <td>{{flight.gate}}</td>
-        <td><button class="btn btn-primary btn-block" (click)="flightDetails(flight)" >Details</button></td>
+        <td><button class="btn btn-primary" (click)="flightDetails(flight)" >Details</button></td>
       </tr>
     </table>
   </div>

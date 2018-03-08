@@ -1,24 +1,27 @@
+<br>
+<h1 class="h3 mb-3 font-weight-normal text-center">Flight History</h1>
+<br>
 <div class="container">
-  <div class="row">
-    <table id="flightTable" class="table">
+  <div class="row table-responsive">
+    <table id="flightTable" class="table table-striped table-sm">
       <tr>
         <th>Country</th>
         <th>City</th>
         <th>Departure</th>
-        <th>Duration (Minutes)</th>
+        <th>Duration</th>
         <th>Cost</th>
         <th>Gate</th>
         <!-- ...and other info as needed -->
-        <th>Make a Reservation</th>
+        <th></th>
       </tr>
         <tr *ngFor="let flight of flights">
           <td>{{flight.city.country.name}}</td>
           <td>{{flight.city.name}}</td>
-          <td>{{flight.time | date: "short"}}</td>
-          <td>{{flight.duration}}</td>
-          <td>{{flight.cost}}</td>
+          <td class="text-nowrap">{{flight.time | date: "short"}}</td>
+          <td class="text-nowrap">{{flight.duration/60 | number:'1.0-0'}} hr {{flight.duration%60}} min</td>
+          <td>{{flight.cost | currency: 'USD'}}</td>
           <td>{{flight.gate}}</td>
-          <td><button (click)="flightDetails(flight)" >Flight Details</button></td>
+          <td><button class="btn btn-primary" (click)="flightDetails(flight)" >Details</button></td>
         </tr>
     </table>
     <p></p>

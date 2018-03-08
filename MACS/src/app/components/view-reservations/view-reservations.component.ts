@@ -15,7 +15,7 @@ export class ViewReservationsComponent implements OnInit {
   constructor(
     private details: FlightDetailService,
     private http: HttpClient,
-    private session: SessionService
+    public session: SessionService
   ) { }
 
   flight: flight;

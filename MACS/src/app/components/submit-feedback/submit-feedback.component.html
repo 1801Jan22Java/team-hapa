@@ -1,10 +1,17 @@
-<div>
+<br>
+<h1 class="h3 mb-3 font-weight-normal text-center">Tell us how we did!</h1>
+<br>
+<div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-6">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <!-- Allow User to leave the fields blank if no changes wanted -->
       <div class="form-group">
-        <label for="inputFeedback">Feedback: </label>
-        <input formControlName="feedback" type="text" class="form-control" id="inputFeedback">
+        <h4 for="inputFeedback">Feedback: </h4>
+        <textarea formControlName="feedback" class="form-control" id="inputFeedback"></textarea>
       </div>
-    <input type="submit" value="Submit Feedback">
+    <input class="btn btn-primary" type="submit" value="Submit Feedback">
     </form>
+  </div>
+  <div class="col-sm-3"></div>
 </div>

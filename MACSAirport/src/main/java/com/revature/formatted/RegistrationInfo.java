@@ -36,16 +36,16 @@ public class RegistrationInfo {
 	private String answer3;
 	
 	
-	public String getFirstName() {
+	public String getFirstname() {
 		return firstname;
 	}
-	public void setFirstName(String firstName) {
+	public void setFirstname(String firstName) {
 		this.firstname = firstName;
 	}
-	public String getLastName() {
+	public String getLastname() {
 		return lastname;
 	}
-	public void setLastName(String lastName) {
+	public void setLastname(String lastName) {
 		this.lastname = lastName;
 	}
 	public String getEmail() {

@@ -14,7 +14,7 @@ export class ResetPasswordService {
   private updated$: Observable<any>;
 
   updatePassword(resetinfo : passwordreset): Observable<any> {
-    this.updated$ = this.http.post<any>('/MACSAirport/util/reset', resetinfo);
+    this.updated$ = this.http.post<any>('http://ec2-107-21-70-248.compute-1.amazonaws.com:8080/MACSAirport/util/reset', resetinfo);
 
     return this.updated$;
   }

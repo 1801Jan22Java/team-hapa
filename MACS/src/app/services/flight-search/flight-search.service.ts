@@ -12,7 +12,7 @@ export class FlightSearchService {
   flightResults: Observable<flight[]>;
 
   getFlightResults(earliestDate: string, destination: string) {
-    this.flightResults = this.http.post<flight[]>('http://localhost:8080/MACSAirport/util/flight-search',
+    this.flightResults = this.http.post<flight[]>('/MACSAirport/util/flight-search',
       { earliestDate: earliestDate, destination: destination });
   }
 
@@ -21,7 +21,7 @@ export class FlightSearchService {
   }
 
   displayArrivalsDepartures():Observable<any>{
-    return this.http.post('http://localhost:8080/MACSAirport/util/all-flights', '');
+    return this.http.post('/MACSAirport/util/all-flights', '');
   }
   
 }

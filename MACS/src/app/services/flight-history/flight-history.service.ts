@@ -17,7 +17,7 @@ export class FlightHistoryService {
   private user_type: string = "user_type";
 
   getFlightHistory(): Observable<reservation[]>{
-    this.flightResults$ = this.http.post<reservation[]>('http://localhost:8080/MACSAirport/util/flight-history', { id : localStorage.getItem(this.user_id) });
+    this.flightResults$ = this.http.post<reservation[]>('/MACSAirport/util/flight-history', { id : localStorage.getItem(this.user_id) });
     return this.flightResults$;
   }
 

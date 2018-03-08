@@ -35,7 +35,7 @@ export class FlightReservationComponent implements OnInit {
       userID: this.session.getUserId(),
       type: this.selected
     }
-    this.http.post<{id: number}>("http://localhost:8080/MACSAirport/util/reserve",
+    this.http.post<{id: number}>("/MACSAirport/util/reserve",
       fr
     ).subscribe(data => {
       

@@ -19,7 +19,7 @@ export class FillAccountDetailsService {
   private updated$: Observable<any>;
 
   autofill(): Observable<any> {
-      this.updated$ = this.http.post<any>('http://localhost:8080/MACSAirport/util/fillprofile', { id :  localStorage.getItem(this.user_id) });
+      this.updated$ = this.http.post<any>('/MACSAirport/util/fillprofile', { id :  localStorage.getItem(this.user_id) });
 
       return this.updated$;
   }

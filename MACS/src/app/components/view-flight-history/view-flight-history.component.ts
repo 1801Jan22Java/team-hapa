@@ -29,7 +29,7 @@ export class ViewFlightHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.service.getFlightHistory();
-    this.http.post<flight[]>('http://localhost:8080/MACSAirport/util/flight-history', { id : localStorage.getItem(this.user_id) }).subscribe(
+    this.http.post<flight[]>('/MACSAirport/util/flight-history', { id : localStorage.getItem(this.user_id) }).subscribe(
       data => {
         
         this.flights = [];

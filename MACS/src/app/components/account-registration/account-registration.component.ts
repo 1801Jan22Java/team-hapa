@@ -57,7 +57,7 @@ export class AccountRegistrationComponent implements OnInit {
 
     if(registrationInfo.password == this.form.get("confirmPassword").value){
       this.http.post<any>(
-        'http://localhost:8080/MACSAirport/util/register',
+        '/MACSAirport/util/register',
         registrationInfo).subscribe(
           data=>{
             this.session.setSession(data);

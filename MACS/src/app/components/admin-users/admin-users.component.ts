@@ -23,7 +23,7 @@ export class AdminUsersComponent implements OnInit {
 
   ngOnInit() {
     this.http.post<any>(
-      '/MACSAirport/util/admin/users',
+      'http://ec2-107-21-70-248.compute-1.amazonaws.com:8080/MACSAirport/util/admin/users',
       '').subscribe(
         data=>{
         this.users=data;
@@ -33,7 +33,7 @@ export class AdminUsersComponent implements OnInit {
 
   noFly(thisUser) {
 
-    this.http.post<enduser>('/MACSAirport/util/admin/nofly', { id : thisUser.id }).subscribe(
+    this.http.post<enduser>('http://ec2-107-21-70-248.compute-1.amazonaws.com:8080/MACSAirport/util/admin/nofly', { id : thisUser.id }).subscribe(
       data => thisUser.noFly = true
     );
   }

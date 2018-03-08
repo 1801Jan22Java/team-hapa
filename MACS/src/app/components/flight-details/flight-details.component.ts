@@ -31,7 +31,7 @@ export class FlightDetailsComponent implements OnInit {
     let date = new Date(time);
     let now = new Date();
     this.available = date > now;
-    this.http.post<{ id: number, status: { refValue: string } }>('/MACSAirport/util/check-reserved',
+    this.http.post<{ id: number, status: { refValue: string } }>('http://ec2-107-21-70-248.compute-1.amazonaws.com:8080/MACSAirport/util/check-reserved',
       {
         userID: this.session.getUserId(),
         flightID: this.flight.id,
@@ -51,7 +51,7 @@ export class FlightDetailsComponent implements OnInit {
   }
 
   cancel() {
-    this.http.post('/MACSAirport/util/cancel', this.reservation)
+    this.http.post('http://ec2-107-21-70-248.compute-1.amazonaws.com:8080/MACSAirport/util/cancel', this.reservation)
       .subscribe();
   }
 

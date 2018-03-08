@@ -23,7 +23,7 @@ export class ViewReservationsComponent implements OnInit {
 
   ngOnInit() {
     this.flight = this.details.flight;
-    this.http.post<flightDetails>('http://localhost:8080/MACSAirport/util/flight-details', {id: this.flight.id})
+    this.http.post<flightDetails>('/MACSAirport/util/flight-details', {id: this.flight.id})
       .subscribe(
         data=>{
           let time = data.flight.time;

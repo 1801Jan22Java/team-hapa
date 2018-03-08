@@ -32,7 +32,7 @@ export class TrackFlightStatusComponent implements OnInit {
   onSubmit() {
     let id = parseInt(this.form.get("flightID").value);
     console.log(id)
-    this.http.post<flightDetails>('http://localhost:8080/MACSAirport/util/flight-details',
+    this.http.post<flightDetails>('/MACSAirport/util/flight-details',
       { id: id }
     ).subscribe(
       data => {

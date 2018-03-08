@@ -12,7 +12,7 @@ export class AdminFeedbackService {
   public feedback$: Observable<any>;
 
   getFeedback(): Observable<any> {
-    this.feedback$ = this.http.post('http://localhost:8080/MACSAirport/util/admin/feedback', {});
+    this.feedback$ = this.http.post('/MACSAirport/util/admin/feedback', {});
 
     return this.feedback$;
   }

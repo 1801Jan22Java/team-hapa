@@ -44,7 +44,7 @@ export class SessionService {
       })
     };
     // // Send a user object, and get an auth object array back.
-    this.session$ = this.http.post<auth>('http://localhost:8080/MACSAirport/util/login', u, httpOptions);
+    this.session$ = this.http.post<auth>('/MACSAirport/util/login', u, httpOptions);
 
     return this.session$;
     // // For local testing purposes

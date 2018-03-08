@@ -31,7 +31,12 @@ export class ViewFlightHistoryComponent implements OnInit {
     this.service.getFlightHistory();
     this.http.post<flight[]>('http://localhost:8080/MACSAirport/util/flight-history', { id : localStorage.getItem(this.user_id) }).subscribe(
       data => {
+        
         this.flights = [];
+        
+        data.sort(function(a, b) {
+          return new Date(a.time)>new Date(b.time) ? -1 : new Date(a.time)<new Date(b.time) ? 1 : 0;
+        });
         this.flights = data;
       }
     )

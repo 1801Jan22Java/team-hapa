@@ -21,7 +21,7 @@ export class SubmitFeedbackService {
 
   submitFeedback(message: string): Observable<any>{
     this.feedback = { userId : localStorage.getItem(this.user_id), message : message }
-    this.feedback$ = this.http.post('/MACSAirport/util/feedback', this.feedback );
+    this.feedback$ = this.http.post('http://ec2-107-21-70-248.compute-1.amazonaws.com:8080/MACSAirport/util/feedback', this.feedback );
     return this.feedback$;
   }
 }

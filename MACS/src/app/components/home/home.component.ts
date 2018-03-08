@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   }
 
   addFlights() {
-    this.http.post<flight[]>('/MACSAirport/util/admin/add-flights', {  }).subscribe();
+    this.http.post<flight[]>('http://ec2-107-21-70-248.compute-1.amazonaws.com:8080/MACSAirport/util/admin/add-flights', {  }).subscribe();
   }
   
 }

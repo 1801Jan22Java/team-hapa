@@ -11,7 +11,7 @@ import { SessionService } from '../../services/session/session.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: HttpClient, private session: SessionService) { }
+  constructor(private http: HttpClient, public session: SessionService) { }
 
   ngOnInit() {
   }

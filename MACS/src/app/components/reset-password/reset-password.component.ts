@@ -26,8 +26,8 @@ export class ResetPasswordComponent implements OnInit {
                       answer3: new FormControl("")
                       });
 
-  private message: string = "";
-  private passwordErrorMessage: string = "";
+  public message: string = "";
+  public passwordErrorMessage: string = "";
   
   // Keys for localStorage
   private user_id: string = "userID"

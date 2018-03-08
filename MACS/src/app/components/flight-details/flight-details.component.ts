@@ -20,7 +20,7 @@ export class FlightDetailsComponent implements OnInit {
 
   constructor(
     private details: FlightDetailService,
-    private session: SessionService,
+    public session: SessionService,
     private http: HttpClient,
     private router: Router
   ) { }

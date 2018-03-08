@@ -26,7 +26,7 @@ export class ChangeAccountDetailsComponent implements OnInit {
 
   public user: enduser;
 
-  private emailErrorMessage: string = "";
+  public emailErrorMessage: string = "";
 
   form = new FormGroup({firstname: new FormControl(""),
                       lastname: new FormControl(""),

@@ -269,7 +269,7 @@ public class EndUserController {
 		List<Flight> flightList = null;
 		City city = cd.getCityByOnlyName(search.getDestination());
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String strDate = search.getEarliestDate();
 		Date date = null;
 		try {

@@ -1,3 +1,6 @@
+<br>
+<h1 class="h3 mb-3 font-weight-normal text-center">Passenger List</h1>
+<br>
 <div class="container">
   <div class="row">
     <table id="flightTable" class="table">
@@ -10,7 +13,7 @@
       </tr>
       <tr *ngFor="let user of users">
           <td class="text-nowrap">{{user.creationDate | date: "short"}}</td>
-          <td>{{user.firstname}} {{user.lastname}}</td>
+          <td class="text-nowrap">{{user.firstname}} {{user.lastname}}</td>
           <td>{{user.email}}</td>
           <td>{{user.noFly}}</td>
           <td><button class="btn btn-primary btn-block" (click)="noFly(user)" *ngIf="!user.noFly">No Fly</button></td>

@@ -1,39 +1,45 @@
-<div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <!-- Allow User to leave the fields blank if no changes wanted -->
-    <div class="form-group">
-      <label for="inputFirstName">First Name: </label>
-      <input formControlName="firstname" type="text" class="form-control" id="inputFirstName" value="{{firstname}}">
-    </div>
-    <div class="form-group">
-      <label for="inputLastName">Last Name: </label>
-      <input formControlName="lastname" type="text" class="form-control" id="inputLastName" value="{{lastname}}">
-    </div>
-    <div class="form-group">
-      <label for="inputEmail">Email: </label>
-      <input formControlName="email" type="email" class="form-control" id="inputEmail" value="{{email}}">
-      <span>{{emailErrorMessage}}</span>
-    </div>
-    <div class="form-group">
-      <label for="inputPassword">Password: </label>
-      <input formControlName="password" type="password" class="form-control" id="inputPassword">
-    </div>
-    <div class="form-group">
-      <label for="inputAnswer1">Answer 1: </label>
-      <input formControlName="answer1" type="text" class="form-control" id="inputAnswer1" value="{{answer1}}">
-    </div>
-    <div class="form-group">
-      <label for="inputAnswer2">Answer 2: </label>
-      <input formControlName="answer2" type="text" class="form-control" id="inputAnswer2" value="{{answer2}}">
-    </div>
-    <div class="form-group">
-      <label for="inputAnswer3">Answer 3: </label>
-      <input formControlName="answer3" type="text" class="form-control" id="inputAnswer3" value="{{answer3}}">
-    </div>
+<br>
+<div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-6">
+    <h1 class="h3 mb-3 font-weight-normal text-center">Arrivals</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <!-- Allow User to leave the fields blank if no changes wanted -->
+      <div class="form-group">
+        <label for="inputFirstName">First Name: </label>
+        <input formControlName="firstname" type="text" class="form-control" id="inputFirstName" value="{{firstname}}">
+      </div>
+      <div class="form-group">
+        <label for="inputLastName">Last Name: </label>
+        <input formControlName="lastname" type="text" class="form-control" id="inputLastName" value="{{lastname}}">
+      </div>
+      <div class="form-group">
+        <label for="inputEmail">Email: </label>
+        <input formControlName="email" type="email" class="form-control" id="inputEmail" value="{{email}}">
+        <span>{{emailErrorMessage}}</span>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword">Password: </label>
+        <input formControlName="password" type="password" class="form-control" id="inputPassword">
+      </div>
+      <div class="form-group">
+        <label for="inputAnswer1">What is your mother's maiden name?</label>
+        <input formControlName="answer1" type="text" class="form-control" id="inputAnswer1" value="{{answer1}}">
+      </div>
+      <div class="form-group">
+        <label for="inputAnswer2">What city were you born in?</label>
+        <input formControlName="answer2" type="text" class="form-control" id="inputAnswer2" value="{{answer2}}">
+      </div>
+      <div class="form-group">
+        <label for="inputAnswer3">What are the last 4 digits of your social security number?</label>
+        <input formControlName="answer3" type="text" class="form-control" id="inputAnswer3" value="{{answer3}}">
+      </div>
 
-    <br>
-    <button type="submit" class="btn btn-primary">Confirm Changes</button>
-  </form>
+      <br>
+      <button type="submit" class="btn btn-primary">Confirm Changes</button>
+    </form>
 
-  <a routerLink="../reservation/history">View My Flights</a>
+    <a routerLink="../reservation/history">View My Flights</a>
+  </div>
+  <div class="col-sm-3"></div>
 </div>

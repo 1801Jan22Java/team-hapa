@@ -29,6 +29,12 @@
       </li>
     </ul>
 
+    <ul class="navbar-nav" *ngIf="this.session.checkLoggedIn()">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="../reservation/history">My Flights</a>
+      </li>
+    </ul>
+
     <ul class="navbar-nav" *ngIf="!this.session.checkLoggedIn()">
       <li class="nav-item">
         <a class="nav-link" routerLink="register">Register</a>

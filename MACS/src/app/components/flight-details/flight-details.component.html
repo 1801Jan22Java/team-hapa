@@ -41,19 +41,19 @@
     <div class="col-sm-3"></div>
   </div>
   <div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4" *ngIf="this.session.checkUser() && this.status=='Reserved' && this.available">
-      <button (click)="cancel()" routerLink="../../reservation/history">Cancel</button>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3 text-center" *ngIf="this.session.checkUser() && this.status=='Reserved' && this.available">
+      <button class="btn btn-primary" (click)="cancel()" routerLink="../../reservation/history">Cancel Reservation</button>
     </div>
-    <div class="col-sm-4"></div>
+    <div class="col-sm-3 text-center" *ngIf="this.session.checkUser() && this.status=='Reserved' && this.available">
+      <a class="btn btn-primary" routerLink="../../checkin">Boarding Pass</a>
+    </div>
+    <div class="col-sm-3"></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-3">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
     </div>
-    <div class="col-sm-3" *ngIf="this.session.checkUser() && this.status=='Reserved' && this.available">
-      <a routerLink="../../checkin">Boarding Pass</a>
-    </div>
-    <div class="col-sm-3"></div>
+    <div class="col-sm-4"></div>
   </div>
 </div>
